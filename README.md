@@ -1,5 +1,3 @@
-A boileprlate for React Native over the Expo, conatinig TYpeScript, Jest, React-Native-Testing-Library and Cypress.
+My Social Coffee React Native App
 
-(It wasn't easy to have all of this setup and running)
-
-For testing with Cypress please run Expo Web.
+With TypeScript, Jest, React-Native-Testing-Library, Cypress.
