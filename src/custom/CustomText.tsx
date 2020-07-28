@@ -1,7 +1,13 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-const CustomText = props => {
+interface Props {
+  type: string,
+  style?: {},
+  
+}
+
+const CustomText: React.FC<Props> = props => {
   const setFontType = type => {
     switch (type) {
       case 'black':
@@ -33,8 +39,8 @@ const CustomText = props => {
     }
   };
   const font = setFontType(props.type ? props.type : 'normal');
-  const style = [{ fontFamily: font }, props.style || {}];
-  return <Text style={style}>{props.children}</Text>;
+  const style = [{ fontFamily: font, color: 'white' }, props.style || {}];
+  return <Text style={style} >{props.children}</Text>;
 };
 
 export default CustomText;
