@@ -14,5 +14,10 @@
     "skipLibCheck": true
   },
   "include": ["./src", "./src/**/package.json", "babel.config.js"],
-  "exclude": ["./**/*.spec.ts", "./**/*.spec.tsx"]
+  "exclude": [
+    "./**/*.spec.ts",
+    "./**/*.spec.tsx",
+    "./**/*.test.tsx",
+    "./**/*.test.ts"
+  ]
 }

@@ -1,9 +1,11 @@
 import React from 'react';
-
-import { render } from 'react-native-testing-library';
+import renderer from 'react-test-renderer';
 
 import HomeScreen from '../HomeScreen';
 
-test('it renders HomeScreen', () => {
-  render( <HomeScreen type="bold"/>);
+describe('<HomeScreen />', () => {
+  it('has 1 child', () => {
+    const tree = renderer.create(<HomeScreen />).toJSON();
+    expect(tree.children.length).toBe(1);
+  });
 });

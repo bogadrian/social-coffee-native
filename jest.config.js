@@ -2,8 +2,12 @@ module.exports = {
   preset: 'react-native',
   cacheDirectory: '<rootDir>/dist/jest/cache',
   coverageDirectory: '<rootDir>/dist/jest/coverage',
-  moduleFileExtensions: ['ts', 'tsx', 'js'],
-  modulePathIgnorePatterns: ['<rootDir>/cypress/'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  modulePathIgnorePatterns: [
+    '<rootDir>/cypress/',
+    '<rootDir>/node_modules/',
+    '<rootDir>/dist/'
+  ],
   testPathIgnorePatterns: [
     '<rootDir>/node_modules',
     '<rootDir>/dist',
@@ -11,8 +15,12 @@ module.exports = {
   ],
   setupFiles: ['./node_modules/react-native-gesture-handler/jestSetup.js'],
   moduleNameMapper: {
-    '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$':
+    '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$':
       'jest-transform-stub',
     '\\.(css|less)$': 'identity-obj-proxy'
+  },
+  testEnvironment: 'jest-environment-node',
+  transform: {
+    '^.+\\.tsx?$': 'ts-jest'
   }
 };

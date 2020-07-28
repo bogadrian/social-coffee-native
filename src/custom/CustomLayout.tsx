@@ -4,7 +4,7 @@ import {View, StyleSheet} from 'react-native'
 
 interface Props { 
   style?: any,
-    children: any
+  children: any
 }
 
 const styles = StyleSheet.create({
