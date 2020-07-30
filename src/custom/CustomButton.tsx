@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Button, TouchableOpacity } from 'react-native';
 
 import Color from '../constants/Color'
-import CustomText from './CustomText';
+import CustomTextAnimated from './CustomTextAnimated';
 import CustomIcon from './CustomIcon'
 
 interface Props { 
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     padding: 6,
     borderWidth: 1,
     opacity: 0.9,
-    backgroundColor: 'rgba(240,47,23,0.1) ',
+    backgroundColor: 'rgba(0,0,0,0.1) ',
     alignItems: 'center',
     shadowColor: 'black',
     shadowOffset: {width: 0, height: 10},
@@ -36,14 +36,15 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 20
   },
+  text: {justifyContent: 'center', alignItems: 'center'}
   
  
 });
 
 export const CustomButton: React.FC<Props> = ({name, animation, size, textType, color, text, onPress, fontSize, buttonWidth}) => (
   <TouchableOpacity onPress={onPress} style={[styles.button, {'borderColor': color, 'width': buttonWidth}]}>
-    <CustomIcon name={name} size={size} color={color} animation={animation}/>
-    <CustomText  type={textType} style={{color, fontSize}}>{text}</CustomText>
+    <CustomIcon name={name} size={size} color={color} />
+    <CustomTextAnimated animation={animation} type={textType} style={[{color, fontSize}, styles.text]}>{text}</CustomTextAnimated>
   </TouchableOpacity>
 );
 

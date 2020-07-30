@@ -25,11 +25,18 @@ return (
 const styles = StyleSheet.create({
     card: {
         borderRadius: 15,
+        borderWidth: 1,
+        borderColor: 'white',
         width: '90%',
         backgroundColor: 'white',
         marginBottom: 20,
         marginTop: 10,
-        overflow: 'hidden',  
+        overflow: 'hidden',
+        elevation: 20,  
+        shadowColor: 'black',
+        shadowOffset: {width: 0, height: 10},
+        shadowOpacity: 0.5,
+        shadowRadius: 10,
     }, image: {
         width: '100%',
         height: 200

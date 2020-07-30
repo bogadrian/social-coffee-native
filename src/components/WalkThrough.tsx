@@ -3,6 +3,8 @@ import { Text, Dimensions, Image, StyleSheet, View } from 'react-native';
 
 import SwiperFlatList from 'react-native-swiper-flatlist';
 
+import InfoCard from './InfoCard/InfoCard'
+
 const WalkThrough: React.FC = () => {
  
     return (
@@ -10,19 +12,19 @@ const WalkThrough: React.FC = () => {
         <SwiperFlatList
           showPagination
           paginationActiveColor="red"
-          paginationDefaultColor="blue"
+          paginationDefaultColor="white"
         >
-          <View style={[styles.child, { backgroundColor: 'tomato' }]}>
-            <Text style={styles.text}>1</Text>
+          <View style={[styles.child, { backgroundColor: 'white' }]}>
+            <InfoCard />  
           </View>
-          <View style={[styles.child, { backgroundColor: 'thistle' }]}>
-            <Text style={styles.text}>2</Text>
+          <View style={[styles.child, { backgroundColor: 'white' }]}>
+            <InfoCard />  
           </View>
-          <View style={[styles.child, { backgroundColor: 'skyblue' }]}>
-            <Text style={styles.text}>3</Text>
+          <View style={[styles.child, { backgroundColor: 'white' }]}>
+            <InfoCard />  
           </View>
-          <View style={[styles.child, { backgroundColor: 'teal' }]}>
-            <Text style={styles.text}>4</Text>
+          <View style={[styles.child, { backgroundColor: 'white' }]}>
+            <InfoCard />  
           </View>
         </SwiperFlatList>
       </View>
@@ -38,9 +40,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   child: {
-    height: height * 0.91,
+    height,
     width,
-    justifyContent: 'center'
+    justifyContent: 'center', 
+    alignItems: 'center'
   },
   text: {
     fontSize: width * 0.5,

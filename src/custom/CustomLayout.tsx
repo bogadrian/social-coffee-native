@@ -10,8 +10,6 @@ interface Props {
 const styles = StyleSheet.create({
     layout: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
       backgroundColor: '#2A335A'
     },
   });
