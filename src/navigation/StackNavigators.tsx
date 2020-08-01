@@ -4,6 +4,8 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 
+import playSound from '../customHooks/sound'
+
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 import {HomeStack, InfoStack, AuthStack, AccountStack, MyComunitiesStack} from './Stacks/Stacks'
@@ -15,8 +17,6 @@ function getHeaderTitle(route) {
   // This can happen during if there hasn't been any navigation inside the screen
   // In our case, it's "Feed" as that's the first screen inside the navigator
   const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home';
-  console.log(routeName)
-
   switch (routeName) {
     case 'Settings':
       return 'Settings';
@@ -34,25 +34,39 @@ function getHeaderTitle(route) {
 const Tab = createMaterialBottomTabNavigator();
 
 const MyTabs = () => {
+  
+  const play = () => {
+    playSound()
+  }
+  
   return (
     <Tab.Navigator  
     activeColor='aqua'
     inactiveColor='white'
+   screenOptions={{ 
+     
+}}
     barStyle={{backgroundColor: Color.backGroundPrimary}}
     
   >
       <Tab.Screen 
-      name="Home" 
+      name="Home"  
+       listeners={{
+        tabPress: () => play() 
+      }}
       component={HomeStack} 
       options={{
         tabBarLabel: 'Home',
         tabBarIcon: ({ color }) => (
-          <MaterialCommunityIcons name="home-outline" color={color} size={26} />
+          <MaterialCommunityIcons name="home-outline" color={color} size={26}  />
         ),
       }}
        /> 
         <Tab.Screen 
        name="My Comunities" 
+       listeners={{
+        tabPress: () => play() 
+      }}
        component={MyComunitiesStack}
         options={{
          tabBarLabel: 'Comunity',
@@ -61,8 +75,11 @@ const MyTabs = () => {
          ),
        }}/>
         <Tab.Screen 
-       name="Sett" 
+       name="Donate" 
        component={AuthStack}
+       listeners={{
+        tabPress: () => play() 
+      }}
        options={{
          tabBarLabel: 'Donate',
          tabBarIcon: ({ color }) => (
@@ -72,6 +89,9 @@ const MyTabs = () => {
       <Tab.Screen 
       name="Settings" 
       component={AuthStack}
+      listeners={{
+        tabPress: () => play() 
+      }}
       options={{
         tabBarLabel: 'Settings',
         tabBarIcon: ({ color }) => (
@@ -81,6 +101,9 @@ const MyTabs = () => {
       <Tab.Screen 
       name="Account" 
       component={AccountStack}
+      listeners={{
+        tabPress: () => play() 
+      }}
       options={{
         tabBarLabel: 'Account',
         tabBarIcon: ({ color }) => (

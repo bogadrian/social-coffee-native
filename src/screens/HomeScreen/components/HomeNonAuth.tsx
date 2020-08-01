@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { StyleSheet, View } from 'react-native';
+
+import playSound from '../../../customHooks/sound'
 
 import CustomTextAnimated from '../../../custom/CustomTextAnimated';
 import CustomButton from '../../../custom/CustomButton';
@@ -33,49 +35,54 @@ const styles = StyleSheet.create({
 });
 
 const HomeAuth: React.FC<Props> = () => {
+  
+   const handleLoginUser =  () => {
+    playSound()
+  }
+  
   return (   
     
       <View style={styles.container}>
-        <CustomTextAnimated animation="pulse" type="extra-bold-italic" style={styles.text} >
-        Welcome!
-        </CustomTextAnimated>
-        <CustomText type="black" style={styles.subtitle}>
-          To The Social Coffee App
-        </CustomText>
-        <CustomText type="semibold" style={styles.thirdText}>
-        A Coffee Adicted People's App
-        </CustomText>
-        <Divider />
-        <CustomText type="light" style={styles.forthText}>
-        In order to search for a Coffee Provider, you can Login or Signup
-        </CustomText>
-        <View style={styles.buttonContainer}>
-        <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='fuchsia' fontSize={12}textType="bold" text="Login" onPress={() => console.log('pressed')}/>
-        <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='yellow' fontSize={12} textType="bold" text="Signup" onPress={() => console.log('pressed')}/>
-        </View>
-        <CustomText type="light" style={styles.forthText}>
-        If you are a Coffee Provider, you can Login or Signup here
-        </CustomText>
-        <View style={styles.buttonContainer}>
-        <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='salmon' fontSize={12} textType="bold" text="Login" onPress={() => console.log('pressed')}/>
-        <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='cyan' fontSize={12} textType="bold" text="Signup" onPress={() => console.log('pressed')}/>
-        </View>
-        <Divider style={styles.secondDivider}/>
-        <CustomTextAnimated animation="pulse" type="extra-bold-italic" style={styles.textAnimatedSecond} >
-        You can also ... 
-        </CustomTextAnimated>
-        <CustomText type="light" style={styles.forthText}>
-                Donate a coffee to us. We will 
-                forawrad it to one of our 
-                verfied coffee provider!
-        </CustomText>
-        <CustomButton  buttonWidth='50%' name="ios-cafe" size={20} color='orange' fontSize={20} animation="flash" textType="bold" text="Donate" onPress={() => console.log('pressed')}/>
-     
-      <Divider style={styles.secondDivider} /> 
-       <CustomText type="light" style={styles.forthText}>
-               How does this app work?
-        </CustomText> 
-        <CustomButton  buttonWidth='50%' name="ios-cog" size={20} color='white' fontSize={20} textType="bold" text="App Info" onPress={() => console.log('pressed')}/> 
+          <CustomText type="extra-bold-italic" style={styles.text} >
+          Welcome!
+          </CustomText>
+          <CustomText type="black" style={styles.subtitle}>
+            To The Social Coffee App
+          </CustomText>
+          <CustomText type="semibold" style={styles.thirdText}>
+          A Coffee Adicted People's App
+          </CustomText>
+          <Divider />
+          <CustomText type="light" style={styles.forthText}>
+          In order to search for a Coffee Provider, you can Login or Signup
+          </CustomText>
+          <View style={styles.buttonContainer}>
+          <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='fuchsia' fontSize={12}textType="bold" text="Login" onPress={handleLoginUser}/>
+          <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='yellow' fontSize={12} textType="bold" text="Signup" onPress={handleLoginUser}/>
+          </View>
+          <CustomText type="light" style={styles.forthText}>
+          If you are a Coffee Provider, you can Login or Signup here
+          </CustomText>
+          <View style={styles.buttonContainer}>
+          <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='salmon' fontSize={12} textType="bold" text="Login" onPress={handleLoginUser}/>
+          <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='cyan' fontSize={12} textType="bold" text="Signup" onPress={handleLoginUser}/>
+          </View>
+          <Divider style={styles.secondDivider}/>
+          <CustomTextAnimated animation="pulse" type="extra-bold-italic" style={styles.textAnimatedSecond} >
+          You can also ... 
+          </CustomTextAnimated>
+          <CustomText type="light" style={styles.forthText}>
+                  Donate a coffee to us. We will 
+                  forawrad it to one of our 
+                  verfied coffee provider!
+          </CustomText>
+          <CustomButton  buttonWidth='50%' name="ios-cafe" size={20} color='orange' fontSize={20} animation="flash" textType="bold" text="Donate" onPress={handleLoginUser}/>
+      
+          <Divider style={styles.secondDivider} /> 
+          <CustomText type="light" style={styles.forthText}>
+                How does this app work?
+          </CustomText> 
+          <CustomButton  buttonWidth='50%' name="ios-cog" size={20} color='white' fontSize={20} textType="bold" text="App Info" onPress={handleLoginUser}/> 
         </View>
     
   );

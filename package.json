@@ -12,18 +12,19 @@
   "dependencies": {
     "@babel/preset-env": "^7.10.4",
     "@babel/runtime": "^7.10.5",
-    "@expo/vector-icons": "^10.2.0",
+    "@expo/vector-icons": "^10.0.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.7.2",
     "@react-navigation/material-bottom-tabs": "^5.2.15",
     "@react-navigation/native": "^5.7.1",
     "@react-navigation/stack": "^5.7.1",
-    "@types/jest": "^26.0.7",
+    "@types/jest": "^26.0.8",
     "@types/mocha": "^8.0.0",
     "@types/node": "^14.0.26",
     "babel-jest": "^26.1.0",
     "babel-preset-react-native": "5.0.2",
     "expo": "^38.0.0",
+    "expo-av": "~8.2.1",
     "expo-status-bar": "^1.0.0",
     "jest-transform-stub": "^2.0.0",
     "react": "16.11.0",
@@ -55,9 +56,9 @@
   },
   "private": true,
   "jest": {
-    "preset": "jest-expo",
+    "preset": "react-native",
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base/.*|@expo/vector-icons/)"
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
     ]
   }
 }

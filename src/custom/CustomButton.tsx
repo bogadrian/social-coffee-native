@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    borderRadius: 4,
+    borderRadius: 8,
     margin: 5,
     padding: 6,
     borderWidth: 1,

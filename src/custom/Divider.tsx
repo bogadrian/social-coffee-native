@@ -11,7 +11,10 @@ const styles = StyleSheet.create({
         margin: 10,
         height: 5,
         width: '90%',
-        backgroundColor: 'white'
+        borderWidth: 1, 
+        borderColor: 'white',
+        backgroundColor: 'transparent',
+        borderRadius: 8
     }
 })
 
