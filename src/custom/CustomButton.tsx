@@ -7,6 +7,7 @@ import CustomIcon from './CustomIcon'
 
 interface Props { 
 textType: string,
+style?: {},
 textStyle?: {},
 text: string, 
 color: string,
@@ -41,8 +42,8 @@ const styles = StyleSheet.create({
  
 });
 
-export const CustomButton: React.FC<Props> = ({name, animation, size, textType, color, text, onPress, fontSize, buttonWidth}) => (
-  <TouchableOpacity onPress={onPress} style={[styles.button, {'borderColor': color, 'width': buttonWidth}]}>
+export const CustomButton: React.FC<Props> = ({name, animation, size, style, textType, color, text, onPress, fontSize, buttonWidth}) => (
+  <TouchableOpacity onPress={onPress} style={[ style, styles.button, {'borderColor': color, 'width': buttonWidth}]}>
     <CustomIcon name={name} size={size} color={color} />
     <CustomTextAnimated animation={animation} type={textType} style={[{color, fontSize}, styles.text]}>{text}</CustomTextAnimated>
   </TouchableOpacity>

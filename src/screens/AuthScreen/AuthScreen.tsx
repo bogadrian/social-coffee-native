@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 
-import CustomText from '../../custom/CustomText';
+import CustomLayout from '../../custom/CustomLayout'
 
 interface Props {
   type: string;
@@ -13,14 +13,10 @@ const styles = StyleSheet.create({
 
 const AuthScreen: React.FC<Props> = () => {
   return (
-    <View style={styles.layout}>
-      <CustomText type="bold" >      
-    Auth Screen
-      </CustomText>
-    </View>
+    <CustomLayout style={styles.layout}>
+      <Text>Settings Screen here</Text>
+    </CustomLayout>
   );
 };
-
-
 
 export default AuthScreen;

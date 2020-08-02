@@ -19,11 +19,11 @@ const styles = StyleSheet.create({
     marginTop: 20
   }, 
   text: {
-    color: 'white', 
+    color: 'coral', 
     fontSize: 20, 
     marginTop: 20,
   }, 
-  subtitle: {fontSize: 14, marginTop: 10, color: 'aqua'},
+  subtitle: {fontSize: 14, marginTop: 10, color: 'coral'},
   thirdText: {fontSize: 16, marginTop: 10, margin: 20},
   forthText: {fontSize: 16, marginTop: 10, margin: 10, textAlign: 'center'}, buttonContainer: {
     flexDirection: 'row',
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   secondDivider: {marginTop: 20},
-  textAnimatedSecond: {fontSize: 20, color: 'aqua'}
+  textAnimatedSecond: {fontSize: 20, color: 'coral'}
 });
 
 const HomeAuth: React.FC<Props> = () => {
@@ -64,7 +64,7 @@ const HomeAuth: React.FC<Props> = () => {
           If you are a Coffee Provider, you can Login or Signup here
           </CustomText>
           <View style={styles.buttonContainer}>
-          <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='salmon' fontSize={12} textType="bold" text="Login" onPress={handleLoginUser}/>
+          <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='pink' fontSize={12} textType="bold" text="Login" onPress={handleLoginUser}/>
           <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='cyan' fontSize={12} textType="bold" text="Signup" onPress={handleLoginUser}/>
           </View>
           <Divider style={styles.secondDivider}/>
@@ -76,7 +76,7 @@ const HomeAuth: React.FC<Props> = () => {
                   forawrad it to one of our 
                   verfied coffee provider!
           </CustomText>
-          <CustomButton  buttonWidth='50%' name="ios-cafe" size={20} color='orange' fontSize={20} animation="flash" textType="bold" text="Donate" onPress={handleLoginUser}/>
+          <CustomButton  buttonWidth='50%' name="ios-cafe" size={20} color='coral' fontSize={20} animation="flash" textType="bold" text="Donate" onPress={handleLoginUser}/>
       
           <Divider style={styles.secondDivider} /> 
           <CustomText type="light" style={styles.forthText}>

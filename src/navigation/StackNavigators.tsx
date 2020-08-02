@@ -41,7 +41,7 @@ const MyTabs = () => {
   
   return (
     <Tab.Navigator  
-    activeColor='aqua'
+    activeColor='coral'
     inactiveColor='white'
    screenOptions={{ 
      
