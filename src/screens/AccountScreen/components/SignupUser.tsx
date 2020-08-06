@@ -9,30 +9,43 @@ import CustomText from "../../../custom/CustomText";
 import { AppForm, AppFormField} from "../../../components/forms";
 import SubmitButton from '../../../components/forms/SubmitButton'
 import CustomButton from '../../../custom/CustomButton'
+import CustomLayout from '../../../custom/CustomLayout'
 
 interface Props {}
 
 const validationSchema = Yup.object().shape({
+  name: Yup.string().required().min(4).label('Name'),
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
+  confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').label('Confirm Password')
 });
 
-const Login: React.FC<Props> = (props) => { 
+const SignupUser: React.FC<Props> = (props) => { 
   const navigation = useNavigation();
   
   return (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <ScrollView>
+    <ScrollView>
+    <CustomLayout >
     <View style={styles.container}>
         <CustomText type="extra-bold-italic" style={styles.text} >
-    Please Login or: 
-    </CustomText>
-    <CustomButton  buttonWidth='60%' style={styles.button2} name="ios-person-add" size={15} color='white' fontSize={14} animation="pulse" textType="bold" text="Switch To Signup" onPress={() => navigation.navigate('Signup')}/>
+    Signup User: 
+       </CustomText>
+    <CustomButton  buttonWidth='70%' style={styles.button1}  size={15} color='white' fontSize={12} animation="pulse" textType="bold" text="Switch To Signup Coffee Provider" onPress={() => navigation.navigate('SignupProvider')}/>
       <AppForm
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ name: "", email: "", password: "", confirmPassword:"" }}
         onSubmit={(values) => console.log(values)}
         validationSchema={validationSchema}
       >
+        <AppFormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="account"
+          keyboardType="default"
+          name="name"
+          placeholder="Name"
+          textContentType="name"
+        />
         <AppFormField
           autoCapitalize="none"
           autoCorrect={false}
@@ -51,9 +64,19 @@ const Login: React.FC<Props> = (props) => {
           secureTextEntry
           textContentType="password"
         />
-         <SubmitButton buttonWidth='40%' style={styles.button1} name="ios-person-add" size={15} color={Color.tertiary} fontSize={14} animation="fadeIn" textType="bold" text="Login" />
+        <AppFormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="lock"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          secureTextEntry
+          textContentType="password"
+        />
+         <SubmitButton buttonWidth='40%' style={styles.button2} name="ios-person-add" size={15} color={Color.tertiary} fontSize={14} animation="fadeIn" textType="bold" text="Signup" />
          </AppForm>
-    </View>
+         </View>
+    </CustomLayout>
     </ScrollView>
     </TouchableWithoutFeedback>
   );
@@ -61,21 +84,23 @@ const Login: React.FC<Props> = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow:1,
+    flexGrow: 1,
+    height: '100%',
     padding: 10,
     marginTop: 20,
-    justifyContent: 'center', alignItems: 'center' 
+    justifyContent: 'center', 
+    alignItems: 'center' 
+  }, text: {
+      fontSize: 30, marginTop: 20
   }, button1: {
       marginTop: 10,
-      justifyContent: 'flex-end', alignItems: 'flex-end'
+      marginBottom: 20
   }, button2: {
-      marginTop: -30,
-      marginBottom: 30
+      marginTop: 30,
+      marginBottom: 80
   },
-  text: {
-      fontSize: 30, marginBottom: 40
-  }
+ 
  
 });
 
-export default Login;
+export default SignupUser;

@@ -6,12 +6,13 @@ import defaultStyles from "../../constants/styles";
 
 interface Props {
   icon: any,
-  otherProps: any
+  otherProps?: any
+  style?: {}
 }
 
 const AppTextInput: React.FC<Props> =({ icon, ...otherProps }) => {
   return (
-    <View style={styles.container}>
+    <View style={ styles.container}>
       {icon && (
         <MaterialCommunityIcons
           name={icon}
@@ -34,9 +35,11 @@ const styles = StyleSheet.create({
     backgroundColor: defaultStyles.colors.light,
     borderRadius: 25,
     flexDirection: "row",
-    width: "100%",
     padding: 15,
     marginVertical: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center"
   },
   icon: {
     marginRight: 10,

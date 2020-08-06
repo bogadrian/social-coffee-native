@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
@@ -115,12 +115,17 @@ const MyTabs = () => {
   );
 }
 
+
+
 const MainStackNavigator = createStackNavigator();
 
 export const MainStack: React.FC = props => {
+  const isInfoTrue = true //pull this variable out of asyncStorage
+  
+  
   return (
     <MainStackNavigator.Navigator >
-      {true && (
+      {isInfoTrue && (
         <MainStackNavigator.Screen 
         name="Home Stack" 
         component={MyTabs} 
@@ -132,9 +137,9 @@ export const MainStack: React.FC = props => {
         })}
         />
       )}
-      {false && (
+      {!isInfoTrue && (
         <MainStackNavigator.Screen 
-        name="Info Stack" 
+        name="Info" 
         component={InfoStack} 
         options={{
           headerShown: false,

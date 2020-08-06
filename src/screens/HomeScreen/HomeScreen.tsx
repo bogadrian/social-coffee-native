@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import CustomLayout from '../../custom/CustomLayout';
 import HomeNonAuth from './components/HomeNonAuth'

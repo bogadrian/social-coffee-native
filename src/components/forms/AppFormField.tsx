@@ -5,11 +5,17 @@ import AppTextInput from "./AppTextInput";
 import ErrorMessage from "./ErrorMessage";
 
 interface Props {
+  onBlur?: (value: boolean) => void,
+  onChangeText?: (value: string) => void, 
+  autoCapitalize: string,
+  autoCorrect: boolean,
+  icon: string,
+  keyboardType?: string,
   name: string,
-  otherProps: any,
-  icon: any,
-  onBlur: () => void,
-  onChangeText: (value: string) => void,
+  secureTextEntry?: boolean,
+  placeholder: string,
+  textContentType: string,
+  otherProps?: Object
 }
 
 const AppFormField: React.FC<Props> = ({ name, ...otherProps }) => {

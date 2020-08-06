@@ -1,31 +1,36 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
 import playSound from '../../../customHooks/sound'
+
+import Logo from '../../../assets/coffee.svg'
 
 import CustomTextAnimated from '../../../custom/CustomTextAnimated';
 import CustomButton from '../../../custom/CustomButton';
 import CustomText from '../../../custom/CustomText';
 import Divider from '../../../custom/Divider';
 
-interface Props {  
-}
+interface Props {}
+
+
 
 const styles = StyleSheet.create({
- 
   container: {
     justifyContent: 'center',
     alignItems: 'center', 
     marginTop: 20
   }, 
+  logo: {width: 100, height: 100},
   text: {
-    color: 'coral', 
+    color: 'white', 
     fontSize: 20, 
     marginTop: 20,
   }, 
-  subtitle: {fontSize: 14, marginTop: 10, color: 'coral'},
+  subtitle: {fontSize: 18, marginTop: 10, color: 'white'},
   thirdText: {fontSize: 16, marginTop: 10, margin: 20},
-  forthText: {fontSize: 16, marginTop: 10, margin: 10, textAlign: 'center'}, buttonContainer: {
+  forthText: {fontSize: 20, marginTop: 10, margin: 10, textAlign: 'center'}, buttonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center'
@@ -34,15 +39,33 @@ const styles = StyleSheet.create({
   textAnimatedSecond: {fontSize: 20, color: 'coral'}
 });
 
-const HomeAuth: React.FC<Props> = () => {
+const HomeNonAuth: React.FC<{Props, HandleUser}> = () => {
+  const navigation = useNavigation();
+
+   const handleUserLogin = () => {
+      playSound()
+       navigation.navigate('Account', {screen: 'Account'})
+    }
+    
+    
+    const handleUserSignup = () => { 
+      playSound()
+     navigation.navigate('Account', { screen: 'Signup'})
+    }
   
-   const handleLoginUser =  () => {
-    playSound()
+  
+  const appInfo = () => {
+      playSound()
+     navigation.navigate('InfoScreen', {screen: 'InfoScreen'})
   }
   
   return (   
     
       <View style={styles.container}>
+         <Logo
+      width="60"
+      height="60"
+    />
           <CustomText type="extra-bold-italic" style={styles.text} >
           Welcome!
           </CustomText>
@@ -54,18 +77,18 @@ const HomeAuth: React.FC<Props> = () => {
           </CustomText>
           <Divider />
           <CustomText type="light" style={styles.forthText}>
-          In order to search for a Coffee Provider, you can Login or Signup
+          Search for a Coffee Provider
           </CustomText>
           <View style={styles.buttonContainer}>
-          <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='fuchsia' fontSize={12}textType="bold" text="Login" onPress={handleLoginUser}/>
-          <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='yellow' fontSize={12} textType="bold" text="Signup" onPress={handleLoginUser}/>
-          </View>
+          <CustomButton  buttonWidth='60%'  size={14} color='coral' fontSize={14} textType="regular" text="Search a Coffee Provider" onPress={handleUserLogin}/>
+          </View> 
+          <Divider style={styles.secondDivider}/>
           <CustomText type="light" style={styles.forthText}>
-          If you are a Coffee Provider, you can Login or Signup here
+          Login or Signup
           </CustomText>
           <View style={styles.buttonContainer}>
-          <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='pink' fontSize={12} textType="bold" text="Login" onPress={handleLoginUser}/>
-          <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='cyan' fontSize={12} textType="bold" text="Signup" onPress={handleLoginUser}/>
+          <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='#66ff33' fontSize={12} textType="bold" text="Login" onPress={handleUserLogin}/>
+          <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='cyan' fontSize={12} textType="bold" text="Signup" onPress={handleUserSignup}/>
           </View>
           <Divider style={styles.secondDivider}/>
           <CustomTextAnimated animation="pulse" type="extra-bold-italic" style={styles.textAnimatedSecond} >
@@ -76,17 +99,17 @@ const HomeAuth: React.FC<Props> = () => {
                   forawrad it to one of our 
                   verfied coffee provider!
           </CustomText>
-          <CustomButton  buttonWidth='50%' name="ios-cafe" size={20} color='coral' fontSize={20} animation="flash" textType="bold" text="Donate" onPress={handleLoginUser}/>
+          <CustomButton  buttonWidth='50%' name="ios-cafe" size={20} color='coral' fontSize={20} animation="flash" textType="bold" text="Donate" onPress={handleUserLogin}/>
       
           <Divider style={styles.secondDivider} /> 
           <CustomText type="light" style={styles.forthText}>
                 How does this app work?
           </CustomText> 
-          <CustomButton  buttonWidth='50%' name="ios-cog" size={20} color='white' fontSize={20} textType="bold" text="App Info" onPress={handleLoginUser}/> 
+          <CustomButton  buttonWidth='50%' name="ios-cog" size={20} color='white' fontSize={20} textType="bold" text="App Info" onPress={appInfo}/> 
         </View>
     
   );
 };
 
 
-export default HomeAuth;
+export default HomeNonAuth;

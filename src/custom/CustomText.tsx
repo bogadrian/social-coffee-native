@@ -40,7 +40,7 @@ const CustomText: React.FC<Props> = props => {
   };
   const font = setFontType(props.type ? props.type : 'normal');
   const style = [{ fontFamily: font, color: 'white' }, props.style || {}];
-  return <Text style={style} >{props.children}</Text>;
+  return <Text style={style}>{props.children}</Text>;
 };
 
 export default CustomText;

@@ -7,7 +7,12 @@ import Color from '../../constants/Color'
 
 import HomeScreen from '../../screens/HomeScreen/HomeScreen';
 import InfoScreen from '../../screens/InfoScreen/InfoScreen';
+
 import AuthScreen from '../../screens/AuthScreen/AuthScreen';
+import SignupScreen from '../../screens/AccountScreen/SignupScreen';
+import SignupUser from '../../screens/AccountScreen/components/SignupUser';
+import SignupProvider from '../../screens/AccountScreen/components/SignupProvider';
+
 import AccountScreen from '../../screens/AccountScreen/AccountScreen';
 import MyComunitiesScreen from '../../screens/MyComunities/MyComunitiesScreen';
 
@@ -33,7 +38,7 @@ export const InfoStack: React.FC = () => {
   return (
     <InfoStackNavigator.Navigator>
       <HomeStackNavigator.Screen 
-      name="Info" 
+      name="InfoScreen" 
       component={InfoScreen} 
       options={{ 
         headerShown: false, 
@@ -51,6 +56,7 @@ export const AuthStack: React.FC = () => {
       name="Auth" 
       component={AuthScreen}  
       />
+      
     </AuthStackNavigator.Navigator>
   );
 };
@@ -59,10 +65,22 @@ const AccountStackNavigator = createStackNavigator();
 
 export const AccountStack: React.FC = () => {
   return (
-    <AccountStackNavigator.Navigator>
+    <AccountStackNavigator.Navigator initialRouteName="AccountScreen">
       <HomeStackNavigator.Screen 
-      name="Acoount" 
+      name="Account" 
       component={AccountScreen}  
+      />
+      <HomeStackNavigator.Screen 
+      name="Signup" 
+      component={SignupScreen}  
+      />
+      <HomeStackNavigator.Screen 
+      name="SignupUser" 
+      component={SignupUser}  
+      />
+      <HomeStackNavigator.Screen 
+      name="SignupProvider" 
+      component={SignupProvider}  
       />
     </AccountStackNavigator.Navigator>
   );

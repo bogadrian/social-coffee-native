@@ -6,6 +6,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "jsx": "react",
+    "typeRoots": ["./src/@types", "./node_modules/@types"],
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "experimentalDecorators": true,

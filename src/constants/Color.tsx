@@ -1,7 +1,7 @@
  const Color = {
     primary: 'white',
-    secondary: '#BA7967',
-    tertiary: '#F5F8FA',
+    secondary: '#FAA406',
+    tertiary: '#66ff33',
     backGroundPrimary: '#2A335A',
     backGroundSecondary: '#AAB8C2',
 }

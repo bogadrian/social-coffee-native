@@ -16,7 +16,7 @@ const playSound = async () => {
      shouldPlay: false,
    }
    
-    await sound.loadAsync(require('../../assets/sounds/click3.mp3'), status, false) 
+    await sound.loadAsync(require('../assets/sounds/click3.mp3'), status, false) 
    
    return sound.playAsync()
    } 

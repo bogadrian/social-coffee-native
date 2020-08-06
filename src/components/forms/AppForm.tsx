@@ -5,7 +5,8 @@ interface Props {
   initialValues: any,
   onSubmit: (value: any) => void,
   validationSchema: {},
-  children: any
+  children: any,
+  oteherProps?: any
 }
 
 const AppForm: React.FC<Props> = ({
@@ -14,6 +15,7 @@ const AppForm: React.FC<Props> = ({
   validationSchema,
   children
 }) => {
+  console.log(onSubmit)
   return (
     <Formik
       initialValues={initialValues}

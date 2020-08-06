@@ -21,6 +21,7 @@ interface Props {
 const SubmitButton: React.FC<Props> = ({ buttonWidth, style, name, size, color, fontSize, textType, text, onPress }) => {
   const { handleSubmit } = useFormikContext();
 
+
   return (
     <React.Fragment>
       <CustomButton
