@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Keyboard } from 'react-native'
-import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps"
-const screen = Dimensions.get("window");
+import { View,  StyleSheet, Dimensions, TouchableWithoutFeedback, Keyboard } from 'react-native'
+
 import * as Yup from "yup";
 
 import Color from '../../../constants/Color';
@@ -11,6 +10,7 @@ import SubmitButton from '../../../components/forms/SubmitButton'
 
 import CustomLayout from '../../../custom/CustomLayout';
 import CustomText from '../../../custom/CustomText';
+import CustomDragMarker from '../../../custom/CustomDragMarker'
 
 interface Props {}
 
@@ -20,9 +20,7 @@ const validationSchema = Yup.object().shape({
 
 const Localization: React.FC<Props> = () => {
   
-  const positionSet = (e) => {
-    console.log(e.nativeEvent.coordinate)
-  }
+  
 return  (
        
          <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
@@ -52,32 +50,9 @@ return  (
          <SubmitButton buttonWidth='40%' style={styles.button}  size={15} color={Color.secondary} fontSize={14} animation="fadeIn" textType="bold" text="Find on Maps" />
          </AppForm>
          </View>
-                <MapView
-             provider={PROVIDER_GOOGLE}
-              style={styles.map}
-              region={{
-                latitude: 45.2144585,
-                longitude: 9.5113977,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421
-              }}
-              zoomEnabled={false}
-              scrollEnabled={false}
-            >
-              <Marker
-              draggable= {true}
-             onDragEnd={positionSet}
-             
-                coordinate={{
-                  latitude: 45.2144585,
-                  longitude: 9.5113977,
-                }}
-              >
-              <Callout>
-                <Text>Something cool</Text>
-              </Callout>
-              </Marker>
-            </MapView>
+         
+                <CustomDragMarker />
+                
             <CustomText type="bold" style={styles.textEnd}>Is this place correct? </CustomText>
             </View>
         </CustomLayout>
@@ -86,8 +61,13 @@ return  (
 }
 
 const styles = StyleSheet.create({
+  customLayout: {
+    flexGrow: 1,
+    width: '100%'
+  },
   container: {
     flexGrow: 1,
+    width: '100%',
     padding: 10,
     marginTop: 30,
     marginBottom: 50,
@@ -99,43 +79,38 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 20
   },
-form: {
- 
-width: '90%',
-  alignItems: 'center',
-  justifyContent: 'center'
-},
-    map: {
-        width: screen.width *0.94,
-        height: Math.round(screen.height * 0.60),
-        alignSelf: 'center',
-      },
-      title: {
-        alignItems: "center",
-      textAlign: "center",
-      fontSize:20,
-      marginBottom: 5
-      }, 
-      subtitle: {
-        textAlign: "center",
-        fontSize: 18
-      },
-      subtitleContainer: {
-        width: '90%'
-      },
-      customLayout: {
-        flex: 1,
-      },
-      button: {
-        marginBottom: 20,  
-        alignSelf:"center"
-      },
-      textEnd: {
-        marginTop: 20,
-        marginBottom: 80,
-        fontSize: 20,
-        textAlign: "center",
-      }
+  form: {
+  
+  width: '90%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }, 
+  title: {
+    alignItems: "center",
+  textAlign: "center",
+  fontSize:20,
+  marginBottom: 5
+  }, 
+  subtitle: {
+    textAlign: "center",
+    fontSize: 18
+  },
+  subtitleContainer: {
+    width: '90%'
+  },
+  customLayout: {
+    flex: 1,
+  },
+  button: {
+    marginBottom: 20,  
+    alignSelf:"center"
+  },
+  textEnd: {
+    marginTop: 20,
+    marginBottom: 80,
+    fontSize: 20,
+    textAlign: "center",
+  }
 })
 
 export default Localization;
