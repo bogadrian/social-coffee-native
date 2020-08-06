@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Keyboard } from 'react-native'
-import MapView, { Marker } from "react-native-maps"
+import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps"
 const screen = Dimensions.get("window");
 import * as Yup from "yup";
 
@@ -19,6 +19,10 @@ const validationSchema = Yup.object().shape({
 });
 
 const Localization: React.FC<Props> = () => {
+  
+  const positionSet = (e) => {
+    console.log(e.nativeEvent.coordinate)
+  }
 return  (
        
          <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
@@ -49,6 +53,7 @@ return  (
          </AppForm>
          </View>
                 <MapView
+             provider={PROVIDER_GOOGLE}
               style={styles.map}
               region={{
                 latitude: 45.2144585,
@@ -60,11 +65,18 @@ return  (
               scrollEnabled={false}
             >
               <Marker
+              draggable= {true}
+             onDragEnd={positionSet}
+             
                 coordinate={{
                   latitude: 45.2144585,
                   longitude: 9.5113977,
                 }}
-              />
+              >
+              <Callout>
+                <Text>Something cool</Text>
+              </Callout>
+              </Marker>
             </MapView>
             <CustomText type="bold" style={styles.textEnd}>Is this place correct? </CustomText>
             </View>
