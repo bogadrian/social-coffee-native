@@ -5,11 +5,14 @@ import { useNavigation } from '@react-navigation/native';
 
 import Color from '../../../constants/Color';
 
-import CustomText from "../../../custom/CustomText";
 import { AppForm, AppFormField} from "../../../components/forms";
+//import FormImagePicker from '../../../components/ImageList/FormImagePicker'
+
+
 import SubmitButton from '../../../components/forms/SubmitButton'
 import CustomButton from '../../../custom/CustomButton'
 import CustomLayout from '../../../custom/CustomLayout'
+import CustomText from "../../../custom/CustomText";
 
 interface Props {}
 
@@ -19,7 +22,8 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required().min(4).label("Password"),
   confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').label('Confirm Password'),
   address: Yup.string().required().label('Activity Address'),
-  vat: Yup.string().required().label('Activity Vat Number')
+  vat: Yup.string().required().label('Activity Vat Number'),
+  //images: Yup.array().min(1, "Pleaseselect at least 1 image")
 });
 
 const SignupProvider: React.FC<Props> = (props) => { 
@@ -34,10 +38,19 @@ const SignupProvider: React.FC<Props> = (props) => {
        </CustomText>
     <CustomButton  buttonWidth='70%' style={styles.button1}  size={15} color='white' fontSize={12} animation="pulse" textType="bold" text="Switch To Signup User" onPress={() => navigation.navigate('SignupUser')}/>
       <AppForm
-        initialValues={{ name: "", email: "", password: "", confirmPassword:"", address: "", vat: ""}}
+        initialValues={{ 
+          name: "", 
+          email: "", 
+          password: "", 
+          confirmPassword:"", 
+          address: "", 
+          vat: "" 
+         // images: []
+        }}
         onSubmit={(values) => console.log(values)}
         validationSchema={validationSchema}
       >
+      
         <AppFormField
           autoCapitalize="none"
           autoCorrect={false}

@@ -45,12 +45,12 @@ const styles = StyleSheet.create({
   container: {  
     backgroundColor: 'white',
     flex: 1,  
-    height: '100%',
-    marginTop: 0
+    height: height * 0.9,
+  
   },
   child: {
     flex: 1,
-    height: '100%',
+    height: height * 0.96,
     width,
     justifyContent: 'center', 
     alignItems: 'center'

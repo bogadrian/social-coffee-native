@@ -1,7 +1,9 @@
 import React from 'react';
-import { View,  StyleSheet, Dimensions, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { View,  StyleSheet, Dimensions, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
 
 import * as Yup from "yup";
+
+export const { width, height } = Dimensions.get('window');
 
 import Color from '../../../constants/Color';
 
@@ -23,9 +25,11 @@ const Localization: React.FC<Props> = () => {
   
 return  (
        
-         <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
-          <CustomLayout style={styles.customLayout}>
-          <View style={styles.container}>
+         <View style={styles.container}>
+          <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
+            <ScrollView>
+          <CustomLayout>
+    
             <CustomText type="bold" style={styles.title}>Let's find where are you located!</CustomText>
             <View style={styles.subtitleContainer}>
             <CustomText type="thin-italic" style={styles.subtitle}>Pleae write a city, a street or any address you want and may be found on Google Maps!</CustomText></View>
@@ -50,38 +54,26 @@ return  (
          <SubmitButton buttonWidth='40%' style={styles.button}  size={15} color={Color.secondary} fontSize={14} animation="fadeIn" textType="bold" text="Find on Maps" />
          </AppForm>
          </View>
-         
+             <View style={{position: 'relative'}}>
                 <CustomDragMarker />
+              </View>
                 
-            <CustomText type="bold" style={styles.textEnd}>Is this place correct? </CustomText>
-            </View>
-        </CustomLayout>
+            <CustomText type="regular" style={styles.textEnd}> Please press OK if it is the right address </CustomText>
+           
+        </CustomLayout></ScrollView>
           </TouchableWithoutFeedback>
+          </View>
+          
     )
 }
 
 const styles = StyleSheet.create({
-  customLayout: {
-    flexGrow: 1,
-    width: '100%'
-  },
   container: {
-    flexGrow: 1,
-    width: '100%',
-    padding: 10,
-    marginTop: 30,
-    marginBottom: 50,
-    justifyContent: 'center', 
-    alignItems: 'center',
-    shadowColor: 'black',
-    shadowOffset: {width: 0, height: 10},
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
-    elevation: 20
+    height: '100%',
+    width
   },
   form: {
-  
-  width: '90%',
+  width: '100%',
     alignItems: 'center',
     justifyContent: 'center'
   }, 
@@ -89,7 +81,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   textAlign: "center",
   fontSize:20,
+  marginTop: 10,
   marginBottom: 5
+  
   }, 
   subtitle: {
     textAlign: "center",
@@ -98,9 +92,6 @@ const styles = StyleSheet.create({
   subtitleContainer: {
     width: '90%'
   },
-  customLayout: {
-    flex: 1,
-  },
   button: {
     marginBottom: 20,  
     alignSelf:"center"
@@ -108,7 +99,7 @@ const styles = StyleSheet.create({
   textEnd: {
     marginTop: 20,
     marginBottom: 80,
-    fontSize: 20,
+    fontSize: 14,
     textAlign: "center",
   }
 })

@@ -27,6 +27,8 @@
     "babel-preset-react-native": "5.0.2",
     "expo": "^38.0.0",
     "expo-av": "~8.2.1",
+    "expo-cli": "^3.23.3",
+    "expo-location": "~8.2.1",
     "expo-status-bar": "^1.0.0",
     "formik": "^2.1.5",
     "jest-transform-stub": "^2.0.0",
