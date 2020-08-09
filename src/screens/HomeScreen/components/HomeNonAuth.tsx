@@ -14,31 +14,6 @@ import Divider from '../../../custom/Divider';
 
 interface Props {}
 
-
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center', 
-    marginTop: 20
-  }, 
-  logo: {width: 100, height: 100},
-  text: {
-    color: 'white', 
-    fontSize: 20, 
-    marginTop: 20,
-  }, 
-  subtitle: {fontSize: 18, marginTop: 10, color: 'white'},
-  thirdText: {fontSize: 16, marginTop: 10, margin: 20},
-  forthText: {fontSize: 20, marginTop: 10, margin: 10, textAlign: 'center'}, buttonContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  secondDivider: {marginTop: 20},
-  textAnimatedSecond: {fontSize: 20, color: 'coral'}
-});
-
 const HomeNonAuth: React.FC<{Props, HandleUser}> = () => {
   const navigation = useNavigation();
 
@@ -111,5 +86,27 @@ const HomeNonAuth: React.FC<{Props, HandleUser}> = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center', 
+    marginTop: 20
+  }, 
+  logo: {width: 100, height: 100},
+  text: {
+    color: 'white', 
+    fontSize: 20, 
+    marginTop: 20,
+  }, 
+  subtitle: {fontSize: 18, marginTop: 10, color: 'white'},
+  thirdText: {fontSize: 16, marginTop: 10, margin: 20},
+  forthText: {fontSize: 20, marginTop: 10, margin: 10, textAlign: 'center'}, buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  secondDivider: {marginTop: 20},
+  textAnimatedSecond: {fontSize: 20, color: 'coral'}
+});
 
 export default HomeNonAuth;

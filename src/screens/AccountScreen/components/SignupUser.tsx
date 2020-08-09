@@ -24,8 +24,8 @@ const SignupUser: React.FC<Props> = (props) => {
   const navigation = useNavigation();
   
   return (
-  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-    <ScrollView>
+  <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
+ 
     <CustomLayout >
     <View style={styles.container}>
         <CustomText type="extra-bold-italic" style={styles.text} >
@@ -77,7 +77,7 @@ const SignupUser: React.FC<Props> = (props) => {
          </AppForm>
          </View>
     </CustomLayout>
-    </ScrollView>
+ 
     </TouchableWithoutFeedback>
   );
 }

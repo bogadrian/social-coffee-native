@@ -12,7 +12,7 @@ interface Props {
 }
 
 const styles = StyleSheet.create({
-  layout: { flex: 1, justifyContent: 'center', alignItems: 'center' }
+  layout: { flex: 1, justifyContent: 'center', alignItems: 'center', height: 1000 }
 });
 
 const AccountScreen: React.FC<Props> = () => {

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {  Text, View, StyleSheet, Dimensions, Image, TouchableOpacity, ActivityIndicator, Alert } from 'react-native'
+import {  Text, View, StyleSheet, Dimensions, Image, TouchableOpacity, ActivityIndicator} from 'react-native'
 import MapView, {  PROVIDER_GOOGLE } from "react-native-maps"
 import * as Location from 'expo-location'
 
@@ -10,6 +10,7 @@ import marker from '../assets/markers/marker4.png'
 import Color from '../constants/Color'
 
 import CustomTextAnimated from './CustomTextAnimated'
+import CustomText from './CustomText'
 
 interface Props {}
 
@@ -26,7 +27,7 @@ const CustomDragMarker: React.FC<Props> = props => {
   const [loading, setLoading] = useState<boolean>(true)
   const [location, setLocation] = useState<{latitude: number, longitude: number} >(null);
   const [address, setAddress] = useState<object>(null);
-  const [errorMsg, setErrorMsg] = useState<string>(null);
+  const [update, setUpdate] = useState<boolean>(false)
   const [coordsOnMarkerChange, setCoordsOnMarkerChange] = useState<object>(null)
   
   let latitude, longitude;
@@ -46,7 +47,7 @@ const CustomDragMarker: React.FC<Props> = props => {
         })
         
     useEffect(() => {
-      let update = true
+      setUpdate(true)
       if (update) {
          (async () => {
                setLoading(true)
@@ -54,11 +55,11 @@ const CustomDragMarker: React.FC<Props> = props => {
               let { status } = await Location.requestPermissionsAsync();
 
                 if (status !== 'granted') {
-                  alert("You can't register on this app; we are sorry ... ")
-                  
+                  alert("You can't register on this app; we are sorry ... ")   
                 }
-                let location = await Location.getCurrentPositionAsync(); 
-
+                
+                let location = await Location.getLastKnownPositionAsync(); 
+                
                 const {latitude, longitude} = await location.coords
                 let address = await Location.reverseGeocodeAsync({latitude, longitude});
 
@@ -76,8 +77,8 @@ const CustomDragMarker: React.FC<Props> = props => {
            
       })();
       }
-        return function cleanup() {
-          update = false
+        return () => {
+          setUpdate(false)
         }
      
     }, []);
@@ -93,17 +94,21 @@ const CustomDragMarker: React.FC<Props> = props => {
     console.log(coordsOnMarkerChange)
       // call redux action with lat and long from coordsOnMarkerChange
   }
-
+console.log(loading)
   if(loading) {
-    return <View style={styles.activity}>
-            <ActivityIndicator size="large" />
+    return (<View style={styles.activity}>
+            <ActivityIndicator size="large" color="white"/>
             <CustomTextAnimated animation="pulse" type="extra-bold-italic" style={styles.text} >
         Waiting for the Maps ...
         </CustomTextAnimated>
-          </View>
+            <CustomText  type="extra-bold-italic" style={styles.text1} >
+       May take a few Seconds
+        </CustomText>
+          </View>)
   }
-      return (   
-     <View style={{position: 'relative',}}>
+      return (  
+        
+     <View style={{position: 'relative',}}>  
        <MapView
         provider={PROVIDER_GOOGLE}
          style={styles.map}
@@ -120,6 +125,7 @@ const CustomDragMarker: React.FC<Props> = props => {
       
         </View>
     </View>
+ 
        )
   }
   
@@ -129,6 +135,7 @@ const styles = StyleSheet.create({
   activity: {
     width: screen.width *0.94,
     height: Math.round(screen.height * 0.40),
+    color: 'white',
     alignSelf: 'center',
     position: 'relative',
     marginTop: 40
@@ -138,6 +145,7 @@ const styles = StyleSheet.create({
         height: Math.round(screen.height * 0.60),
         alignSelf: 'center',
         position: 'relative',
+       
     
       }, 
        markerFixed: {
@@ -175,6 +183,11 @@ const styles = StyleSheet.create({
       padding: 4,
       textAlign: "center",
       marginTop: 30
+    },
+    text1: {
+      fontSize: 14, 
+      color: 'white',
+      textAlign: "center"
     }
 })
 export default CustomDragMarker

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View,  StyleSheet, Dimensions, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
+import {MaterialCommunityIcons} from '@expo/vector-icons'
 
 import * as Yup from "yup";
 
@@ -25,10 +26,10 @@ const Localization: React.FC<Props> = () => {
   
 return  (
        
-         <View style={styles.container}>
-          <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
-            <ScrollView>
-          <CustomLayout>
+   <ScrollView contentContainerStyle={{ flexGrow: 1, height: '140%' }}>
+          <TouchableWithoutFeedback   onPress={() => Keyboard.dismiss()}>
+      
+          <CustomLayout >
     
             <CustomText type="bold" style={styles.title}>Let's find where are you located!</CustomText>
             <View style={styles.subtitleContainer}>
@@ -59,29 +60,31 @@ return  (
               </View>
                 
             <CustomText type="regular" style={styles.textEnd}> Please press OK if it is the right address </CustomText>
-           
-        </CustomLayout></ScrollView>
+            <CustomText type="bold" style={styles.swipe}> Swipe Left </CustomText>
+           <View style={{alignItems: 'center', marginBottom: 120}}>
+           <MaterialCommunityIcons name="gesture-swipe" size={60} color="white" />
+           </View>
+        </CustomLayout>
           </TouchableWithoutFeedback>
-          </View>
-          
+        </ScrollView>
+         
     )
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    width
+    width,
+    
   },
   form: {
-  width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center'
+  width: '90%',
+  alignSelf: 'center',
   }, 
   title: {
     alignItems: "center",
   textAlign: "center",
   fontSize:20,
-  marginTop: 10,
+  marginTop: 20,
   marginBottom: 5
   
   }, 
@@ -97,10 +100,15 @@ const styles = StyleSheet.create({
     alignSelf:"center"
   },
   textEnd: {
-    marginTop: 20,
-    marginBottom: 80,
+    marginTop: 40,
+    marginBottom: 10,
     fontSize: 14,
     textAlign: "center",
+    color: Color.secondary
+  },
+  swipe: {
+    marginBottom: 5,
+    textAlign: "center"
   }
 })
 

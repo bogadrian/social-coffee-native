@@ -3,37 +3,35 @@ import { Text, Dimensions, Image, StyleSheet, View, ScrollView, } from 'react-na
 
 import SwiperFlatList from 'react-native-swiper-flatlist';
 
+import Color from '../../../constants/Color'
+
 interface Props {}
 
 import Localization from './Localization'
 import FormInfo from './FormInfo'
-import Images from './Images'
-
 
 const SignupProvider: React.FC<Props> = () => {
  
     return (
+ 
      
-      <View style={styles.container}>
-        <ScrollView>
+       
         <SwiperFlatList
           showPagination
           paginationActiveColor="red"
           paginationDefaultColor="white"
+          style={styles.list}
         >
-          <View style={[styles.child, { backgroundColor: 'white' }]}>
+          <View style={styles.child}>
             <Localization />  
           </View>
-          <View style={[styles.child, { backgroundColor: 'white' }]}>
+          <View style={styles.child }>
             <FormInfo />  
           </View>
-          <View style={[styles.child, { backgroundColor: 'white' }]}>
-            <Images />  
-          </View>
         </SwiperFlatList>
-        </ScrollView>
-      </View>
-     
+      
+    
+  
     );
   }
 
@@ -42,18 +40,17 @@ export const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
 
-  container: {  
-    backgroundColor: 'white',
-    flex: 1,  
-    height: height * 0.9,
+  
+  list: {
   
   },
   child: {
-    flex: 1,
-    height: height * 0.96,
+    flexGrow: 1,
+    height: height * 0.94,
     width,
     justifyContent: 'center', 
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: Color.backGroundPrimary
   },
   text: {
     fontSize: width * 0.5,

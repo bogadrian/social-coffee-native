@@ -4,8 +4,8 @@ import ImageInput from "./ImageInput";
 
 interface Props {
   imageUris: [], 
-  onRemoveImage: (uri: string) => void, 
-  onAddImage: (uri : string) => void
+  onRemoveImage: any, 
+  onAddImage: any
 }
 
 const ImageInputList: React.FC<Props> = ({ imageUris = [], onRemoveImage, onAddImage }) => {
@@ -19,11 +19,11 @@ const ImageInputList: React.FC<Props> = ({ imageUris = [], onRemoveImage, onAddI
         onContentSizeChange={() => scrollView.current.scrollToEnd()}
       >
         <View style={styles.container}>
-          {imageUris.map((uri) => (
+          {imageUris.slice(0, 10).map((uri) => (
             <View key={uri} style={styles.image}>
               <ImageInput
                 imageUri={uri}
-                onChangeImage={(uri) => onRemoveImage(uri)}
+                onChangeImage={() => onRemoveImage(uri)}
               />
             </View>
           ))}

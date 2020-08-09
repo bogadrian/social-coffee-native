@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {View, StyleSheet} from 'react-native'
+import {View, StyleSheet, ScrollView} from 'react-native'
 
 interface Props { 
   style?: any,
@@ -9,14 +9,15 @@ interface Props {
 
 const styles = StyleSheet.create({
     layout: {
-      flex: 1,
-      backgroundColor: '#2A335A'
+      backgroundColor: '#2A335A',
     },
   });
   
 const CustomLayout: React.FC<Props>= (props) => {
     return (
-      <View style={[styles.layout, props.style] }>{props.children}</View>   
+      <ScrollView>
+      <View style={[styles.layout, props.style] }>{props.children}</View>
+       </ScrollView>  
     )
 }
 

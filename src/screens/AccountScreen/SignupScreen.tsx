@@ -1,7 +1,8 @@
 import React from 'react';
 
-import {StyleSheet, View} from 'react-native'
+import {StyleSheet, Dimensions} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
+export const { width, height } = Dimensions.get('window');
 
 import Color from '../../constants/Color'
 
@@ -12,27 +13,7 @@ import Divider from "../../custom/Divider";
 
 interface Props {}
 
-const styles = StyleSheet.create({
-    text1: {
-        fontSize: 20,
-        marginBottom: 10,
-    },
-    text2: {
-        fontSize: 14,
-        marginBottom: 10
-    },
-    container: {
-        justifyContent: 'center', 
-        alignItems: 'center', 
-    },
-    divider: {
-        marginBottom: 20, 
-        marginTop: 20
-    },
-    lastButton: {
-        marginTop: 80
-    }
-}) 
+
 
 const SignupScreen: React.FC<Props> = () => {
     const navigation = useNavigation();
@@ -58,5 +39,27 @@ const SignupScreen: React.FC<Props> = () => {
    </CustomLayout>
    )
 }
-
+const styles = StyleSheet.create({
+    text1: {
+        fontSize: 20,
+        marginBottom: 10,
+    },
+    text2: {
+        fontSize: 14,
+        marginBottom: 10
+    },
+    container: {
+        flexGrow: 1,
+        height,
+        justifyContent: 'center', 
+        alignItems: 'center', 
+    },
+    divider: {
+        marginBottom: 20, 
+        marginTop: 20
+    },
+    lastButton: {
+        marginTop: 80
+    }
+}) 
 export default SignupScreen
