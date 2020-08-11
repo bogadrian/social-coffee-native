@@ -10,7 +10,7 @@
     "cypress": "cypress open"
   },
   "dependencies": {
-    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-env": "^7.11.0",
     "@babel/runtime": "^7.10.5",
     "@expo/vector-icons": "^10.0.0",
     "@react-native-community/masked-view": "0.1.10",
@@ -23,7 +23,7 @@
     "@types/mocha": "^8.0.0",
     "@types/node": "^14.0.26",
     "@types/yup": "^0.29.3",
-    "babel-jest": "^26.1.0",
+    "babel-jest": "^26.3.0",
     "babel-preset-react-native": "5.0.2",
     "expo": "^38.0.0",
     "expo-av": "~8.2.1",
@@ -60,14 +60,18 @@
     "babel-preset-expo": "^8.2.3",
     "cypress": "^4.11.0",
     "jest": "^26.1.0",
-    "ts-jest": "^26.1.4",
+    "metro-react-native-babel-preset": "^0.62.0",
+    "ts-jest": "^26.2.0",
     "typescript": "~3.9.5"
   },
   "private": true,
   "jest": {
-    "preset": "react-native",
+    "preset": "jest-expo",
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
-    ]
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base)"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    }
   }
 }

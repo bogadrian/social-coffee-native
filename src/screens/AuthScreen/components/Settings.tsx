@@ -2,13 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, Dimensions } from 'react-native';
 export const { width, height } = Dimensions.get('window');
 
-import CustomLayout from '../../custom/CustomLayout'
-
-import NotLogin from './components/NotLogin'
-import Settings from './components/Settings'
+import CustomLayout from '../../../custom/CustomLayout'
 
 interface Props {
- 
+  
 }
 
 const styles = StyleSheet.create({
@@ -22,10 +19,9 @@ const styles = StyleSheet.create({
 });
 
 const AuthScreen: React.FC<Props> = () => {
-  const auth = false
   return (
     <CustomLayout style={styles.layout}>
-      {auth ? <Settings /> : <NotLogin />}
+      <Text style={styles.text}>The Settings Here</Text>
     </CustomLayout>
   );
 };

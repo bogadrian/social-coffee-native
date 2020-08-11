@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Ionicons}  from '@expo/vector-icons';
+import {MaterialCommunityIcons}  from '@expo/vector-icons';
 
 interface Props {
     name: string,
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const CustomIcon: React.FC<Props> = ({name, size, color}) => {
-    return   <Ionicons name={name} color={color} size={size}/>
+    return   <MaterialCommunityIcons name={name} color={color} size={size}/>
 }
 
 export default CustomIcon

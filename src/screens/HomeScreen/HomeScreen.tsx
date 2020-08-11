@@ -15,7 +15,7 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
   return (   
     <CustomLayout>
       <ScrollView>
-      {auth &&<HomeNonAuth />}
+      {auth && <HomeNonAuth />}
     </ScrollView>  
     </CustomLayout>
   );

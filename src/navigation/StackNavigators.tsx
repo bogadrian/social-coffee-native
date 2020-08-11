@@ -25,9 +25,9 @@ function getHeaderTitle(route) {
     case 'Info':
       return 'Info';
     case 'Account':
-      return 'My Account';
+      return 'Account';
     case 'My Comunities':
-      return 'My Comuities'
+      return 'Comunity'
   }
 }
 

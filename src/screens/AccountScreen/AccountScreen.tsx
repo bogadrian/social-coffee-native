@@ -2,13 +2,12 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Login from './components/Login'
-import Signup from './SignupScreen'
+import MyComunitiesScreen from '../MyComunities/MyComunitiesScreen'
 
 
 import CustomLayout from '../../custom/CustomLayout'
 
 interface Props {
-  type: string;
 }
 
 const styles = StyleSheet.create({
@@ -16,10 +15,12 @@ const styles = StyleSheet.create({
 });
 
 const AccountScreen: React.FC<Props> = () => {
-  const auth = true
+  const auth = false
   return (
     <CustomLayout style={styles.layout}>
-      <Login />
+     
+  {auth ? <MyComunitiesScreen/> :<Login /> }
+    
     </CustomLayout>
   );
 };

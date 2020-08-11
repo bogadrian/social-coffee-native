@@ -33,9 +33,9 @@ const CompUI: React.FC<Props> = () => {
         Hello World
         </CustomTextAnimated>
         <View style={styles.buttonContainers}>
-            <CustomButton  buttonWidth='30%' name="ios-person-add" size={15} color='white' fontSize={14}animation="fadeIn" textType="bold" text="Press" onPress={() => console.log('pressed')}/>
-            <CustomButton buttonWidth='30%' name="ios-person-add" size={15} color='red' fontSize={14} animation="pulse" textType="bold" text="Stop" onPress={() => console.log('pressed')}/>
-            <CustomButton buttonWidth='30%' name="ios-person-add" size={15} color='yellow' fontSize={14} animation="tada" textType="bold" text="Go Now" onPress={() => console.log('pressed')}/>
+            <CustomButton  buttonWidth='30%' name="account-heart-outline" size={15} color='white' fontSize={14}animation="fadeIn" textType="bold" text="Press" onPress={() => console.log('pressed')}/>
+            <CustomButton buttonWidth='30%' name="account-heart-outline" size={15} color='red' fontSize={14} animation="pulse" textType="bold" text="Stop" onPress={() => console.log('pressed')}/>
+            <CustomButton buttonWidth='30%' name="account-heart-outline" size={15} color='yellow' fontSize={14} animation="tada" textType="bold" text="Go Now" onPress={() => console.log('pressed')}/>
         </View> 
         <CustomCard  style={styles.text} text="some title" cardStyle={styles.card} image={require('../assets/Coffee.jpg')}/>
     </React.Fragment>

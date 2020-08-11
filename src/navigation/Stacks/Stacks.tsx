@@ -36,12 +36,13 @@ const InfoStackNavigator = createStackNavigator();
 
 export const InfoStack: React.FC = () => {
   return (
-    <InfoStackNavigator.Navigator>
+    <InfoStackNavigator.Navigator headerMode="none" >
       <HomeStackNavigator.Screen 
       name="InfoScreen" 
       component={InfoScreen} 
       options={{ 
         headerShown: false, 
+        header: null
         }}/>
     </InfoStackNavigator.Navigator>
   );
@@ -92,7 +93,7 @@ export const MyComunitiesStack: React.FC = () => {
   return (
     <MyComunitiesStackNavigator.Navigator>
       <HomeStackNavigator.Screen 
-      name="Acoount" 
+      name="Comunities" 
       component={MyComunitiesScreen}  
       />
     </MyComunitiesStackNavigator.Navigator>

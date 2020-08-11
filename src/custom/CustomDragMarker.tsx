@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {  Text, View, StyleSheet, Dimensions, Image, TouchableOpacity, ActivityIndicator} from 'react-native'
+import {  Text, View, StyleSheet, Dimensions, Image, TouchableOpacity, ActivityIndicator, Alert} from 'react-native'
 import MapView, {  PROVIDER_GOOGLE } from "react-native-maps"
 import * as Location from 'expo-location'
+
 
 const screen = Dimensions.get("window");
 
@@ -27,9 +28,7 @@ const CustomDragMarker: React.FC<Props> = props => {
   const [loading, setLoading] = useState<boolean>(true)
   const [location, setLocation] = useState<{latitude: number, longitude: number} >(null);
   const [address, setAddress] = useState<object>(null);
-  const [update, setUpdate] = useState<boolean>(false)
-  const [coordsOnMarkerChange, setCoordsOnMarkerChange] = useState<object>(null)
-  
+ 
   let latitude, longitude;
   if (location) {
     latitude = location.latitude
@@ -46,10 +45,10 @@ const CustomDragMarker: React.FC<Props> = props => {
            longitudeDelta
         })
         
-    useEffect(() => {
-      setUpdate(true)
-      if (update) {
-         (async () => {
+  useEffect(() => {
+     let update = true
+        
+         const fetchLoc = async () => {    
                setLoading(true)
           try {
               let { status } = await Location.requestPermissionsAsync();
@@ -58,43 +57,75 @@ const CustomDragMarker: React.FC<Props> = props => {
                   alert("You can't register on this app; we are sorry ... ")   
                 }
                 
-                let location = await Location.getLastKnownPositionAsync(); 
-                
+                let location = await Location.getCurrentPositionAsync({
+                  accuracy: Location.Accuracy.Highest
+                }); 
+             
                 const {latitude, longitude} = await location.coords
-                let address = await Location.reverseGeocodeAsync({latitude, longitude});
-
-                if (location) {
+               
+                if (location && update) {
                 setLocation({latitude, longitude});
-                setAddress(address[0])
                 setRegion({latitude, longitude, latitudeDelta, longitudeDelta});
-                setLoading(false)
-                
+                setLoading(false)   
               }
           }catch (err) {
             console.log(err)
-          }
-              
-           
-      })();
-      }
+          }     
+      };
+      fetchLoc()
+      
         return () => {
-          setUpdate(false)
-        }
-     
-    }, []);
+         update = false
+        }  
+  }, []);
 
-  const onRegionChange = e => {
+  const onRegionChange: (e: any) => void =  e => {
     setRegion(e)
-    const lat = e.latitude;
-    const log = e.longitude
-    setCoordsOnMarkerChange({lat, log})
+    const latitude = e.latitude;
+    const longitude = e.longitude
+    setLocation({latitude, longitude})
+    const findAddress = async () => {
+      let address = await Location.reverseGeocodeAsync({latitude, longitude});
+      setAddress(address)
+    }
+    findAddress()
   }
   
-     const okPressed = () => {
-    console.log(coordsOnMarkerChange)
-      // call redux action with lat and long from coordsOnMarkerChange
+  const addressFixed: (address: object, location: ({latitude: number, longitude: number})) => void = (address, location) => {
+    
+    const {country, city, street} = address[0]
+    const {latitude, longitude } = location
+
+   //save address and latitude, longitude to redux
   }
-console.log(loading)
+ 
+  const okPressed = async () => { 
+     let {country, city, street} = address[0]
+     if (country === null) country = 'No Country'
+     if (city === null) city = 'No City'
+     if (street === null) street = 'No Street'
+     
+      Alert.alert(
+        "Is this address right?",
+        "If the address you chose on the map is right, press ok, otherise return to the map and try again!",
+        [
+       
+          {
+            text: "Try Again",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => addressFixed(address, location) },
+          {text: 
+            `Country: ${country}, 
+             City: ${city} 
+             Street: ${street}`
+            }
+        ],
+        { cancelable: false }
+        )      // call redux action with lat and long from coordsOnMarkerChange
+  }
+
   if(loading) {
     return (<View style={styles.activity}>
             <ActivityIndicator size="large" color="white"/>
@@ -106,8 +137,7 @@ console.log(loading)
         </CustomText>
           </View>)
   }
-      return (  
-        
+      return (       
      <View style={{position: 'relative',}}>  
        <MapView
         provider={PROVIDER_GOOGLE}
@@ -125,7 +155,6 @@ console.log(loading)
       
         </View>
     </View>
- 
        )
   }
   
@@ -145,8 +174,6 @@ const styles = StyleSheet.create({
         height: Math.round(screen.height * 0.60),
         alignSelf: 'center',
         position: 'relative',
-       
-    
       }, 
        markerFixed: {
         left: '50%', 
@@ -190,4 +217,5 @@ const styles = StyleSheet.create({
       textAlign: "center"
     }
 })
+
 export default CustomDragMarker

@@ -14,7 +14,7 @@ import Divider from '../../../custom/Divider';
 
 interface Props {}
 
-const HomeNonAuth: React.FC<{Props, HandleUser}> = () => {
+const HomeNonAuth: React.FC<Props> = () => {
   const navigation = useNavigation();
 
    const handleUserLogin = () => {
@@ -25,7 +25,7 @@ const HomeNonAuth: React.FC<{Props, HandleUser}> = () => {
     
     const handleUserSignup = () => { 
       playSound()
-     navigation.navigate('Account', { screen: 'Signup'})
+     navigation.navigate('Account', {screen: 'Signup'})
     }
   
   
@@ -62,8 +62,8 @@ const HomeNonAuth: React.FC<{Props, HandleUser}> = () => {
           Login or Signup
           </CustomText>
           <View style={styles.buttonContainer}>
-          <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='#66ff33' fontSize={12} textType="bold" text="Login" onPress={handleUserLogin}/>
-          <CustomButton  buttonWidth='30%' name="ios-person-add" size={14} color='cyan' fontSize={12} textType="bold" text="Signup" onPress={handleUserSignup}/>
+          <CustomButton  buttonWidth='30%' name="account-heart-outline" size={18} color='#66ff33' fontSize={12} textType="bold" text="Login" onPress={handleUserLogin}/>
+          <CustomButton  buttonWidth='30%' name="account-heart-outline" size={18} color='cyan' fontSize={12} textType="bold" text="Signup" onPress={handleUserSignup}/>
           </View>
           <Divider style={styles.secondDivider}/>
           <CustomTextAnimated animation="pulse" type="extra-bold-italic" style={styles.textAnimatedSecond} >
@@ -74,13 +74,13 @@ const HomeNonAuth: React.FC<{Props, HandleUser}> = () => {
                   forawrad it to one of our 
                   verfied coffee provider!
           </CustomText>
-          <CustomButton  buttonWidth='50%' name="ios-cafe" size={20} color='coral' fontSize={20} animation="flash" textType="bold" text="Donate" onPress={handleUserLogin}/>
+          <CustomButton  buttonWidth='50%' name="coffee-outline" size={20} color='coral' fontSize={20} animation="flash" textType="bold" text="Donate" onPress={handleUserLogin}/>
       
           <Divider style={styles.secondDivider} /> 
           <CustomText type="light" style={styles.forthText}>
                 How does this app work?
           </CustomText> 
-          <CustomButton  buttonWidth='50%' name="ios-cog" size={20} color='white' fontSize={20} textType="bold" text="App Info" onPress={appInfo}/> 
+          <CustomButton  buttonWidth='50%' name="information-outline" size={28} color='white' fontSize={20} textType="bold" text="App Info" onPress={appInfo}/> 
         </View>
     
   );

@@ -15,7 +15,6 @@ const AppForm: React.FC<Props> = ({
   validationSchema,
   children
 }) => {
-  console.log(onSubmit)
   return (
     <Formik
       initialValues={initialValues}

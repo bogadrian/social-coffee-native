@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import CustomText from '../../custom/CustomText';
 
 interface Props {
-  type: string;
+  type?: string;
 }
 
 const styles = StyleSheet.create({

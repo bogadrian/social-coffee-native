@@ -1,11 +1,11 @@
+const { defaults } = require('jest-config');
 module.exports = {
   preset: 'react-native',
   cacheDirectory: '<rootDir>/dist/jest/cache',
   coverageDirectory: '<rootDir>/dist/jest/coverage',
-  moduleFileExtensions: ['ts', 'tsx', 'js'],
   modulePathIgnorePatterns: ['<rootDir>/cypress/'],
   testPathIgnorePatterns: [
-    '<rootDir>/node_modules',
+    '<rootDir>/node_modules/',
     '<rootDir>/dist',
     '<rootDir>/docs'
   ],
@@ -14,5 +14,6 @@ module.exports = {
     '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$':
       'jest-transform-stub',
     '\\.(css|less)$': 'identity-obj-proxy'
-  }
+  },
+  moduleFileExtensions: ['tsx', 'ts', 'js', ...defaults.moduleFileExtensions]
 };

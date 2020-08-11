@@ -113,7 +113,7 @@ const SignupProvider: React.FC<Props> = (props) => {
         placeholder="Activity VAT Number"
         textContentType="location"
       />
-         <SubmitButton buttonWidth='40%' style={styles.button2} name="ios-person-add" size={15} color={Color.tertiary} fontSize={14} animation="fadeIn" textType="bold" text="Signup" />
+         <SubmitButton buttonWidth='40%' style={styles.button2} name="account-heart-outline" size={15} color={Color.tertiary} fontSize={14} animation="fadeIn" textType="bold" text="Signup" />
          </AppForm>
          </View>
     </CustomLayout>
