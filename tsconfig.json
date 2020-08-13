@@ -5,20 +5,19 @@
     "target": "esnext",
     "module": "commonjs",
     "moduleResolution": "node",
-    "jsx": "react",
+    "jsx": "react-native",
     "typeRoots": ["./src/@types", "./node_modules/@types"],
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "experimentalDecorators": true,
     "sourceMap": true,
     "declaration": true,
-    "skipLibCheck": true
-  },
-  "include": ["./src", "./src/**/package.json", "babel.config.js"],
-  "exclude": [
-    "./**/*.spec.ts",
-    "./**/*.spec.tsx",
-    "./**/*.test.tsx",
-    "./**/*.test.ts"
-  ]
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "lib": ["es2015", "esnext.asynciterable"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  }
 }

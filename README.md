@@ -1,3 +1,3 @@
 My Social Coffee React Native App
 
-With TypeScript, Jest, React-Native-Testing-Library, Cypress.
+With TypeScript, React-Native-Testing-Library, Cypress.

@@ -22,8 +22,8 @@ function getHeaderTitle(route) {
       return 'Settings';
     case 'Home':
       return 'Home';
-    case 'Info':
-      return 'Info';
+    case 'AppInfo':
+      return 'App Info';
     case 'Account':
       return 'Account';
     case 'My Comunities':
@@ -110,7 +110,7 @@ const MyTabs = () => {
           <MaterialCommunityIcons name="account-heart-outline" color={color} size={26} />
         ),
       }} />
-    
+
     </Tab.Navigator>
   );
 }
@@ -139,7 +139,7 @@ export const MainStack: React.FC = props => {
       )}
       {!isInfoTrue && (
         <MainStackNavigator.Screen 
-        name="Info" 
+        name="AppInfo" 
         component={InfoStack} 
         options={{
           headerShown: false,

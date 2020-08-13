@@ -38,11 +38,10 @@ export const InfoStack: React.FC = () => {
   return (
     <InfoStackNavigator.Navigator headerMode="none" >
       <HomeStackNavigator.Screen 
-      name="InfoScreen" 
+      name="AppInfo" 
       component={InfoScreen} 
       options={{ 
         headerShown: false, 
-        header: null
         }}/>
     </InfoStackNavigator.Navigator>
   );

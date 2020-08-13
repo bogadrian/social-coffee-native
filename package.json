@@ -4,35 +4,23 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject",
-    "test": "jest",
-    "cypress": "cypress open"
+    "web": "expo start --web"
   },
   "dependencies": {
-    "@babel/preset-env": "^7.11.0",
-    "@babel/runtime": "^7.10.5",
     "@expo/vector-icons": "^10.0.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.7.2",
     "@react-navigation/material-bottom-tabs": "^5.2.15",
     "@react-navigation/native": "^5.7.1",
     "@react-navigation/stack": "^5.7.1",
-    "@testing-library/react-native": "^7.0.1",
-    "@types/jest": "^26.0.8",
-    "@types/mocha": "^8.0.0",
     "@types/node": "^14.0.26",
     "@types/yup": "^0.29.3",
-    "babel-jest": "^26.3.0",
-    "babel-preset-react-native": "5.0.2",
     "expo": "^38.0.0",
     "expo-av": "~8.2.1",
     "expo-cli": "^3.23.3",
     "expo-image-picker": "~8.3.0",
     "expo-location": "~8.2.1",
-    "expo-status-bar": "^1.0.0",
     "formik": "^2.1.5",
-    "jest-transform-stub": "^2.0.0",
     "react": "16.11.0",
     "react-dom": "16.11.0",
     "react-native": "0.62.2",
@@ -49,29 +37,15 @@
     "react-native-unimodules": "~0.10.1",
     "react-native-vector-icons": "^7.0.0",
     "react-native-web": "~0.11.7",
-    "react-test-renderer": "^16.13.1",
     "yup": "^0.29.2"
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",
-    "@types/react": "~16.9.41",
+    "@types/expo": "^33.0.1",
+    "@types/react": "^16.9.46",
     "@types/react-dom": "^16.9.8",
     "@types/react-native": "~0.62.13",
-    "babel-preset-expo": "^8.2.3",
-    "cypress": "^4.11.0",
-    "jest": "^26.1.0",
-    "metro-react-native-babel-preset": "^0.62.0",
-    "ts-jest": "^26.2.0",
-    "typescript": "~3.9.5"
+    "typescript": "^3.9.7"
   },
-  "private": true,
-  "jest": {
-    "preset": "jest-expo",
-    "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base)"
-    ],
-    "transform": {
-      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
-    }
-  }
+  "private": true
 }

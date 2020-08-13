@@ -12,6 +12,7 @@ import CustomButton from '../../../custom/CustomButton';
 import CustomText from '../../../custom/CustomText';
 import Divider from '../../../custom/Divider';
 
+
 interface Props {}
 
 const HomeNonAuth: React.FC<Props> = () => {
@@ -31,7 +32,8 @@ const HomeNonAuth: React.FC<Props> = () => {
   
   const appInfo = () => {
       playSound()
-     navigation.navigate('InfoScreen', {screen: 'InfoScreen'})
+      // must set isInfoTrue to false
+     navigation.navigate('AppInfo', {screen: 'InfoScreen'})
   }
   
   return (   

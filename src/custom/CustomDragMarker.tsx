@@ -15,9 +15,14 @@ import CustomText from './CustomText'
 
 interface Props {}
 
+interface ILocation { 
+latitude: number , 
+longitude: number , 
+}
+
 interface StateRegion {
-latitude: number | undefined, 
-longitude: number | undefined, 
+  latitude: number , 
+  longitude: number , 
 latitudeDelta: number, 
 longitudeDelta: number
 }
@@ -26,8 +31,9 @@ const longitudeDelta = 0.0421
 
 const CustomDragMarker: React.FC<Props> = props => {
   const [loading, setLoading] = useState<boolean>(true)
-  const [location, setLocation] = useState<{latitude: number, longitude: number} >(null);
-  const [address, setAddress] = useState<object>(null);
+  const [location, setLocation] = useState<ILocation>();
+ 
+  const [address, setAddress] = useState<any>(null);
  
   let latitude, longitude;
   if (location) {
@@ -38,7 +44,7 @@ const CustomDragMarker: React.FC<Props> = props => {
     longitude = 122.458202
   }
   
-  const [region, setRegion] = useState<StateRegion>({
+  const [region, setRegion] = useState<StateRegion >({
            latitude,
            longitude,
            latitudeDelta,
@@ -91,11 +97,11 @@ const CustomDragMarker: React.FC<Props> = props => {
     findAddress()
   }
   
-  const addressFixed: (address: object, location: ({latitude: number, longitude: number})) => void = (address, location) => {
-    
+  const addressFixed: (address: any, location?: {latitude: number, longitude: number}) => void = (address, location) => {
+     
     const {country, city, street} = address[0]
     const {latitude, longitude } = location
-
+   console.log(location)
    //save address and latitude, longitude to redux
   }
  
@@ -107,20 +113,18 @@ const CustomDragMarker: React.FC<Props> = props => {
      
       Alert.alert(
         "Is this address right?",
-        "If the address you chose on the map is right, press ok, otherise return to the map and try again!",
+        `If the address you chose on the map is right, press ok, otherise return to the map and try again! 
+        
+        Country: ${country}, 
+        City: ${city} 
+        Street: ${street}`,
         [
-       
+          { text: "OK", onPress: () => addressFixed(address, location) },
           {
             text: "Try Again",
             onPress: () => console.log("Cancel Pressed"),
             style: "cancel"
-          },
-          { text: "OK", onPress: () => addressFixed(address, location) },
-          {text: 
-            `Country: ${country}, 
-             City: ${city} 
-             Street: ${street}`
-            }
+          } 
         ],
         { cancelable: false }
         )      // call redux action with lat and long from coordsOnMarkerChange
