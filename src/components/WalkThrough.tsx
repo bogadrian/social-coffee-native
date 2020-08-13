@@ -1,9 +1,10 @@
-import React, { PureComponent } from 'react';
-import { Text, Dimensions, Image, StyleSheet, View } from 'react-native';
+import React from 'react';
+import {  Dimensions,  StyleSheet, View } from 'react-native';
 
 import SwiperFlatList from 'react-native-swiper-flatlist';
 
 import InfoCard from './InfoCard/InfoCard'
+import InfoCard4 from './InfoCard/infoCard4'
 
 const WalkThrough: React.FC = () => {
  
@@ -24,7 +25,7 @@ const WalkThrough: React.FC = () => {
             <InfoCard />  
           </View>
           <View style={[styles.child, { backgroundColor: 'white' }]}>
-            <InfoCard />  
+            <InfoCard4 />  
           </View>
         </SwiperFlatList>
       </View>

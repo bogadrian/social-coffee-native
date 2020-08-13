@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import  { useSelector } from 'react-redux'
 
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 
@@ -115,17 +116,18 @@ const MyTabs = () => {
   );
 }
 
-
-
 const MainStackNavigator = createStackNavigator();
 
 export const MainStack: React.FC = props => {
+  const isInfo = useSelector<{isInfo: boolean}>(state => state.isInfo)
+  const { info } = isInfo
+  console.log(info)
   const isInfoTrue = true //pull this variable out of asyncStorage
   
   
   return (
     <MainStackNavigator.Navigator >
-      {isInfoTrue && (
+      {info && (
         <MainStackNavigator.Screen 
         name="Home Stack" 
         component={MyTabs} 
@@ -137,14 +139,14 @@ export const MainStack: React.FC = props => {
         })}
         />
       )}
-      {!isInfoTrue && (
-        <MainStackNavigator.Screen 
+      
+        {!info && <MainStackNavigator.Screen 
         name="AppInfo" 
         component={InfoStack} 
         options={{
           headerShown: false,
-        }}/>
-      )}
+        }}/>}
+   
     </MainStackNavigator.Navigator>
   );
 };

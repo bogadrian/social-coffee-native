@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react';
-import { Text, Dimensions, Image, StyleSheet, View, ScrollView, } from 'react-native';
+import React from 'react';
+import { Dimensions, StyleSheet, View } from 'react-native';
 
 import SwiperFlatList from 'react-native-swiper-flatlist';
 

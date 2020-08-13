@@ -2,7 +2,10 @@
 import React, {useState} from 'react';
 import { StyleSheet, View } from 'react-native';
 import { AppLoading } from 'expo';
+import { Provider } from 'react-redux';
 import * as Font from 'expo-font';
+
+import store from './src/redux/store';
 
 import AppNavigator from './src/navigation/AppNavigator';
 
@@ -24,6 +27,7 @@ const fetchFonts = () => {
   });
 };
 
+
 const App: React.FC = () => {
   const [fontLoaded, setFontLoaded] = useState(false); 
   
@@ -37,10 +41,12 @@ const App: React.FC = () => {
     />
   );
 }
-  return (
+  return ( 
+  <Provider store={store}>
     <View style={styles.container}>
       <AppNavigator />
     </View>
+    </Provider>
   );
 };
 

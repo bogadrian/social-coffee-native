@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, View, TouchableWithoutFeedback, Keyboard, ScrollView, Dimensions} from "react-native";
+import React, {useState} from "react";
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard,  Dimensions} from "react-native";
 import * as Yup from "yup";
 import { useNavigation } from '@react-navigation/native';
 export const { width, height } = Dimensions.get('window');
@@ -18,8 +18,24 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required().min(4).label("Password"),
 });
 
-const Login: React.FC<Props> = (props) => { 
+const Login: React.FC<Props> = () => { 
   const navigation = useNavigation();
+  const [userType, setUserType] = useState<string>('user')
+  
+  const switchUser = () => {
+    if (userType === 'user'){
+      setUserType('coffee provider')
+    }else {
+      setUserType('user')
+    }
+  }
+  
+  const loginHandler = (email: string, password: string): void =>  {
+    //console.log(email, password, userType)
+     //userType === 'user' ? // call dispatch user : // call dispatch login coffe provider
+  }
+  
+  
   
   return (
   <View style={styles.container}>
@@ -27,12 +43,15 @@ const Login: React.FC<Props> = (props) => {
     
     <View style={styles.content}>
         <CustomText type="extra-bold-italic" style={styles.text} >
-    Please Login or: 
+  {userType=== 'user' ? 'Login as regular User': 'Login as Coffee Provider'} 
     </CustomText>
-    
+        <CustomText type="extra-bold-italic" style={styles.text2} >
+  or:
+    </CustomText>
+     <CustomButton  buttonWidth='80%' style={styles.button2} name="electric-switch" size={28} color='coral' fontSize={12} animation="pulse" textType="bold" text={userType === 'user' ? 'Switch to Login Coffe Provider' : 'Switch To Login User'} onPress={switchUser}/>
       <AppForm
         initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={({email, password}) => loginHandler(email, password)}
         validationSchema={validationSchema}
       >
         <AppFormField
@@ -53,8 +72,10 @@ const Login: React.FC<Props> = (props) => {
           secureTextEntry
           textContentType="password"
         />
-         <SubmitButton buttonWidth='40%' style={styles.button1} name="account-arrow-right-outline" size={24} color={Color.tertiary} fontSize={14} animation="fadeIn" textType="bold" text="Login" />
-         <CustomButton  buttonWidth='60%' style={styles.button2} name="account-switch" size={24} color='white' fontSize={14} animation="pulse" textType="bold" text="Switch To Signup" onPress={() => navigation.navigate('Signup')}/>
+         <SubmitButton buttonWidth='60%' style={styles.button1} name="account-arrow-right-outline" size={24} color={Color.tertiary} fontSize={12} animation="fadeIn" textType="bold" text={userType === 'user' ? 'LoginUser' : 'Login Coffe Provider'} />
+        
+         <CustomButton  buttonWidth='60%' style={styles.button3} name="account-switch" size={24} color='white' fontSize={14} animation="pulse" textType="bold" text="Switch To Signup" onPress={() => navigation.navigate('Signup')}/>
+         
          </AppForm>
     </View>
  
@@ -78,11 +99,20 @@ const styles = StyleSheet.create({
       marginTop: 30,
       justifyContent: 'flex-end', alignItems: 'flex-end'
   }, button2: {
-      marginTop: 40,
+      marginTop: 10,
+      marginBottom: 20
+  },
+  button3: {
+    marginTop: 40,
       marginBottom: 30
   },
   text: {
-      fontSize: 30, marginBottom: 40
+      fontSize: 20, marginBottom: 10
+  }, 
+  text2: {
+    fontSize: 26,
+    marginTop: 5, 
+    marginBottom: 5
   }
  
 });
