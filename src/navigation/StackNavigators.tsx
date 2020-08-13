@@ -119,15 +119,15 @@ const MyTabs = () => {
 const MainStackNavigator = createStackNavigator();
 
 export const MainStack: React.FC = props => {
-  const isInfo = useSelector<{isInfo: boolean}>(state => state.isInfo)
-  const { info } = isInfo
-  console.log(info)
-  const isInfoTrue = true //pull this variable out of asyncStorage
+  const isInfo = useSelector<{isInfo: {info: boolean}}>(state => state.isInfo.info)
+  
+ console.log(isInfo)
+  //pull this variable out of asyncStorage
   
   
   return (
     <MainStackNavigator.Navigator >
-      {info && (
+      {isInfo && (
         <MainStackNavigator.Screen 
         name="Home Stack" 
         component={MyTabs} 
@@ -140,7 +140,7 @@ export const MainStack: React.FC = props => {
         />
       )}
       
-        {!info && <MainStackNavigator.Screen 
+        {!isInfo && <MainStackNavigator.Screen 
         name="AppInfo" 
         component={InfoStack} 
         options={{
