@@ -6,14 +6,12 @@ import CustomLayout from '../../custom/CustomLayout';
 import HomeNonAuth from './components/HomeNonAuth'
 
 interface Props {  
-  navigation: any,
-  isInfo: boolean
+  navigation: any
 }
 
-const HomeScreen: React.FC<Props> = ({navigation, isInfo}) => {
+const HomeScreen: React.FC<Props> = ({navigation}) => {
   const auth = true
   
-  console.log(isInfo)
   {!auth && navigation.navigate('My Comunities')}
   return (   
     <CustomLayout>

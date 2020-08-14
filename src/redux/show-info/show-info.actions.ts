@@ -1,10 +1,13 @@
 import {IInfoTypes} from './show-info.types'
 
-export interface toggleInfoAction  {
-    type: IInfoTypes
-
+export interface infoAction  {
+    type: IInfoTypes,
 }
 
-export const  startToggleInfo = () => {
-   return {type: IInfoTypes.TOGGLE_INFO}
+export const  closeInfo = () => {
+   return {type: IInfoTypes.CLOSE_INFO}
+}
+
+export const openInfo = () => {
+    return { type: IInfoTypes.OPEN_INFO}
 }

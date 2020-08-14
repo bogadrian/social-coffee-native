@@ -1,4 +1,5 @@
 export enum IInfoTypes {
-    TOGGLE_INFO = 'TOGGLE_INFO',
+    CLOSE_INFO = 'CLOSE_INFO',
+    OPEN_INFO = 'OPEN_INFO',
 }
 

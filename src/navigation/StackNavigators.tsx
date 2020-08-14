@@ -13,7 +13,7 @@ import {HomeStack, InfoStack, AuthStack, AccountStack, MyComunitiesStack} from '
 
 import Color from '../constants/Color'
 
-function getHeaderTitle(route) {
+function getHeaderTitle(route: any) {
   // If the focused route is not found, we need to assume it's the initial screen
   // This can happen during if there hasn't been any navigation inside the screen
   // In our case, it's "Feed" as that's the first screen inside the navigator
@@ -83,7 +83,7 @@ const MyTabs = () => {
       }}
        options={{
          tabBarLabel: 'Donate',
-         tabBarIcon: ({ color }) => (
+         tabBarIcon: () => (
            <MaterialCommunityIcons name="plus-circle-outline" color="red" size={26} />
          ),
        }} />
@@ -118,35 +118,32 @@ const MyTabs = () => {
 
 const MainStackNavigator = createStackNavigator();
 
-export const MainStack: React.FC = props => {
-  const isInfo = useSelector<{isInfo: {info: boolean}}>(state => state.isInfo.info)
+export const MainStack: React.FC = () => {
+  const info = useSelector<{isInfo: {info: boolean}}>(state => state.isInfo.info)
   
- console.log(isInfo)
+ console.log(info)
   //pull this variable out of asyncStorage
   
   
   return (
     <MainStackNavigator.Navigator >
-      {isInfo && (
-        <MainStackNavigator.Screen 
-        name="Home Stack" 
-        component={MyTabs} 
-        options={({ route }) => ({
-          title: getHeaderTitle(route),
-          headerStyle: {backgroundColor: Color.backGroundPrimary},
-          headerTintColor: 'white',
-          
-        })}
-        />
-      )}
       
-        {!isInfo && <MainStackNavigator.Screen 
+       {info ? <MainStackNavigator.Screen 
         name="AppInfo" 
         component={InfoStack} 
         options={{
           headerShown: false,
-        }}/>}
-   
+        }}/>: 
+      
+        <MainStackNavigator.Screen 
+        name="Home Stack" 
+        component={MyTabs} 
+        options={ ({route}) => ({
+          title: getHeaderTitle(route),
+          headerStyle: {backgroundColor: Color.backGroundPrimary},
+          headerTintColor: 'white', 
+        })}
+        />}
     </MainStackNavigator.Navigator>
   );
 };

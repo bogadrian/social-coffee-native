@@ -3,21 +3,20 @@ import {View, StyleSheet, Button} from 'react-native'
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import  { connect } from 'react-redux';
 
-
-
 import Color from '../../constants/Color'
-import {startToggleInfo} from '../../redux/show-info/show-info.actions';
+import {closeInfo} from '../../redux/show-info/show-info.actions';
+
 
 interface Props {
-    startToggleInfo?: any
+    closeInfo?: any
 }
 
-const InfoCard4: React.FC<Props> = ({startToggleInfo}) => {
+const InfoCard4: React.FC<Props> = ({closeInfo}) => {
     
     return (
     <View style={styles.container}>
         
-        <Button title="close" onPress={startToggleInfo} />
+        <Button title="close" onPress={closeInfo} />
         
     </View>
     )
@@ -42,9 +41,9 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
   bindActionCreators(
     {
-        startToggleInfo
+       closeInfo,
     },
-    dispatch
+    dispatch,
   );
 
   
