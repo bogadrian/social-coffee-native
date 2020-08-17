@@ -1,26 +1,33 @@
 import React from 'react'
 import {View, StyleSheet, Button} from 'react-native'
-import { AnyAction, bindActionCreators, Dispatch } from 'redux';
-import  { connect } from 'react-redux';
+
+import AsyncStorage from '@react-native-community/async-storage'
+import { useNavigation } from '@react-navigation/native';
 
 import Color from '../../constants/Color'
-import {closeInfo} from '../../redux/show-info/show-info.actions';
 
-
-interface Props {
-    closeInfo?: any
-}
-
-const InfoCard4: React.FC<Props> = ({closeInfo}) => {
-    
-    return (
+ interface Props {}
+ 
+const InfoCard4: React.FC<Props> = () => {
+  const navigation = useNavigation();
+  
+const storeInfo = async () => {  
+        try {
+           await AsyncStorage.setItem('Info', JSON.stringify(false))
+           
+           navigation.navigate('Home Stack', {screen: 'My Tabs'})
+        }catch (err) {
+            console.log(err)
+        }
+    }
+   
+return (
     <View style={styles.container}>
-        
-        <Button title="close" onPress={closeInfo} />
-        
+        <Button title="close" onPress={storeInfo} />   
     </View>
     )
 }
+
 const styles = StyleSheet.create({
     container: {
         width: '95%',
@@ -38,13 +45,5 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
-  bindActionCreators(
-    {
-       closeInfo,
-    },
-    dispatch,
-  );
+  export default InfoCard4
 
-  
-  export default connect(null, mapDispatchToProps)(InfoCard4)

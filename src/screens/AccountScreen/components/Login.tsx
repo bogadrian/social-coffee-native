@@ -72,7 +72,7 @@ const Login: React.FC<Props> = () => {
           secureTextEntry
           textContentType="password"
         />
-         <SubmitButton buttonWidth='60%' style={styles.button1} name="account-arrow-right-outline" size={24} color={Color.tertiary} fontSize={12} animation="fadeIn" textType="bold" text={userType === 'user' ? 'LoginUser' : 'Login Coffe Provider'} />
+         <SubmitButton buttonWidth='60%' style={styles.button1} name="account-arrow-right-outline" size={24} color={Color.tertiary} fontSize={12} animation="fadeIn" textType="bold" text={userType === 'user' ? 'Login User' : 'Login Coffe Provider'} />
         
          <CustomButton  buttonWidth='60%' style={styles.button3} name="account-switch" size={24} color='white' fontSize={14} animation="pulse" textType="bold" text="Switch To Signup" onPress={() => navigation.navigate('Signup')}/>
          

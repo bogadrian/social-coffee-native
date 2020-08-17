@@ -1,12 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { AnyAction, bindActionCreators, Dispatch } from 'redux';
-import  { connect } from 'react-redux';
-
 import { useNavigation } from '@react-navigation/native';
 
-import { openInfo } from '../../../redux/show-info/show-info.actions';
 import playSound from '../../../customHooks/sound'
 
 import Logo from '../../../assets/coffee.svg'
@@ -16,11 +12,12 @@ import CustomButton from '../../../custom/CustomButton';
 import CustomText from '../../../custom/CustomText';
 import Divider from '../../../custom/Divider';
 
-interface Props {
-  openInfo?: any
-}
 
-const HomeNonAuth: React.FC<Props> = ({openInfo}) => {
+
+interface Props {}
+
+const HomeNonAuth: React.FC<Props> = () => {
+ 
   const navigation = useNavigation();
 
    const handleUserLogin = () => {
@@ -34,19 +31,11 @@ const HomeNonAuth: React.FC<Props> = ({openInfo}) => {
      navigation.navigate('Account', {screen: 'Signup'})
     }
   
-  
   const appInfo = () => {
       playSound()
-      // call opneInfo which change the state in redux for isInfo from false to true 
-      openInfo()
-       // setTimeout because navigation is called before the boolean info is changed 
-      setTimeout(() => {
-       navigation.navigate('AppInfo', {screen: 'InfoScreen'})
-      }, 100)
-     
-  }
- 
- 
+       navigation.navigate('Info', {screen: 'InfoScreen'})   
+   }
+  
   return (   
     
       <View style={styles.container}>
@@ -122,12 +111,4 @@ const styles = StyleSheet.create({
   textAnimatedSecond: {fontSize: 20, color: 'coral'}
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
-  bindActionCreators(
-    {
-     openInfo,
-    },
-    dispatch,
-  );
-
-  export default connect(null, mapDispatchToProps)(HomeNonAuth)
+  export default HomeNonAuth

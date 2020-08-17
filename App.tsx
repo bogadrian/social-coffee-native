@@ -7,7 +7,8 @@ import * as Font from 'expo-font';
 
 import store from './src/redux/store';
 
-import AppNavigator from './src/navigation/AppNavigator';
+//import AppNavigator from './src/navigation/AppNavigator';
+import AppWrapper from './AppWrapper'
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -44,7 +45,7 @@ const App: React.FC = () => {
   return ( 
   <Provider store={store}>
     <View style={styles.container}>
-      <AppNavigator />
+      <AppWrapper />
     </View>
     </Provider>
   );

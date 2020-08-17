@@ -1,12 +1,11 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 
-
 import CustomLayout from '../../custom/CustomLayout';
 import HomeNonAuth from './components/HomeNonAuth'
 
 interface Props {  
-  navigation: any
+  navigation: any,
 }
 
 const HomeScreen: React.FC<Props> = ({navigation}) => {
@@ -21,6 +20,5 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
     </CustomLayout>
   );
 };
-
 
 export default HomeScreen;

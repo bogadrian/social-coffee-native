@@ -2,12 +2,27 @@ import {IInfoTypes} from './show-info.types'
 
 export interface infoAction  {
     type: IInfoTypes,
+    info: boolean | string,
+    err?: string
 }
 
-export const  closeInfo = () => {
-   return {type: IInfoTypes.CLOSE_INFO}
+export interface IInfo {
+    info: boolean | string
 }
 
-export const openInfo = () => {
-    return { type: IInfoTypes.OPEN_INFO}
+export interface ActionType {
+    type: IInfoTypes,
+    err?: string
+}
+
+export const  infoGetStart = (): ActionType =>  {
+   return {type: IInfoTypes.START_INFO_GET}
+}
+
+export const infoGetSuccess = (): ActionType =>  {
+    return { type: IInfoTypes.INFO_SUCCESS_GET}
+}
+
+export const infoGetFailure = (err: string): ActionType =>  {
+    return { type: IInfoTypes.INFO_FAILURE_GET, err}
 }
