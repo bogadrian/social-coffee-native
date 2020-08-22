@@ -4,8 +4,8 @@ import { StyleSheet } from "react-native";
 import CustomText from "../../custom/CustomText";
 
 interface Props {
-  error: string,
-  visible: boolean,
+  error: string | undefined | boolean;
+  visible: boolean | undefined
 }
 
 const ErrorMessage: React.FC<Props> =({ error, visible }) =>{

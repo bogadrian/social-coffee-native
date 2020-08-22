@@ -14,8 +14,17 @@ import CustomLayout from '../../custom/CustomLayout';
 import defaultStyles from '../../constants/styles';
 import PickerItem from './PickerItem';
 
-function AppPicker({ icon, items, onSelectItem, placeholder, selectedItem }) {
-  const [modalVisible, setModalVisible] = useState(false);
+interface Props {
+  icon?: string, 
+  items: Array<any>,
+  onSelectItem: (item: string) => void,
+  placeholder: string,
+  selectedItem: any,
+
+}
+
+const AppPicker: React.FC<Props>= ({ icon, items, onSelectItem, placeholder, selectedItem }) => {
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   return (
     <React.Fragment>

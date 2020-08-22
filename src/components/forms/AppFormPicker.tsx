@@ -5,13 +5,13 @@ import AppPicker from "./AppPicker";
 import ErrorMessage from "./ErrorMessage";
 
 interface Props {
-  items: [],
-  name: string,
-  placeholder: string,
+  items: string[];
+  name: any;
+  placeholder: string
 }
 
 const AppFormPicker: React.FC<Props> = ({ items, name, placeholder })=> {
-  const { errors, setFieldValue, touched, values } = useFormikContext();
+  const { errors, setFieldValue, touched, values } = useFormikContext<string[]>();
 
   return (
     <>

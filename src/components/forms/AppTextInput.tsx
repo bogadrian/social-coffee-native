@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import defaultStyles from "../../constants/styles";
 
 interface Props {
-  icon: any,
+  icon: string,
   otherProps?: any
   style?: {}
 }

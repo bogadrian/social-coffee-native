@@ -4,6 +4,8 @@ import { Text } from 'react-native';
 interface Props {
   type: string,
   style?: {},
+  children: React.ReactNode,
+  animation?: string
   
 }
 

@@ -5,21 +5,22 @@ import AppTextInput from "./AppTextInput";
 import ErrorMessage from "./ErrorMessage";
 
 interface Props {
-  onBlur?: (value: boolean) => void,
-  onChangeText?: (value: string) => void, 
-  autoCapitalize: string,
-  autoCorrect: boolean,
-  icon: string,
-  keyboardType?: string,
-  name: string,
-  secureTextEntry?: boolean,
-  placeholder: string,
-  textContentType: string,
-  otherProps?: Object
+  onBlur?: (value: boolean) => void;
+  onChangeText?: (value: string) => void; 
+  autoCapitalize: string;
+  autoCorrect: boolean;
+  icon: string;
+  keyboardType?: string;
+  name: any;
+  secureTextEntry?: boolean;
+  placeholder: string;
+  textContentType: string;
+  otherProps?: Object;
+
 }
 
 const AppFormField: React.FC<Props> = ({ name, ...otherProps }) => {
-  const { setFieldTouched, handleChange, errors, touched } = useFormikContext();
+  const { setFieldTouched, handleChange, errors, touched } = useFormikContext<string[]>();
 
   return (
     <React.Fragment>

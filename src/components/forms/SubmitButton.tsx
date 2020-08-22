@@ -18,8 +18,8 @@ interface Props {
   onPress?: () => void;
 }
 
-const SubmitButton: React.FC<Props> = ({ buttonWidth, style, name, size, color, fontSize, textType, text, onPress }) => {
-  const { handleSubmit } = useFormikContext();
+const SubmitButton: React.FC<Props> = ({ buttonWidth, style, name, size, color, fontSize, textType, text }) => {
+  const { handleSubmit } = useFormikContext<string[]>();
 
 
   return (
