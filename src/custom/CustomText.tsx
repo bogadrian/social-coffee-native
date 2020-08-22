@@ -10,7 +10,7 @@ interface Props {
 }
 
 const CustomText: React.FC<Props> = props => {
-  const setFontType = type => {
+  const setFontType = (type: string) => {
     switch (type) {
       case 'black':
         return 'raleway-black';

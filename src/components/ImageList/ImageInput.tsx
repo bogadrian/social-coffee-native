@@ -11,9 +11,10 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
 import Color from '../../constants/Color'
+
 interface Props {
-  imageUri?: Image,
-  onChangeImage: (image: Image) => void
+  imageUri?: string;
+  onChangeImage: (image: string ) => void
 }
 
 const ImageInput: React.FC<Props> = ({ imageUri, onChangeImage }) => {
@@ -24,7 +25,7 @@ const ImageInput: React.FC<Props> = ({ imageUri, onChangeImage }) => {
   const requestPermission = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status !== 'granted') {
-      alert('Sorry, we need camera roll permissions to make this work!');
+      Alert.alert('Sorry, we need camera roll permissions to make this work!');
     }
   };
 
@@ -32,7 +33,7 @@ const ImageInput: React.FC<Props> = ({ imageUri, onChangeImage }) => {
     if (!imageUri) selectImage();
     else
       Alert.alert('Delete', 'Are you sure you want to delete this image?', [
-        { text: 'Yes', onPress: () => onChangeImage(null) },
+        { text: 'Yes', onPress: () => onChangeImage('') },
         { text: 'No' }
       ]);
   };

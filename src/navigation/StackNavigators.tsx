@@ -121,7 +121,7 @@ const MainStackNavigator = createStackNavigator();
 
 export const MainStack: React.FC = () => {
 
- const info = useSelector<any>(state => state.isInfo.info)
+ const info = useSelector<{isInfo: {info: boolean}}>(state => state.isInfo.info)
  
   return (
     <MainStackNavigator.Navigator >

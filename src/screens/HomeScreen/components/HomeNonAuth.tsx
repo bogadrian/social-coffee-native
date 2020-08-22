@@ -57,7 +57,7 @@ const HomeNonAuth: React.FC<Props> = () => {
           Search for a Coffee Provider
           </CustomText>
           <View style={styles.buttonContainer}>
-          <CustomButton  buttonWidth='60%'  size={14} color='coral' fontSize={14} textType="regular" text="Search a Coffee Provider" onPress={handleUserLogin}/>
+          <CustomButton  name="search-web" buttonWidth='70%'  size={18} color='coral' fontSize={14} textType="regular" text="Search a Coffee Provider" onPress={handleUserLogin}/>
           </View> 
           <Divider style={styles.secondDivider}/>
           <CustomText type="light" style={styles.forthText}>

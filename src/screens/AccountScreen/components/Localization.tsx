@@ -52,7 +52,7 @@ return  (
           textContentType="addressCity"
         />
         
-         <SubmitButton buttonWidth='40%' style={styles.button}  size={15} color={Color.secondary} fontSize={14} animation="fadeIn" textType="bold" text="Find on Maps" />
+         <SubmitButton name="search-web" buttonWidth='50%' style={styles.button}  size={18} color={Color.secondary} fontSize={14} animation="fadeIn" textType="bold" text="Find on Maps" />
          </AppForm>
          </View>
              <View style={{position: 'relative'}}>
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   }, 
   subtitle: {
     textAlign: "center",
-    fontSize: 18
+    fontSize: 16
   },
   subtitleContainer: {
     width: '90%'

@@ -10,9 +10,9 @@ interface Props {
   textStyle?: {};
   text: string;
   color: string;
-  name?: string;
+  name: string;
   animation?: string;
-  size?: number;
+  size: number;
   fontSize: number;
   buttonWidth: string;
   onPress?: () => void;

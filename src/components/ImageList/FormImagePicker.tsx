@@ -5,23 +5,25 @@ import ErrorMessage from '../forms/ErrorMessage';
 import ImageInputList from './ImageInputList';
 
 interface Props {
-  name: string
+  name: any
 }
 
+type handle = (uri: string) => void
+
 const FormImagePicker: React.FC<Props> = ({ name }) => {
-  const { errors, setFieldValue, touched, values } = useFormikContext();
-  const imageUris = values[name];
+  const { errors, setFieldValue, touched, values } = useFormikContext<string[]>();
+  const imageUris: any = values[name];
  
 
-  const handleAdd = uri => {
+  const handleAdd: handle  = (uri: string) => {
     setFieldValue(name, [...imageUris, uri]);
   };
 
-  const handleRemove = uri => {
+  const handleRemove: handle = (uri: string) => {
    
     setFieldValue(
       name,
-      imageUris.filter(imageUri => imageUri !== uri)
+      imageUris.filter((imageUri: string) => imageUri !== uri)
     );
   };
 

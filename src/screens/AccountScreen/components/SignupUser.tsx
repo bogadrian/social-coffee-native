@@ -31,7 +31,7 @@ const SignupUser: React.FC<Props> = (props) => {
         <CustomText type="extra-bold-italic" style={styles.text} >
     Signup User: 
        </CustomText>
-    <CustomButton  buttonWidth='70%' style={styles.button1}  size={15} color='white' fontSize={12} animation="pulse" textType="bold" text="Switch To Signup Coffee Provider" onPress={() => navigation.navigate('SignupProvider')}/>
+    <CustomButton  name="electric-switch" buttonWidth='80%' style={styles.button1}  size={15} color='white' fontSize={12} animation="pulse" textType="bold" text="Switch To Signup Coffee Provider" onPress={() => navigation.navigate('SignupProvider')}/>
       <AppForm
         initialValues={{ name: "", email: "", password: "", confirmPassword:"" }}
         onSubmit={(values) => console.log(values)}

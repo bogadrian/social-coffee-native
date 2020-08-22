@@ -60,7 +60,7 @@ const CustomDragMarker: React.FC<Props> = props => {
               let { status } = await Location.requestPermissionsAsync();
 
                 if (status !== 'granted') {
-                  alert("You can't register on this app; we are sorry ... ")   
+                  Alert.alert("You can't register on this app; we are sorry ... ")   
                 }
                 
                 let location = await Location.getCurrentPositionAsync({

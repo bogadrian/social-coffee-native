@@ -3,8 +3,6 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
-import Color from '../../constants/Color'
-
 import HomeScreen from '../../screens/HomeScreen/HomeScreen';
 import InfoScreen from '../../screens/InfoScreen/InfoScreen';
 

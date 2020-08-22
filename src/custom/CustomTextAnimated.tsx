@@ -5,12 +5,12 @@ import * as Animatable from 'react-native-animatable';
 interface Props {
   type: string,
   style?: {},
-  animation: string
+  animation?: string
   
 }
 
 const CustomTextAnimated: React.FC<Props> = props => {
-  const setFontType = type => {
+  const setFontType = (type: string) => {
     switch (type) {
       case 'black':
         return 'raleway-black';

@@ -1,22 +1,22 @@
 import React from 'react';
-import { StyleSheet, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
-import Color from '../constants/Color'
+
 import CustomTextAnimated from './CustomTextAnimated';
 import CustomIcon from './CustomIcon'
 
 interface Props { 
 textType: string,
-style?: {},
-textStyle?: {},
+style?: any,
+textStyle?: any,
 text: string, 
 color: string,
-name?: string, 
+name: string, 
 animation?: string, 
-size?: number,
+size: number,
 fontSize: number,
 buttonWidth: string,
-onPress: (NativeSyntheticEvent) => void
+onPress: (NativeSyntheticEvent: any) => void
 }
 
 const styles = StyleSheet.create({

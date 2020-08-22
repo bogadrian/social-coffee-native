@@ -2,10 +2,10 @@ import React from 'react';
 import { Formik } from 'formik';
 
 interface Props {
-  initialValues: Element,
-  onSubmit: () => void,
-  validationSchema: {},
-  children: React.ReactChild,
+  initialValues: any,
+  onSubmit: (values: any) => void,
+  validationSchema: any,
+  children: any,
   oteherProps?: any
 }
 

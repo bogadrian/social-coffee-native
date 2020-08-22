@@ -28,7 +28,7 @@ const validationSchema = Yup.object().shape({
   images: Yup.array().min(1, "Pleaseselect at least 1 image")
 });
 
-const SignupProvider: React.FC<Props> = (props) => { 
+const SignupProvider: React.FC<Props> = () => { 
   const navigation = useNavigation();
   
   return (
@@ -40,7 +40,7 @@ const SignupProvider: React.FC<Props> = (props) => {
         <CustomText type="extra-bold-italic" style={styles.text} >
     Signup Coffee Provider: 
        </CustomText>
-    <CustomButton  buttonWidth='70%' style={styles.button1}  size={15} color='white' fontSize={12} animation="pulse" textType="bold" text="Switch To Signup User" onPress={() => navigation.navigate('SignupUser')}/>
+    <CustomButton  name="electric-switch" buttonWidth='70%' style={styles.button1}  size={15} color='white' fontSize={12} animation="pulse" textType="bold" text="Switch To Signup User" onPress={() => navigation.navigate('SignupUser')}/>
     </View>
       <AppForm
         initialValues={{ 
