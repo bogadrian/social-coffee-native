@@ -29,7 +29,7 @@ longitudeDelta: number
 const  latitudeDelta = 0.0922
 const longitudeDelta = 0.0421
 
-const CustomDragMarker: React.FC<Props> = props => {
+const CustomDragMarker: React.FC<Props> = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [location, setLocation] = useState<ILocation>();
  
@@ -102,6 +102,7 @@ const CustomDragMarker: React.FC<Props> = props => {
     const {country, city, street} = address[0]
     const {latitude, longitude } = location
    console.log(location)
+   console.log(address[0])
    //save address and latitude, longitude to redux
   }
  

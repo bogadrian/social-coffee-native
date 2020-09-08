@@ -9,6 +9,7 @@
       "config": "metro.config.js",
       "sourceExts": ["js", "jsx", "svg", "ts", "tsx"]
     },
+    "scheme": "socialcoffeeapp",
     "splash": {
       "image": "./src/assets/splash.png",
       "resizeMode": "contain",
