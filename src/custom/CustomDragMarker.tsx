@@ -3,7 +3,6 @@ import {  Text, View, StyleSheet, Dimensions, Image, TouchableOpacity, ActivityI
 import MapView, {  PROVIDER_GOOGLE } from "react-native-maps"
 import * as Location from 'expo-location'
 
-
 const screen = Dimensions.get("window");
 
 import marker from '../assets/markers/marker4.png'
@@ -13,47 +12,29 @@ import Color from '../constants/Color'
 import CustomTextAnimated from './CustomTextAnimated'
 import CustomText from './CustomText'
 
-interface Props {}
+import { setProviderDataWithCoords,setProviderDataAddress} from '../utilis/providerData'
 
-interface ILocation { 
-latitude: number , 
-longitude: number , 
-}
-
-interface StateRegion {
-  latitude: number , 
-  longitude: number , 
-latitudeDelta: number, 
-longitudeDelta: number
-}
 const  latitudeDelta = 0.0922
 const longitudeDelta = 0.0421
 
-const CustomDragMarker: React.FC<Props> = () => {
+interface Props {reg: any}
+
+
+const CustomDragMarker: React.FC<Props> = ({reg}) => {
   const [loading, setLoading] = useState<boolean>(true)
-  const [location, setLocation] = useState<ILocation>();
- 
+  const [location, setLocation] = useState<any>();
   const [address, setAddress] = useState<any>(null);
- 
-  let latitude, longitude;
-  if (location) {
-    latitude = location.latitude
-    longitude = location.longitude
-  }else {
-    latitude = 37.776406
-    longitude = 122.458202
-  }
   
-  const [region, setRegion] = useState<StateRegion >({
-           latitude,
-           longitude,
-           latitudeDelta,
-           longitudeDelta
-        })
-        
+  
+  const [region, setRegion] = useState<any>({
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  })
+ 
   useEffect(() => {
      let update = true
-        
          const fetchLoc = async () => {    
                setLoading(true)
           try {
@@ -62,16 +43,18 @@ const CustomDragMarker: React.FC<Props> = () => {
                 if (status !== 'granted') {
                   Alert.alert("You can't register on this app; we are sorry ... ")   
                 }
-                
+               
                 let location = await Location.getCurrentPositionAsync({
                   accuracy: Location.Accuracy.Highest
                 }); 
+            
+                let {latitude, longitude} = await location.coords
              
-                const {latitude, longitude} = await location.coords
-               
-                if (location && update) {
-                setLocation({latitude, longitude});
-                setRegion({latitude, longitude, latitudeDelta, longitudeDelta});
+                console.log(reg)
+                
+                if ((update && location) || (update && reg)) {
+            
+                reg !== undefined ? setRegion({latitude: reg.lat, longitude: reg.lng, latitudeDelta, longitudeDelta}) : setRegion({latitude, longitude, latitudeDelta, longitudeDelta});
                 setLoading(false)   
               }
           }catch (err) {
@@ -83,10 +66,12 @@ const CustomDragMarker: React.FC<Props> = () => {
         return () => {
          update = false
         }  
-  }, []);
+  }, [reg]);
 
-  const onRegionChange: (e: any) => void =  e => {
-    setRegion(e)
+  const onRegionChange: (e: any) => void =  e => {  
+    
+    console.log(e)
+     //setRegion(e)
     const latitude = e.latitude;
     const longitude = e.longitude
     setLocation({latitude, longitude})
@@ -97,13 +82,19 @@ const CustomDragMarker: React.FC<Props> = () => {
     findAddress()
   }
   
-  const addressFixed: (address: any, location?: {latitude: number, longitude: number}) => void = (address, location) => {
-     
-    const {country, city, street} = address[0]
-    const {latitude, longitude } = location
-   console.log(location)
-   console.log(address[0])
-   //save address and latitude, longitude to redux
+  
+  //const {latitude, longitude} = location!
+   
+  const addressFixed: (address: any, ) => void = (address) => {
+    console.log(location)
+    console.log(address)
+    setProviderDataWithCoords(location)
+    setProviderDataAddress(address)
+  okPressedFromAlert()
+  }
+  
+  const okPressedFromAlert = () => {
+  Alert.alert('Your Address was set! Please press OK and swipe left! <--')    
   }
  
   const okPressed = async () => { 
@@ -120,7 +111,7 @@ const CustomDragMarker: React.FC<Props> = () => {
         City: ${city} 
         Street: ${street}`,
         [
-          { text: "OK", onPress: () => addressFixed(address, location) },
+          { text: "OK", onPress: () => addressFixed(address) },
           {
             text: "Try Again",
             onPress: () => console.log("Cancel Pressed"),
@@ -128,8 +119,9 @@ const CustomDragMarker: React.FC<Props> = () => {
           } 
         ],
         { cancelable: false }
-        )      // call redux action with lat and long from coordsOnMarkerChange
+        )     
   }
+  
 
   if(loading) {
     return (<View style={styles.activity}>
@@ -155,10 +147,10 @@ const CustomDragMarker: React.FC<Props> = () => {
       <View style={styles.markerFixed}>
             <TouchableOpacity onPress={okPressed} style={styles.touchble}>
             <Text style={styles.ok}>OK &#x1F44C;</Text>
-            <Image style={styles.marker} source={marker} /> 
+            <Image style={styles.marker} source={marker}/> 
             </TouchableOpacity>
       
-        </View>
+        </View> 
     </View>
        )
   }
@@ -172,7 +164,7 @@ const styles = StyleSheet.create({
     color: 'white',
     alignSelf: 'center',
     position: 'relative',
-    marginTop: 40
+    marginTop: 40  
   },
     map: {
         width: screen.width *0.94,

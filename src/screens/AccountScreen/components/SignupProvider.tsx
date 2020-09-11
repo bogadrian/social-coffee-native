@@ -13,14 +13,11 @@ import FormInfo from './FormInfo'
 const SignupProvider: React.FC<Props> = () => {
  
     return (
- 
-     
-       
         <SwiperFlatList
           showPagination
           paginationActiveColor="red"
           paginationDefaultColor="white"
-          style={styles.list}
+          
         >
           <View style={styles.child}>
             <Localization />  
@@ -29,9 +26,6 @@ const SignupProvider: React.FC<Props> = () => {
             <FormInfo />  
           </View>
         </SwiperFlatList>
-      
-    
-  
     );
   }
 
@@ -39,11 +33,6 @@ const SignupProvider: React.FC<Props> = () => {
 export const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-
-  
-  list: {
-  
-  },
   child: {
     flexGrow: 1,
     height: height * 0.94,

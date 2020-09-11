@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View,  StyleSheet, Dimensions, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 
 import * as Yup from "yup";
+import axios from 'axios';
+import {URL } from '../../../constants/variables'
 
 export const { width, height } = Dimensions.get('window');
 
@@ -15,6 +17,8 @@ import CustomLayout from '../../../custom/CustomLayout';
 import CustomText from '../../../custom/CustomText';
 import CustomDragMarker from '../../../custom/CustomDragMarker'
 
+
+
 interface Props {}
 
 const validationSchema = Yup.object().shape({
@@ -22,11 +26,30 @@ const validationSchema = Yup.object().shape({
 });
 
 const Localization: React.FC<Props> = () => {
-  
-  
+  const [coord, setCoordinates] = useState<any>()
+ 
+  const setCoords = async (city: string) => {
+   try {
+      const coordinates = await axios.post(`${URL}/api/v1/geo/address`, {data: city})
+     console.log(coordinates)
+     if (coordinates) {
+        setCoordinates(coordinates.data.data)
+        
+     }else {
+       setCoordinates({lat: 344555, lng:556767}) 
+      
+     }
+     
+     // call a action and put this in a reducer for provider data
+    
+   }catch(err) {
+     console.log(err)
+   }
+   
+  }
 return  (
        
-   <ScrollView contentContainerStyle={{ flexGrow: 1, height: '140%' }}>
+   <ScrollView contentContainerStyle={{ flex: 1, height: '140%', marginBottom: 140 }}>
           <TouchableWithoutFeedback   onPress={() => Keyboard.dismiss()}>
       
           <CustomLayout >
@@ -38,7 +61,7 @@ return  (
                <View style={styles.form}>
             <AppForm
         initialValues={{ city: ""}}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => setCoords(values)}
         validationSchema={validationSchema}
       >
         <AppFormField
@@ -48,7 +71,7 @@ return  (
           icon="map-search"
           keyboardType="default"
           name="city"
-          placeholder="Your Address"
+          placeholder="City ... "
           textContentType="addressCity"
         />
         
@@ -56,7 +79,7 @@ return  (
          </AppForm>
          </View>
              <View style={{position: 'relative'}}>
-                <CustomDragMarker />
+             <CustomDragMarker reg={coord}/>
               </View>
                 
             <CustomText type="regular" style={styles.textEnd}> Please press OK if it is the right address </CustomText>

@@ -1,7 +1,11 @@
 import React from "react";
-import { StyleSheet, View, TouchableWithoutFeedback, Keyboard, ScrollView} from "react-native";
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard} from "react-native";
 import * as Yup from "yup";
 import { useNavigation } from '@react-navigation/native';
+
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
+import  { connect } from 'react-redux';
+import {signupStartUser} from '../../../redux/user/signup.actions'
 
 import Color from '../../../constants/Color';
 
@@ -11,17 +15,22 @@ import SubmitButton from '../../../components/forms/SubmitButton'
 import CustomButton from '../../../custom/CustomButton'
 import CustomLayout from '../../../custom/CustomLayout'
 
-interface Props {}
+interface Props {signupStartUser: any}
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().min(4).label('Name'),
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
-  confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').label('Confirm Password')
+  passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null!], 'Passwords must match').label('Confirm Password')
 });
 
-const SignupUser: React.FC<Props> = (props) => { 
+const SignupUser: React.FC<Props> = ({signupStartUser}) => { 
   const navigation = useNavigation();
+  
+  const signupUserHandler = (values: any) => {
+    console.log('5555555555', values)
+    signupStartUser(values)
+  }
   
   return (
   <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
@@ -33,8 +42,8 @@ const SignupUser: React.FC<Props> = (props) => {
        </CustomText>
     <CustomButton  name="electric-switch" buttonWidth='80%' style={styles.button1}  size={15} color='white' fontSize={12} animation="pulse" textType="bold" text="Switch To Signup Coffee Provider" onPress={() => navigation.navigate('SignupProvider')}/>
       <AppForm
-        initialValues={{ name: "", email: "", password: "", confirmPassword:"" }}
-        onSubmit={(values) => console.log(values)}
+        initialValues={{ name: "", email: "", password: "", passwordConfirm:"" }}
+        onSubmit={(values) => signupUserHandler(values)}
         validationSchema={validationSchema}
       >
         <AppFormField
@@ -68,7 +77,7 @@ const SignupUser: React.FC<Props> = (props) => {
           autoCapitalize="none"
           autoCorrect={false}
           icon="lock"
-          name="confirmPassword"
+          name="passwordConfirm"
           placeholder="Confirm Password"
           secureTextEntry
           textContentType="password"
@@ -84,10 +93,11 @@ const SignupUser: React.FC<Props> = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
     height: '100%',
     padding: 10,
     marginTop: 20,
+    marginBottom: 180,
     justifyContent: 'center', 
     alignItems: 'center' 
   }, text: {
@@ -103,4 +113,11 @@ const styles = StyleSheet.create({
  
 });
 
-export default SignupUser;
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+bindActionCreators(
+  {
+    signupStartUser
+  },
+  dispatch,
+);
+export default connect(null, mapDispatchToProps)(SignupUser)

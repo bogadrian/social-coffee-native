@@ -1,12 +1,13 @@
 import { all, call } from 'redux-saga/effects';
 
 import {infoSet} from './show-info/show-saga'
-import { getUser } from './getUser/users.saga'
+import { rootUserSaga} from './user/userRoot.saga'
+
 
 function* rootSaga() {
   yield all([
   call(infoSet),
-  call(getUser)
+  call(rootUserSaga),
   ])
 }
 

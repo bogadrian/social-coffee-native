@@ -8,7 +8,7 @@ import { getUserToken, getProviderToken } from '../apis/getUser'
 function* takeNewRoute () {
   try { 
       const user = yield call(getProviderToken)
-      
+    
       if (user) {
         yield put(providerGetSuccess(user))
       }
@@ -22,13 +22,15 @@ function* takeNewRoute () {
  function* setSuccessGet () {
  try {
     const user = yield call(getUserToken)
-       
         if (user) { 
           yield  put(userGetSuccess(user))
+        }else {
+          yield call(takeNewRoute)
         }
  }catch (err) {
-        yield call(takeNewRoute)
-  }     
+      yield call(takeNewRoute)
+ }
+       
  }
 
  function* setStartGet () {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { StyleSheet, View, TouchableWithoutFeedback, Keyboard, Dimensions} from "react-native";
 import * as Yup from "yup";
 import { useNavigation } from '@react-navigation/native';
@@ -7,8 +7,11 @@ export const { width, height } = Dimensions.get('window');
 import Color from '../../../constants/Color';
 
 import { AppForm, AppFormField} from "../../../components/forms";
-import FormImagePicker from '../../../components/ImageList/FormImagePicker'
+//import FormImagePicker from '../../../components/ImageList/FormImagePicker'
 
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
+import  { connect } from 'react-redux';
+import { signupStartProvider } from '../../../redux/user/signup.actions'
 
 import SubmitButton from '../../../components/forms/SubmitButton'
 import CustomButton from '../../../custom/CustomButton'
@@ -16,23 +19,42 @@ import CustomLayout from '../../../custom/CustomLayout'
 import CustomText from "../../../custom/CustomText";
 import { ScrollView } from "react-native-gesture-handler";
 
-interface Props {}
+import {providerData} from '../../../utilis/providerData'
+
+
+interface Props {
+  signupStartProvider: any
+}
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().min(4).label('Activity Name'),
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
-  confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').label('Confirm Password'),
-  address: Yup.string().required().label('Activity Address'),
+  passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null!], 'Passwords must match').label('Confirm Password'),
+  //address: Yup.string().required().label('Activity Address'),
   vat: Yup.string().required().label('Activity Vat Number'),
-  images: Yup.array().min(1, "Pleaseselect at least 1 image")
+  //images: Yup.array().min(1, "Pleaseselect at least 1 image")
 });
 
-const SignupProvider: React.FC<Props> = () => { 
+const SignupProvider: React.FC<Props> = ({signupStartProvider}) => { 
+  //const [address, setAddress] = useState<any>()
   const navigation = useNavigation();
-  
+ 
+
+  const callTheBackendWithProviderData = (data: any) => {
+    const user = {
+      name: data.name,
+      email: data.email, 
+      password: data.password,
+      passwordConfirm: data.passwordConfirm,
+      address: providerData.address,
+      vat: data.vat,
+      position: providerData.coords
+    }
+    signupStartProvider(user)
+  }
   return (
-    <ScrollView contentContainerStyle={{ flex: 1, height, width, marginBottom: 60}}>
+    <ScrollView contentContainerStyle={{flex: 1,  height, width, marginBottom: 150}}>
   <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
     <CustomLayout >
     <View style={styles.container}>
@@ -47,18 +69,17 @@ const SignupProvider: React.FC<Props> = () => {
           name: "", 
           email: "", 
           password: "", 
-          confirmPassword:"", 
-          address: "", 
+          passwordConfirm:"", 
           vat: "",
-          images: []
+          //images: []
         }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => callTheBackendWithProviderData(values)}
         validationSchema={validationSchema}
       > 
       <CustomText type="thin-italic" style={styles.text1} >
       Please chose at least 1 photo, up to 10 photos!
          </CustomText>
-      <FormImagePicker name="images" />
+      {/*<FormImagePicker name="images" />+*/}
         <AppFormField
           autoCapitalize="none"
           autoCorrect={false}
@@ -90,20 +111,11 @@ const SignupProvider: React.FC<Props> = () => {
           autoCapitalize="none"
           autoCorrect={false}
           icon="lock"
-          name="confirmPassword"
+          name="passwordConfirm"
           placeholder="Confirm Password"
           secureTextEntry
           textContentType="password"
         />
-        <AppFormField
-        autoCapitalize="none"
-        autoCorrect={false}
-        icon="email"
-        keyboardType="default"
-        name="address"
-        placeholder="Activity Address"
-        textContentType="addressCity"
-      />
         <AppFormField
         autoCapitalize="none"
         autoCorrect={false}
@@ -147,9 +159,16 @@ const styles = StyleSheet.create({
       marginBottom: 20
   }, button2: {
       marginTop: 10,
-      marginBottom: 50,
+      marginBottom: 100,
       alignSelf: 'center'
   },
 });
 
-export default SignupProvider;
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+bindActionCreators(
+  {
+    signupStartProvider,
+  },
+  dispatch,
+);
+export default connect(null, mapDispatchToProps)(SignupProvider)

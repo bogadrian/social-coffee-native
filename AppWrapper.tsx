@@ -4,7 +4,7 @@ import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import  { connect } from 'react-redux';
 
 import { infoGetStart, ActionType } from './src/redux/show-info/show-info.actions';
-import { userGetStart } from './src/redux/getUser/users.actions'
+import { userGetStart } from './src/redux/user/users.actions'
 
 import AppNavigator from './src/navigation/AppNavigator';
 

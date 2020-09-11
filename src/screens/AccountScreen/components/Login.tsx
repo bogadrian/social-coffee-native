@@ -4,6 +4,10 @@ import * as Yup from "yup";
 import { useNavigation } from '@react-navigation/native';
 export const { width, height } = Dimensions.get('window');
 
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
+import  { connect } from 'react-redux';
+import { loginStartUser, loginStartProvider } from '../../../redux/user/login.actions'
+
 import Color from '../../../constants/Color';
 
 import CustomText from "../../../custom/CustomText";
@@ -11,14 +15,17 @@ import { AppForm, AppFormField} from "../../../components/forms";
 import SubmitButton from '../../../components/forms/SubmitButton'
 import CustomButton from '../../../custom/CustomButton'
 
-interface Props {}
+interface Props {
+  loginStartUser: any;
+  loginStartProvider: any;
+}
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
 });
 
-const Login: React.FC<Props> = () => { 
+const Login: React.FC<Props> = ({loginStartUser, loginStartProvider}) => { 
   const navigation = useNavigation();
   const [userType, setUserType] = useState<string>('user')
   
@@ -31,8 +38,9 @@ const Login: React.FC<Props> = () => {
   }
   
   const loginHandler = (email: string, password: string): void =>  {
-    //console.log(email, password, userType)
-     //userType === 'user' ? // call dispatch user : // call dispatch login coffe provider
+    console.log(email, password)
+    console.log('ppppaaapppaaappp', email, password, userType)
+     userType === 'user' ?  loginStartUser({email, password}) : loginStartProvider({email, password})
   }
   
   
@@ -117,4 +125,12 @@ const styles = StyleSheet.create({
  
 });
 
-export default Login;
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+bindActionCreators(
+  {
+    loginStartUser,
+    loginStartProvider
+  },
+  dispatch,
+);
+export default connect(null, mapDispatchToProps)(Login)

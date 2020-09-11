@@ -3,7 +3,6 @@ import {IUsersTypes} from './users.types'
 export interface UserAction  {
     type: IUsersTypes;
     user?: {};
-    provider?: {};
     error?: string
 }
 
@@ -13,11 +12,10 @@ export interface StartActionType {
 }
 
 export const  userGetStart = (): StartActionType =>  {
-    
    return {type: IUsersTypes.START_GET_USER}
 }
 
-export const providerGetSuccess = (user: {}): UserAction =>  {
+export const providerGetSuccess = (user: {}): UserAction =>  { 
     return { type: IUsersTypes.SUCCESS_PROVIDER_GET, user}
 }
 
