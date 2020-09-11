@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import  { connect } from 'react-redux';
-import {signupStartUser} from '../../../redux/user/signup.actions'
+import {signupStartUser} from '../../../redux/user/reducer.actions'
 
 import Color from '../../../constants/Color';
 
@@ -15,7 +15,10 @@ import SubmitButton from '../../../components/forms/SubmitButton'
 import CustomButton from '../../../custom/CustomButton'
 import CustomLayout from '../../../custom/CustomLayout'
 
-interface Props {signupStartUser: any}
+interface Props {
+  signupStartUser: any, 
+  user: any
+}
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().min(4).label('Name'),
@@ -24,11 +27,13 @@ const validationSchema = Yup.object().shape({
   passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null!], 'Passwords must match').label('Confirm Password')
 });
 
-const SignupUser: React.FC<Props> = ({signupStartUser}) => { 
+const SignupUser: React.FC<Props> = ({signupStartUser, user}) => { 
   const navigation = useNavigation();
   
+  if (user && user.role === 'user') {
+    navigation.navigate('Settings')
+  }
   const signupUserHandler = (values: any) => {
-    console.log('5555555555', values)
     signupStartUser(values)
   }
   
@@ -120,4 +125,9 @@ bindActionCreators(
   },
   dispatch,
 );
-export default connect(null, mapDispatchToProps)(SignupUser)
+
+const mapStateToProps = ({user}: any) => ({
+  user: user.user
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignupUser)

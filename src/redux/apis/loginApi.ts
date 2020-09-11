@@ -4,6 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 import { URL} from '../../constants/variables'
 
 export const makeCallLoginWithUser = async(user: any) => {
+
   const data = user.user
     try { 
       const axiosInstance = await axios.create({
@@ -17,7 +18,7 @@ export const makeCallLoginWithUser = async(user: any) => {
         method: 'POST',
         data
       });
-      console.log('here my user in signup', userLoggedIn.data.data.user)
+      
     SecureStore.setItemAsync('jwt', userLoggedIn.data.token)
      return userLoggedIn.data.data.user
     

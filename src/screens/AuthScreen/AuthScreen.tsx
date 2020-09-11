@@ -1,14 +1,17 @@
 import React from 'react';
-import { StyleSheet, Text, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, View, Text } from 'react-native';
 export const { width, height } = Dimensions.get('window');
 
+import  { connect } from 'react-redux';
+
 import CustomLayout from '../../custom/CustomLayout'
+import Color from '../../constants/Color'
 
 import NotLogin from './components/NotLogin'
 import Settings from './components/Settings'
 
 interface Props {
- 
+ user: any
 }
 
 const styles = StyleSheet.create({
@@ -21,14 +24,28 @@ const styles = StyleSheet.create({
   }
 });
 
-const AuthScreen: React.FC<Props> = () => {
-  const auth = false
+const AuthScreen: React.FC<Props> = ({user}) => {
+  
+  if (user && user.emailConfirm === false) {
+    return (<CustomLayout style={styles.layout}>
+      <View>
+      <Text style={styles.text}>
+          <Text>Hi </Text>
+          <Text style={{color: Color.tertiary}}> {user.name}!</Text> 
+          <Text> Please confirm your email before using this app!</Text>
+          </Text>
+        </View>
+         </CustomLayout>)
+  }
   return (
     <CustomLayout style={styles.layout}>
-      {auth ? <Settings /> : <NotLogin />}
+      {user ? <Settings user={user}/> : <NotLogin />}
     </CustomLayout>
   );
 };
 
 
-export default AuthScreen;
+const mapStateToProps = ({user}: any) => ({
+  user: user.user
+})
+export default connect(mapStateToProps)(AuthScreen);

@@ -11,7 +11,7 @@ import { AppForm, AppFormField} from "../../../components/forms";
 
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import  { connect } from 'react-redux';
-import { signupStartProvider } from '../../../redux/user/signup.actions'
+import { signupStartProvider } from '../../../redux/user/reducer.actions'
 
 import SubmitButton from '../../../components/forms/SubmitButton'
 import CustomButton from '../../../custom/CustomButton'

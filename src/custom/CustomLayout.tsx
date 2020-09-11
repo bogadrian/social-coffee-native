@@ -10,6 +10,7 @@ interface Props {
 const styles = StyleSheet.create({
     layout: {
       backgroundColor: '#2A335A',
+      flexGrow: 1
     },
   });
   

@@ -18,6 +18,7 @@ import CustomButton from '../../../custom/CustomButton'
 interface Props {
   loginStartUser: any;
   loginStartProvider: any;
+  user: any;
 }
 
 const validationSchema = Yup.object().shape({
@@ -25,9 +26,13 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required().min(4).label("Password"),
 });
 
-const Login: React.FC<Props> = ({loginStartUser, loginStartProvider}) => { 
+const Login: React.FC<Props> = ({loginStartUser, loginStartProvider, user}) => { 
   const navigation = useNavigation();
   const [userType, setUserType] = useState<string>('user')
+  
+  if (user) {
+    navigation.navigate('Settings')
+  }
   
   const switchUser = () => {
     if (userType === 'user'){
@@ -38,8 +43,9 @@ const Login: React.FC<Props> = ({loginStartUser, loginStartProvider}) => {
   }
   
   const loginHandler = (email: string, password: string): void =>  {
+   
     console.log(email, password)
-    console.log('ppppaaapppaaappp', email, password, userType)
+
      userType === 'user' ?  loginStartUser({email, password}) : loginStartProvider({email, password})
   }
   
@@ -133,4 +139,9 @@ bindActionCreators(
   },
   dispatch,
 );
-export default connect(null, mapDispatchToProps)(Login)
+
+const mapStateToProps = ({user}: any) => ({
+  user: user.user
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

@@ -1,17 +1,26 @@
 import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+import  { connect } from 'react-redux';
 
 import SwiperFlatList from 'react-native-swiper-flatlist';
 
 import Color from '../../../constants/Color'
 
-interface Props {}
+interface Props {
+  user: any
+}
 
 import Localization from './Localization'
 import FormInfo from './FormInfo'
 
-const SignupProvider: React.FC<Props> = () => {
- 
+const SignupProvider: React.FC<Props> = ({user}) => {
+  const navigation = useNavigation();
+  
+  if (user && user.role === 'coffee-provider') {
+    navigation.navigate('Settings')
+  }
     return (
         <SwiperFlatList
           showPagination
@@ -46,4 +55,11 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 });
-export default SignupProvider;
+
+const mapStateToProps = ({user}: any) => ({
+  user: user.user
+})
+
+export default connect(mapStateToProps)(SignupProvider)
+
+

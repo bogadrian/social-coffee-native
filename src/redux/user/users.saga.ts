@@ -1,7 +1,7 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects';
 
 import {IUsersTypes} from './users.types'
-import { userGetSuccess, userGetFailure, providerGetSuccess, providerGetFailure} from './users.actions'
+import { userSuccess, userFailure} from './reducer.actions'
 
 import { getUserToken, getProviderToken } from '../apis/getUser'
 
@@ -10,27 +10,21 @@ function* takeNewRoute () {
       const user = yield call(getProviderToken)
     
       if (user) {
-        yield put(providerGetSuccess(user))
-      }
-      
+        yield put(userSuccess(user))
+        }
       }catch (err) {
-        yield put(providerGetFailure(err))
-        yield put(userGetFailure(err))
+        yield put(userFailure(err))
       }
 }
 
  function* setSuccessGet () {
- try {
+
     const user = yield call(getUserToken)
         if (user) { 
-          yield  put(userGetSuccess(user))
+          yield  put(userSuccess(user))
         }else {
           yield call(takeNewRoute)
-        }
- }catch (err) {
-      yield call(takeNewRoute)
- }
-       
+        } 
  }
 
  function* setStartGet () {

@@ -37,9 +37,12 @@ const Tab = createMaterialBottomTabNavigator();
 
 const MyTabs = () => {
   
-  const play = () => {
-    playSound()
-  }
+
+  const  play = async () => {
+   await playSound()
+  } 
+   
+  
   
   return (
     <Tab.Navigator  

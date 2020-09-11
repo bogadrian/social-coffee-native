@@ -14,11 +14,14 @@ import Divider from '../../../custom/Divider';
 
 
 
-interface Props {}
+interface Props {
+ 
+}
 
 const HomeNonAuth: React.FC<Props> = () => {
  
   const navigation = useNavigation();
+  
 
    const handleUserLogin = () => {
       playSound()

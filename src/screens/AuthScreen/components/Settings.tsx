@@ -2,10 +2,12 @@ import React from 'react';
 import { StyleSheet, Text, Dimensions } from 'react-native';
 export const { width, height } = Dimensions.get('window');
 
+
+
 import CustomLayout from '../../../custom/CustomLayout'
 
 interface Props {
-  
+  user: any
 }
 
 const styles = StyleSheet.create({
@@ -18,10 +20,12 @@ const styles = StyleSheet.create({
   }
 });
 
-const AuthScreen: React.FC<Props> = () => {
+const AuthScreen: React.FC<Props> = ({user}) => {
+  
+ console.log(user)
   return (
     <CustomLayout style={styles.layout}>
-      <Text style={styles.text}>The Settings Here</Text>
+      <Text style={styles.text}>The Settings Here. implemnet update me, my blocked ppl, delete, logout. my comunities no, that has its own screen  </Text>
     </CustomLayout>
   );
 };
