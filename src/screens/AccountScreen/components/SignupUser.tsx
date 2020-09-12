@@ -1,11 +1,12 @@
 import React from "react";
-import { StyleSheet, View, TouchableWithoutFeedback, Keyboard} from "react-native";
+import { StyleSheet, View, TouchableWithoutFeedback, Text, Keyboard, Dimensions} from "react-native";
 import * as Yup from "yup";
 import { useNavigation } from '@react-navigation/native';
+export const { width, height } = Dimensions.get('window');
 
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import  { connect } from 'react-redux';
-import {signupStartUser} from '../../../redux/user/reducer.actions'
+import {signupStartUser} from '../../../redux/user/signup/signup.actions'
 
 import Color from '../../../constants/Color';
 
@@ -30,9 +31,13 @@ const validationSchema = Yup.object().shape({
 const SignupUser: React.FC<Props> = ({signupStartUser, user}) => { 
   const navigation = useNavigation();
   
-  if (user && user.role === 'user') {
-    navigation.navigate('Settings')
+  if ((user && user.role === 'user') || (user && user.role === 'coffee-provider')) {
+    return <CustomLayout style={styles.layout}><Text style={styles.textLoogedIn}>You are allready logged in! </Text>
+      {navigation.navigate('Settings')}
+    <CustomButton buttonWidth='50%' name="account-heart-outline" size={15} color='yellow' fontSize={14} animation="tada" textType="bold" text="My Settings" onPress={() => navigation.navigate('Settings')}/>
+    </CustomLayout>
   }
+  
   const signupUserHandler = (values: any) => {
     signupStartUser(values)
   }
@@ -114,6 +119,14 @@ const styles = StyleSheet.create({
       marginTop: 30,
       marginBottom: 80
   },
+  layout: { flex: 1, justifyContent: 'center', alignItems: 'center', height },
+  textLoogedIn: { 
+    fontSize: 20, 
+    color: 'white',
+    width: width * 0.80,
+    textAlign: 'center',
+    marginBottom: 20
+  }
  
  
 });

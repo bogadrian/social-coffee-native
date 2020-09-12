@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Dimensions, View, Text } from 'react-native';
 export const { width, height } = Dimensions.get('window');
 
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 });
 
 const AuthScreen: React.FC<Props> = ({user}) => {
+ 
   
   if (user && user.emailConfirm === false) {
     return (<CustomLayout style={styles.layout}>
@@ -37,9 +38,11 @@ const AuthScreen: React.FC<Props> = ({user}) => {
         </View>
          </CustomLayout>)
   }
+  
+  
   return (
     <CustomLayout style={styles.layout}>
-      {user ? <Settings user={user}/> : <NotLogin />}
+      {user  ? <Settings user={user}/> : <NotLogin />}
     </CustomLayout>
   );
 };

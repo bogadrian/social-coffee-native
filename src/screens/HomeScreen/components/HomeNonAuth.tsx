@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Dimensions} from 'react-native';
+export const { width, height } = Dimensions.get('window');
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -11,6 +12,7 @@ import CustomTextAnimated from '../../../custom/CustomTextAnimated';
 import CustomButton from '../../../custom/CustomButton';
 import CustomText from '../../../custom/CustomText';
 import Divider from '../../../custom/Divider';
+import CustomLayout from '../../../custom/CustomLayout';
 
 
 
@@ -41,7 +43,7 @@ const HomeNonAuth: React.FC<Props> = () => {
   
   return (   
     
-      <View style={styles.container}>
+      <CustomLayout style={styles.container}>
          <Logo
       width="60"
       height="60"
@@ -85,27 +87,30 @@ const HomeNonAuth: React.FC<Props> = () => {
           <CustomText type="light" style={styles.forthText}>
                 How does this app work?
           </CustomText> 
-          <CustomButton  buttonWidth='50%' name="information-outline" size={28} color='white' fontSize={20} textType="bold" text="App Info" onPress={appInfo}/> 
-        </View>
-    
+          <CustomButton  buttonWidth='50%' name="information-outline" size={18} color='white' fontSize={14} textType="bold" text="App Info" onPress={appInfo}/> 
+        </CustomLayout>
+       
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+   justifyContent: 'center',
     alignItems: 'center', 
-    marginTop: 20
+    marginTop: 0,
+    marginBottom: 50,
+    height, 
+    width
   }, 
   logo: {width: 100, height: 100},
   text: {
     color: 'white', 
-    fontSize: 20, 
-    marginTop: 20,
+    fontSize: 14, 
+    marginTop: 10,
   }, 
-  subtitle: {fontSize: 18, marginTop: 10, color: 'white'},
-  thirdText: {fontSize: 16, marginTop: 10, margin: 20},
-  forthText: {fontSize: 20, marginTop: 10, margin: 10, textAlign: 'center'}, buttonContainer: {
+  subtitle: {fontSize: 14, marginTop: 10, color: 'white'},
+  thirdText: {fontSize: 14, marginTop: 10, margin: 20},
+  forthText: {fontSize: 14, marginTop: 10, margin: 10, textAlign: 'center'}, buttonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center'

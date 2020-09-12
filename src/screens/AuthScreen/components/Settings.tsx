@@ -25,7 +25,7 @@ const AuthScreen: React.FC<Props> = ({user}) => {
  console.log(user)
   return (
     <CustomLayout style={styles.layout}>
-      <Text style={styles.text}>The Settings Here. implemnet update me, my blocked ppl, delete, logout. my comunities no, that has its own screen  </Text>
+      <Text style={styles.text}>The Settings Here. implemnet update me, my blocked ppl, delete, logout. my comunities no, that has its own screen.   </Text>
     </CustomLayout>
   );
 };

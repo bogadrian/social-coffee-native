@@ -20,13 +20,14 @@ import {URL} from '../../constants/variables'
       if (user.emailConfirm === false) {
           console.log('Please confirm your email first!')
       }
-            return user.data.data.user 
-     }
-  }catch (err) {
-    console.log(err)
+      
+      if (user) {
+        return user.data.data.user 
+      }
+    }       
+  }catch (error) {
+    throw new Error(error.response.data.message)
   }
-
-  
 }
 
 
@@ -44,8 +45,8 @@ export const getProviderToken = async() => {
         )
        return provider.data.data.user 
       }
-  }catch (err) {
-    console.log(err)
+  }catch (error) {
+    throw new Error(error.response.data.message)
   }
 
 }

@@ -1,7 +1,7 @@
-import {IUsersTypes} from './users.types'
+import {IUsersTypes} from '../users.types'
+
 
 export const loginStartUser = (user: any) => {
-
     return {
         type: IUsersTypes.START_LOGIN_USER,
         user

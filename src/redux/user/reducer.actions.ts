@@ -1,30 +1,42 @@
 import {IUsersTypes} from './users.types'
 
 
-export const signupStartUser = (user: any) => {
-  
-    return {
-        type: IUsersTypes.START_SIGNUP_USER,
-        user
-    }
-}
-export const signupStartProvider = (user: any) => {
-    return {
-        type: IUsersTypes.START_SIGNUP_PROVIDER,
-        user
-    }
-}
-
-export const userSuccess = (user: any) => { 
+export const userGetMeSuccess = (user: any) => { 
     return {
         type: IUsersTypes.SUCCESS_USER_GET,
         user
     }
 }
 
-export const userFailure = (error: string) => {
+export const userGetMeFailure = (error: string) => {
     return {
         type: IUsersTypes.FAILURE_USER_GET,
-        payload: error
+        error
+    }
+}
+export const userLoginSuccess = (user: any) => { 
+    return {
+        type: IUsersTypes.SUCCESS_LOGIN,
+        user
+    }
+}
+
+export const userLoginFailure = (error: string) => {
+    return {
+        type: IUsersTypes.FAILURE_LOGIN,
+        error
+    }
+}
+export const userSignupSuccess = (user: any) => { 
+    return {
+        type: IUsersTypes.SUCCESS_SIGNUP,
+        user
+    }
+}
+
+export const userSignupFailure = (error: string) => {
+    return {
+        type: IUsersTypes.FAILURE_SIGNUP,
+        error
     }
 }

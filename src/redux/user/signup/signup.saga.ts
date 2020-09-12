@@ -1,23 +1,19 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects';
 
-import {IUsersTypes} from './users.types'
-import {userSuccess, userFailure } from './reducer.actions'
-import {makeCallSignupWithUser, makeCallSignupProvider} from '../apis/signupApi'
+import {IUsersTypes} from '../users.types'
+import {userSignupSuccess, userSignupFailure } from '../reducer.actions'
+import {makeCallSignupWithUser, makeCallSignupProvider} from '../../apis/signupApi'
 
 
 export function* setSignupSuccessProvider (user: any) {
-    try {
+  
         const userSignedUp = yield call(makeCallSignupProvider, user)
         
-    
         if (userSignedUp) {
-            yield put(userSuccess(userSignedUp))
+            yield put(userSignupSuccess(userSignedUp))
+        }else {
+           yield put(userSignupFailure('No user was found')) 
         }
-        
-    }catch (err) {
-        yield put(userFailure(err))
-        
-    }
 }
 
 export  function* setSignupSuccessUser(user: any) {   
@@ -25,7 +21,7 @@ export  function* setSignupSuccessUser(user: any) {
         const userSignedUp = yield call(makeCallSignupWithUser, user)
         
         if (userSignedUp) {
-            yield put(userSuccess(userSignedUp))
+            yield put(userSignupSuccess(userSignedUp))
         }else {
             yield call(setSignupSuccessProvider, user)
         }

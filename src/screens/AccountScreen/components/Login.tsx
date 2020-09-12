@@ -1,12 +1,12 @@
 import React, {useState} from "react";
-import { StyleSheet, View, TouchableWithoutFeedback, Keyboard,  Dimensions} from "react-native";
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard, Text, Dimensions} from "react-native";
 import * as Yup from "yup";
 import { useNavigation } from '@react-navigation/native';
 export const { width, height } = Dimensions.get('window');
 
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import  { connect } from 'react-redux';
-import { loginStartUser, loginStartProvider } from '../../../redux/user/login.actions'
+import { loginStartUser, loginStartProvider } from '../../../redux/user/login/login.actions'
 
 import Color from '../../../constants/Color';
 
@@ -19,6 +19,7 @@ interface Props {
   loginStartUser: any;
   loginStartProvider: any;
   user: any;
+  err: any;
 }
 
 const validationSchema = Yup.object().shape({
@@ -26,12 +27,24 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required().min(4).label("Password"),
 });
 
-const Login: React.FC<Props> = ({loginStartUser, loginStartProvider, user}) => { 
+const Login: React.FC<Props> = ({loginStartUser, loginStartProvider, user, err}) => { 
   const navigation = useNavigation();
   const [userType, setUserType] = useState<string>('user')
   
-  if (user) {
-    navigation.navigate('Settings')
+
+if (err) {
+  return  <View style={styles.layout}><CustomText type="extra-bold-italic" style={styles.text} >
+  {err.message} Here a Go back button and set the jwt in secure store to undefine button 
+    </CustomText>
+    <CustomButton buttonWidth='50%' name="account-heart-outline" size={15} color='yellow' fontSize={14} animation="tada" textType="bold" text="Login" onPress={() => navigation.goBack()}/>
+    </View>
+}
+  if ((user && user.role === 'user') || (user && user.role === 'coffee-provider')) {
+  
+    return <View style={styles.layout}><Text style={styles.textLoogedIn}>You are allready logged in! </Text>
+      {navigation.navigate('Settings')}
+    <CustomButton buttonWidth='50%' name="account-heart-outline" size={15} color='yellow' fontSize={14} animation="tada" textType="bold" text="My Settings" onPress={() => navigation.navigate('Settings')}/>
+    </View>
   }
   
   const switchUser = () => {
@@ -43,18 +56,13 @@ const Login: React.FC<Props> = ({loginStartUser, loginStartProvider, user}) => {
   }
   
   const loginHandler = (email: string, password: string): void =>  {
-   
-    console.log(email, password)
-
      userType === 'user' ?  loginStartUser({email, password}) : loginStartProvider({email, password})
   }
-  
-  
   
   return (
   <View style={styles.container}>
   <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
-    
+  
     <View style={styles.content}>
         <CustomText type="extra-bold-italic" style={styles.text} >
   {userType=== 'user' ? 'Login as regular User': 'Login as Coffee Provider'} 
@@ -95,6 +103,7 @@ const Login: React.FC<Props> = ({loginStartUser, loginStartProvider, user}) => {
  
     </TouchableWithoutFeedback>
     </View>
+  
   );
 }
 
@@ -121,12 +130,22 @@ const styles = StyleSheet.create({
       marginBottom: 30
   },
   text: {
-      fontSize: 20, marginBottom: 10
+      fontSize: 16, 
+      marginBottom: 10,
+      width: width * 0.90
   }, 
   text2: {
-    fontSize: 26,
+    fontSize: 20,
     marginTop: 5, 
     marginBottom: 5
+  }, 
+  layout: {  justifyContent: 'center', alignItems: 'center' },
+  textLoogedIn: { 
+    fontSize: 20, 
+    color: 'white',
+    width: width * 0.80,
+    textAlign: 'center',
+    marginBottom: 20
   }
  
 });
@@ -141,7 +160,8 @@ bindActionCreators(
 );
 
 const mapStateToProps = ({user}: any) => ({
-  user: user.user
+  user: user.user,
+  err: user.err
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

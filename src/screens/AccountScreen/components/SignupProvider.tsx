@@ -1,12 +1,14 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+export const { width, height } = Dimensions.get('window');
 
 import  { connect } from 'react-redux';
 
 import SwiperFlatList from 'react-native-swiper-flatlist';
 
 import Color from '../../../constants/Color'
+import CustomButton from '../../../custom/CustomButton'
 
 interface Props {
   user: any
@@ -14,13 +16,18 @@ interface Props {
 
 import Localization from './Localization'
 import FormInfo from './FormInfo'
+import CustomLayout from '../../../custom/CustomLayout';
 
 const SignupProvider: React.FC<Props> = ({user}) => {
   const navigation = useNavigation();
   
-  if (user && user.role === 'coffee-provider') {
-    navigation.navigate('Settings')
+  if ((user && user.role === 'user') || (user && user.role === 'coffee-provider')) {
+    return <CustomLayout style={styles.layout}><Text style={styles.textLoogedIn}>You are allready logged in! </Text>
+      {navigation.navigate('Settings')}
+    <CustomButton buttonWidth='50%' name="account-heart-outline" size={15} color='yellow' fontSize={14} animation="tada" textType="bold" text="My Settings" onPress={() => navigation.navigate('Settings')}/>
+    </CustomLayout>
   }
+  
     return (
         <SwiperFlatList
           showPagination
@@ -39,8 +46,6 @@ const SignupProvider: React.FC<Props> = ({user}) => {
   }
 
 
-export const { width, height } = Dimensions.get('window');
-
 const styles = StyleSheet.create({
   child: {
     flexGrow: 1,
@@ -53,6 +58,14 @@ const styles = StyleSheet.create({
   text: {
     fontSize: width * 0.5,
     textAlign: 'center'
+  }, 
+  layout: {flex: 1,  justifyContent: 'center', alignItems: 'center', height },
+  textLoogedIn: { 
+    fontSize: 20, 
+    color: 'white',
+    width: width * 0.80,
+    textAlign: 'center',
+    marginBottom: 20
   }
 });
 

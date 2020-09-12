@@ -1,4 +1,4 @@
-import {IUsersTypes} from './users.types'
+import {IUsersTypes} from '../users.types'
 
 export interface UserAction  {
     type: IUsersTypes;

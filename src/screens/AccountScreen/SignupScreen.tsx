@@ -1,7 +1,10 @@
 import React from 'react';
 
-import {StyleSheet, Dimensions} from 'react-native'
+import {StyleSheet, Dimensions, Text} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
+
+import  { connect } from 'react-redux';
+
 export const { width, height } = Dimensions.get('window');
 
 import Color from '../../constants/Color'
@@ -11,14 +14,22 @@ import CustomText from "../../custom/CustomText";
 import CustomButton from "../../custom/CustomButton";
 import Divider from "../../custom/Divider";
 
-interface Props {}
+interface Props {
+    user: any
+}
 
 
 
-const SignupScreen: React.FC<Props> = () => {
-    const auth = false
+const SignupScreen: React.FC<Props> = ({user}) => {
     const navigation = useNavigation();
     
+    if ((user && user.role === 'user') || (user && user.role === 'coffee-provider')) {
+        return <CustomLayout style={styles.container}><Text style={styles.textLoogedIn}>You are allready logged in! </Text>
+          {navigation.navigate('Settings')}
+        <CustomButton buttonWidth='50%' name="account-heart-outline" size={15} color='yellow' fontSize={14} animation="tada" textType="bold" text="My Settings" onPress={() => navigation.navigate('Settings')}/>
+        </CustomLayout>
+      }
+      
    return ( 
    <CustomLayout style={styles.container}>
         <CustomText type="extra-bold-italic" style={styles.text1} >
@@ -42,7 +53,7 @@ const SignupScreen: React.FC<Props> = () => {
 }
 const styles = StyleSheet.create({
     text1: {
-        fontSize: 20,
+        fontSize: 16,
         marginBottom: 10,
     },
     text2: {
@@ -60,7 +71,22 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     lastButton: {
-        marginTop: 80
+        marginTop: 60
+    },
+    textLoogedIn: { 
+      fontSize: 20, 
+      color: 'white',
+      width: width * 0.80,
+      textAlign: 'center',
+      marginBottom: 20
     }
+   
 }) 
-export default SignupScreen
+
+const mapStateToProps = ({user}: any) => ({
+    user: user.user,
+    isLoading: user.isLoading
+  })
+  
+  
+  export default connect(mapStateToProps)(SignupScreen);

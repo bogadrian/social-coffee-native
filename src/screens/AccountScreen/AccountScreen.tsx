@@ -1,28 +1,40 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, Dimensions } from 'react-native';
+import  { connect } from 'react-redux';
+
+export const { width, height } = Dimensions.get('window');
 
 import Login from './components/Login'
-import MyComunitiesScreen from '../MyComunities/MyComunitiesScreen'
+import AuthScreen from '../AuthScreen/AuthScreen'
 
 
 import CustomLayout from '../../custom/CustomLayout'
 
 interface Props {
+  user: any
 }
 
 const styles = StyleSheet.create({
-  layout: { flex: 1, justifyContent: 'center', alignItems: 'center', height: 1000 }
+  layout: { flex: 1, justifyContent: 'center', alignItems: 'center', height}
 });
 
-const AccountScreen: React.FC<Props> = () => {
-  const auth = false
+const AccountScreen: React.FC<Props> = ({user}) => {
+ 
+  
   return (
     <CustomLayout style={styles.layout}>
      
-  {auth ? <MyComunitiesScreen/> :<Login /> }
+  {user ? <AuthScreen/> : <Login /> }
     
     </CustomLayout>
   );
 };
 
-export default AccountScreen;
+const mapStateToProps = ({user}: any) => ({
+  user: user.user,
+  isLoading: user.isLoading
+})
+
+
+export default connect(mapStateToProps)(AccountScreen);
+

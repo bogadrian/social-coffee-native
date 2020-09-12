@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import { ScrollView, View, Text, Dimensions, StyleSheet, ActivityIndicator} from 'react-native';
-import {AppLoading} from 'expo'
+import React from 'react';
+import { View, Text, Dimensions, StyleSheet, ActivityIndicator} from 'react-native';
 
 import  { connect } from 'react-redux';
 
@@ -10,16 +9,16 @@ import Color from '../../constants/Color'
 
 
 import CustomLayout from '../../custom/CustomLayout';
-import HomeNonAuth from './components/HomeNonAuth'
+import HomeLoading from './components/HomeLoading'
 
 interface Props {  
-  navigation: any,
-  user: any
+  user: any;
+  isLoading: boolean;
+  navigation: any;
 }
 
-const HomeScreen: React.FC<Props> = ({navigation, user}) => {
-  
-  
+const HomeScreen: React.FC<Props> = ({ user, isLoading }) => {
+
   if (user && user.emailConfirm === false) {
     return (<CustomLayout style={styles.layout}>
       <View>
@@ -31,21 +30,16 @@ const HomeScreen: React.FC<Props> = ({navigation, user}) => {
         </View> 
         </CustomLayout>)
   }
-  if (user) {
-    navigation.navigate('Settings')  
-  }
-  
-  return (   
-    <CustomLayout>
-      <ScrollView>
-      {!user && <HomeNonAuth /> }
-    </ScrollView>  
-    </CustomLayout>
-  );
+ 
+    return (
+         <CustomLayout style={styles.layout}>
+           {!isLoading ? <HomeLoading user={user} /> : <ActivityIndicator size="large" /> }
+         </CustomLayout>
+    )
 };
 
 const styles = StyleSheet.create({
-  layout: { flexGrow: 1, justifyContent: 'center', alignItems: 'center', height },
+  layout: { flex: 1, justifyContent: 'center', alignItems: 'center', height },
   text: { 
     fontSize: 20, 
     color: 'white',
@@ -55,7 +49,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = ({user}: any) => ({
-  user: user.user
+  user: user.user,
+  isLoading: user.isLoading
 })
 
 

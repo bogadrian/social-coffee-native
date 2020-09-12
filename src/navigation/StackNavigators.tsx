@@ -37,6 +37,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 const MyTabs = () => {
   
+const user = useSelector<{user: any}>(state => state.user.user)
 
   const  play = async () => {
    await playSound()
@@ -59,7 +60,7 @@ const MyTabs = () => {
        listeners={{
         tabPress: () => play() 
       }}
-      component={HomeStack} 
+      component={user ? MyComunitiesStack : HomeStack} 
       options={{
         tabBarLabel: 'Home',
         tabBarIcon: ({ color }) => (

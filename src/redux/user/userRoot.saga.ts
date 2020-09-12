@@ -1,9 +1,9 @@
 import { all, call } from 'redux-saga/effects';
 
 
-import { getUser } from './users.saga'
-import {startSignup} from './signup.saga'
-import { startLogin } from './login.saga'
+import { getUser } from './getMe/users.saga'
+import {startSignup} from './signup/signup.saga'
+import { startLogin } from './login/login.saga'
 
 export function* rootUserSaga() {
   yield all([

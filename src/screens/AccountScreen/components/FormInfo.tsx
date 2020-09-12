@@ -11,7 +11,7 @@ import { AppForm, AppFormField} from "../../../components/forms";
 
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import  { connect } from 'react-redux';
-import { signupStartProvider } from '../../../redux/user/reducer.actions'
+import { signupStartProvider } from '../../../redux/user/signup/signup.actions'
 
 import SubmitButton from '../../../components/forms/SubmitButton'
 import CustomButton from '../../../custom/CustomButton'
@@ -37,10 +37,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const SignupProvider: React.FC<Props> = ({signupStartProvider}) => { 
-  //const [address, setAddress] = useState<any>()
   const navigation = useNavigation();
  
-
   const callTheBackendWithProviderData = (data: any) => {
     const user = {
       name: data.name,
@@ -76,10 +74,10 @@ const SignupProvider: React.FC<Props> = ({signupStartProvider}) => {
         onSubmit={(values) => callTheBackendWithProviderData(values)}
         validationSchema={validationSchema}
       > 
-      <CustomText type="thin-italic" style={styles.text1} >
+      {/*<CustomText type="thin-italic" style={styles.text1} >
       Please chose at least 1 photo, up to 10 photos!
          </CustomText>
-      {/*<FormImagePicker name="images" />+*/}
+      <FormImagePicker name="images" />+*/}
         <AppFormField
           autoCapitalize="none"
           autoCorrect={false}

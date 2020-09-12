@@ -26,10 +26,9 @@ export const makeCallSignupWithUser = async(user: any) => {
     SecureStore.setItemAsync('jwt', userCreated.data.token)
      return userCreated.data.data.user
     
-    }catch (err) {
-        console.log(err)
+    }catch (error) {
+      throw new Error(error.response.data.message)
     }
-  
 }
 
 export const makeCallSignupProvider = async(user: any) => {
@@ -47,10 +46,13 @@ export const makeCallSignupProvider = async(user: any) => {
         data: user
       });
      
-    SecureStore.setItemAsync('jwt', userCreated.data.token)
+      if (userCreated.data) {
+        SecureStore.setItemAsync('jwt', userCreated.data.token)
      return userCreated.data.data.user
-    }catch (err) {
-        console.log(err)
+      }
+    
+    }catch (error) {
+      throw new Error(error.response.data.message)
     }
   
 }
