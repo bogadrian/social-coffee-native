@@ -88,9 +88,8 @@ const Login: React.FC<Props> = ({
     (user && user.role === 'coffee-provider')
   ) {
     return (
-      <View style={styles.layout}>
+      <CustomLayout style={styles.layout}>
         <Text style={styles.textLoogedIn}>You are allready logged in! </Text>
-        {navigation.navigate('Settings')}
         <CustomButton
           buttonWidth="50%"
           name="account-heart-outline"
@@ -102,7 +101,7 @@ const Login: React.FC<Props> = ({
           text="My Settings"
           onPress={() => navigation.navigate('Settings')}
         />
-      </View>
+      </CustomLayout>
     );
   }
 

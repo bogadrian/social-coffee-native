@@ -19,9 +19,8 @@ export function* setLoginSuccessProvider(user: any) {
 export function* setLoginSuccessUser(user: any) {
   try {
     const userSignedUp = yield call(makeCallLoginWithUser, user);
-    if (userSignedUp) {
-      yield put(userLoginSuccess(userSignedUp));
-    }
+
+    yield put(userLoginSuccess(userSignedUp));
   } catch (error) {
     yield put(userLoginFailure(error));
   }

@@ -10,7 +10,7 @@ function* takeNewRoute() {
     const user = yield call(getProviderToken);
     yield put(userGetMeSuccess(user));
   } catch (error) {
-    yield put(userGetMeFailure('No user found!'));
+    yield put(userGetMeFailure(error));
   }
 }
 
@@ -20,7 +20,7 @@ function* setSuccessGet() {
     yield put(userGetMeSuccess(user));
   } catch (error) {
     yield call(takeNewRoute);
-    yield put(userGetMeFailure('No user found!'));
+    yield put(userGetMeFailure(error));
   }
 }
 
