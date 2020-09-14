@@ -87,11 +87,9 @@ const AuthScreen: React.FC<Props> = ({
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (text === 'No such an email found!') {
-      setTimeout(() => {
-        setLoad(false);
-      }, 2000);
-    }
+    setTimeout(() => {
+      setLoad(false);
+    }, 2000);
   }, [text]);
 
   const resendEmailhandler = (email: string) => {
@@ -124,8 +122,8 @@ const AuthScreen: React.FC<Props> = ({
     setModal(true);
   };
 
-  const trySignupAgain = () => {
-    SecureStore.deleteItemAsync('jwt');
+  const trySignupAgain = async () => {
+    await SecureStore.deleteItemAsync('jwt');
     cleanUserErrors();
     fetch(`${URL}/api/v1/users/deleteMe`, { method: 'DELETE' })
       .then(() => {

@@ -2,11 +2,11 @@ import React from 'react';
 import { Formik } from 'formik';
 
 interface Props {
-  initialValues: any,
-  onSubmit: (values: any) => void,
-  validationSchema: any,
-  children?: any,
-  oteherProps?: any
+  initialValues: any;
+  onSubmit: (values: any) => void;
+  validationSchema: any;
+  children?: any;
+  oteherProps?: any;
 }
 
 const AppForm: React.FC<Props> = ({

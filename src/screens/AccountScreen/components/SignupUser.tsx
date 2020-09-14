@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -52,32 +52,33 @@ const SignupUser: React.FC<Props> = ({
   err,
   cleanUserErrors
 }) => {
+  const [inputTextType, setInputTextType] = useState<boolean>(true);
   const navigation = useNavigation();
 
-  const resetLogin = () => {
-    SecureStore.deleteItemAsync('jwt');
+  const resetLogin = async () => {
+    await SecureStore.deleteItemAsync('jwt');
     cleanUserErrors();
-    navigation.goBack();
+    navigation.navigate('SignupUser');
   };
 
   if (err) {
     return (
-      <View style={styles.container}>
+      <CustomLayout style={styles.container}>
         <CustomText type="extra-bold-italic" style={styles.text}>
           {err.message}
         </CustomText>
         <CustomButton
           buttonWidth="50%"
-          name="account-heart-outline"
+          name="step-backward"
           size={15}
           color="yellow"
           fontSize={14}
-          animation="tada"
+          animation="pulse"
           textType="bold"
           text="Go Back"
           onPress={() => resetLogin()}
         />
-      </View>
+      </CustomLayout>
     );
   }
 
@@ -108,13 +109,17 @@ const SignupUser: React.FC<Props> = ({
     signupStartUser(values);
   };
 
+  const handleShow = () => {
+    setInputTextType(!inputTextType);
+  };
+
   return (
     <TouchableWithoutFeedback
       style={{ flex: 1 }}
       onPress={() => Keyboard.dismiss()}
     >
       <CustomLayout>
-        <View style={styles.container}>
+        <View style={styles.containerFields}>
           <CustomText type="extra-bold-italic" style={styles.text}>
             Signup User:
           </CustomText>
@@ -162,19 +167,23 @@ const SignupUser: React.FC<Props> = ({
               autoCapitalize="none"
               autoCorrect={false}
               icon="lock"
+              show={true}
               name="password"
               placeholder="Password"
-              secureTextEntry
+              secureTextEntry={inputTextType}
               textContentType="password"
+              handleShow={handleShow}
             />
             <AppFormField
               autoCapitalize="none"
               autoCorrect={false}
               icon="lock"
+              show={true}
               name="passwordConfirm"
               placeholder="Confirm Password"
-              secureTextEntry
+              secureTextEntry={inputTextType}
               textContentType="password"
+              handleShow={handleShow}
             />
             <SubmitButton
               buttonWidth="40%"
@@ -189,7 +198,7 @@ const SignupUser: React.FC<Props> = ({
             />
           </AppForm>
         </View>
-        {isLoading && (
+        {isLoading && !err && (
           <Modal
             animationType="slide"
             transparent={false}
@@ -213,17 +222,36 @@ const SignupUser: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     height,
     padding: 10,
-    marginTop: 20,
-    marginBottom: 180,
+    marginTop: 0,
+    marginBottom: 10,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    elevation: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  containerFields: {
+    padding: 10,
+    marginTop: 50,
+    marginBottom: 150,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    elevation: 20,
     justifyContent: 'center',
     alignItems: 'center'
   },
   text: {
-    fontSize: 30,
-    marginTop: 20
+    fontSize: 20,
+    marginTop: 20,
+    textAlign: 'center',
+    marginBottom: 20
   },
   text1: {
     fontSize: 20,
@@ -257,7 +285,8 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
 
 const mapStateToProps = ({ user }: any) => ({
   user: user.user,
-  isLoading: user.isLoading
+  isLoading: user.isLoading,
+  err: user.err
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupUser);

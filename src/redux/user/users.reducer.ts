@@ -26,6 +26,7 @@ export const userReducer = (
     case IUsersTypes.START_SIGNUP_PROVIDER:
       return {
         ...state,
+        err: null,
         isLoading: true
       };
 

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import * as SecureStore from 'expo-secure-store';
+
 import { StyleSheet, Dimensions, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -25,6 +27,16 @@ interface Props {
 const SignupScreen: React.FC<Props> = ({ user, cleanUserErrors }) => {
   const navigation = useNavigation();
 
+  const handleSignupUser = async () => {
+    await SecureStore.deleteItemAsync('jwt');
+    navigation.navigate('SignupUser');
+  };
+
+  const handleSignupProvider = async () => {
+    await SecureStore.deleteItemAsync('jwt');
+    navigation.navigate('SignupProvider');
+  };
+
   if (
     (user && user.role === 'user') ||
     (user && user.role === 'coffee-provider')
@@ -39,7 +51,7 @@ const SignupScreen: React.FC<Props> = ({ user, cleanUserErrors }) => {
           size={15}
           color="yellow"
           fontSize={14}
-          animation="tada"
+          animation="pulse"
           textType="bold"
           text="My Settings"
           onPress={() => navigation.navigate('Settings')}
@@ -62,10 +74,10 @@ const SignupScreen: React.FC<Props> = ({ user, cleanUserErrors }) => {
         size={24}
         color={Color.tertiary}
         fontSize={14}
-        animation="tada"
+        animation="pulse"
         textType="bold"
         text="User Signup"
-        onPress={() => navigation.navigate('SignupUser')}
+        onPress={() => handleSignupUser()}
       />
       <Divider style={styles.divider} />
       <CustomText type="extra-bold-italic" style={styles.text1}>
@@ -82,7 +94,7 @@ const SignupScreen: React.FC<Props> = ({ user, cleanUserErrors }) => {
         fontSize={14}
         textType="bold"
         text="Provider Signup"
-        onPress={() => navigation.navigate('SignupProvider')}
+        onPress={() => handleSignupProvider()}
       />
       <CustomButton
         buttonWidth="40%"

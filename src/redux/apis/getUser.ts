@@ -30,13 +30,20 @@ export const getProviderToken = async () => {
   try {
     const token = await SecureStore.getItemAsync('jwt');
 
-    const provider = await axios.get(`${URL}/api/v1/provider/getMe`, {
+    const provider: any = await axios.get(`${URL}/api/v1/provider/getMe`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Access-Control-Allow-Origin': '*'
       }
     });
-    return provider.data.data.user;
+
+    if (provider.emailConfirm === false) {
+      console.log('Please confirm your email first!');
+    }
+
+    if (provider) {
+      return provider.data.data.user;
+    }
   } catch (error) {
     throw new Error(error.response.data.message);
   }

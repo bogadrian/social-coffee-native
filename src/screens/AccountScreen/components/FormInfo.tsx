@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -56,32 +56,33 @@ const SignupProvider: React.FC<Props> = ({
   err,
   isLoading
 }) => {
+  const [inputTextType, setInputTextType] = useState<boolean>(true);
   const navigation = useNavigation();
 
-  const resetLogin = () => {
-    SecureStore.deleteItemAsync('jwt');
+  const resetLogin = async () => {
+    await SecureStore.deleteItemAsync('jwt');
     cleanUserErrors();
-    navigation.goBack();
+    navigation.navigate('SignupProvider');
   };
 
   if (err) {
     return (
-      <View style={styles.container}>
+      <CustomLayout style={styles.container}>
         <CustomText type="extra-bold-italic" style={styles.text}>
           {err.message}
         </CustomText>
         <CustomButton
           buttonWidth="50%"
-          name="account-heart-outline"
+          name="step-backward"
           size={15}
           color="yellow"
           fontSize={14}
-          animation="tada"
+          animation="pulse"
           textType="bold"
           text="Go Back"
           onPress={() => resetLogin()}
         />
-      </View>
+      </CustomLayout>
     );
   }
 
@@ -97,6 +98,11 @@ const SignupProvider: React.FC<Props> = ({
     };
     signupStartProvider(user);
   };
+
+  const handleShow = () => {
+    setInputTextType(!inputTextType);
+  };
+
   return (
     <ScrollView
       contentContainerStyle={{ flex: 1, height, width, marginBottom: 150 }}
@@ -162,19 +168,23 @@ const SignupProvider: React.FC<Props> = ({
                 autoCapitalize="none"
                 autoCorrect={false}
                 icon="lock"
+                show={true}
                 name="password"
                 placeholder="Password"
-                secureTextEntry
+                secureTextEntry={inputTextType}
                 textContentType="password"
+                handleShow={handleShow}
               />
               <AppFormField
                 autoCapitalize="none"
                 autoCorrect={false}
                 icon="lock"
+                show={true}
                 name="passwordConfirm"
                 placeholder="Confirm Password"
-                secureTextEntry
+                secureTextEntry={inputTextType}
                 textContentType="password"
+                handleShow={handleShow}
               />
               <AppFormField
                 autoCapitalize="none"
@@ -223,14 +233,30 @@ const SignupProvider: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
+    height,
     padding: 10,
-    marginTop: 20,
+    marginTop: 0,
     marginBottom: 10,
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.5,
     shadowRadius: 10,
-    elevation: 20
+    elevation: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  containerFields: {
+    padding: 10,
+    marginTop: 50,
+    marginBottom: 150,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    elevation: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   header: {
     alignItems: 'center',
@@ -239,7 +265,8 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     marginTop: 20,
-    marginBottom: 20
+    marginBottom: 20,
+    textAlign: 'center'
   },
   text1: {
     fontSize: 20,
@@ -259,7 +286,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = ({ user }: any) => ({
-  isLoading: user.isLoading
+  isLoading: user.isLoading,
+  err: user.err
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>

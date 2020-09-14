@@ -3,15 +3,21 @@ import {
   StyleSheet,
   View,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   Keyboard,
   Text,
   Dimensions,
   Modal,
   ActivityIndicator
 } from 'react-native';
+
 import * as Yup from 'yup';
+import axios from 'axios';
+
 import { useNavigation } from '@react-navigation/native';
+
 export const { width, height } = Dimensions.get('window');
+
 import * as SecureStore from 'expo-secure-store';
 
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
@@ -23,10 +29,12 @@ import {
 import { cleanUserErrors } from '../../../redux/user/reducer.actions';
 
 import Color from '../../../constants/Color';
+import { URL } from '../../../constants/variables';
 
 import CustomText from '../../../custom/CustomText';
 import CustomLayout from '../../../custom/CustomLayout';
 import CustomButton from '../../../custom/CustomButton';
+import Divider from '../../../custom/Divider';
 
 import { AppForm, AppFormField } from '../../../components/forms';
 import SubmitButton from '../../../components/forms/SubmitButton';
@@ -45,6 +53,10 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required().min(4).label('Password')
 });
 
+const validationSchemaForgot = Yup.object().shape({
+  email: Yup.string().required().email().label('Email')
+});
+
 const Login: React.FC<Props> = ({
   loginStartUser,
   loginStartProvider,
@@ -55,18 +67,23 @@ const Login: React.FC<Props> = ({
 }) => {
   const navigation = useNavigation();
   const [userType, setUserType] = useState<string>('user');
+  const [modal, setModal] = useState<boolean>(false);
+  const [load, setLoad] = useState<boolean>(false);
+  const [text, setText] = useState<string>('Enter your email please!');
+  const [inputTextType, setInputTextType] = useState<boolean>(true);
 
-  const resetLogin = () => {
-    SecureStore.deleteItemAsync('jwt');
+  const resetLogin = async () => {
+    await SecureStore.deleteItemAsync('jwt');
     cleanUserErrors();
-    navigation.goBack();
+    navigation.navigate('Account');
   };
 
-  if (err) {
+  if (err && err.message !== 'jwt malformed') {
     return (
       <CustomLayout style={styles.layout}>
         <CustomText type="extra-bold-italic" style={styles.text}>
-          {err.message}
+          {err.message} Operation went wrong. Please chek your connection and
+          try agin!
         </CustomText>
         <CustomButton
           buttonWidth="50%"
@@ -119,6 +136,44 @@ const Login: React.FC<Props> = ({
       : loginStartProvider({ email, password });
   };
 
+  const forgotHandler = () => {
+    setModal(true);
+  };
+
+  const forgotPasswordHandler = (email: string) => {
+    setLoad(true);
+    //call forgot password end-point
+    if (userType === 'user') {
+      axios
+        .post(`${URL}/api/v1/users/forgotPassword`, { email })
+        .then((response: any) => {
+          setLoad(false);
+          setText(response.data.message);
+        })
+        .catch(error => {
+          setLoad(false);
+          setText(error.message);
+        });
+    }
+
+    if (userType === 'coffee provider') {
+      axios
+        .post(`${URL}/api/v1/provider/forgotPassword`, { email })
+        .then(response => {
+          setLoad(false);
+          setText(response.data.message);
+        })
+        .catch(error => {
+          setLoad(false);
+          setText(error.message);
+        });
+    }
+  };
+
+  const handleShow = () => {
+    setInputTextType(!inputTextType);
+  };
+
   return (
     <CustomLayout style={styles.container}>
       <TouchableWithoutFeedback
@@ -169,9 +224,11 @@ const Login: React.FC<Props> = ({
               autoCorrect={false}
               icon="lock"
               name="password"
+              show={true}
               placeholder="Password"
-              secureTextEntry
+              secureTextEntry={inputTextType}
               textContentType="password"
+              handleShow={handleShow}
             />
             <SubmitButton
               buttonWidth="60%"
@@ -184,20 +241,24 @@ const Login: React.FC<Props> = ({
               textType="bold"
               text={userType === 'user' ? 'Login User' : 'Login Coffe Provider'}
             />
-
-            <CustomButton
-              buttonWidth="60%"
-              style={styles.button3}
-              name="account-switch"
-              size={24}
-              color="white"
-              fontSize={14}
-              animation="pulse"
-              textType="bold"
-              text="Switch To Signup"
-              onPress={() => navigation.navigate('Signup')}
-            />
           </AppForm>
+          <CustomButton
+            buttonWidth="60%"
+            style={styles.button3}
+            name="account-switch"
+            size={24}
+            color="white"
+            fontSize={14}
+            animation="pulse"
+            textType="bold"
+            text="Switch To Signup"
+            onPress={() => navigation.navigate('Signup')}
+          />
+          <TouchableOpacity onPress={forgotHandler}>
+            <CustomText type="extra-bold-italic" style={styles.text2}>
+              Forgot your password?
+            </CustomText>
+          </TouchableOpacity>
         </View>
       </TouchableWithoutFeedback>
       {isLoading && (
@@ -217,6 +278,70 @@ const Login: React.FC<Props> = ({
           </CustomLayout>
         </Modal>
       )}
+      {modal ? (
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={true}
+          onRequestClose={() => {
+            console.log('some action');
+          }}
+        >
+          <CustomLayout style={styles.layout}>
+            {load ? (
+              <ActivityIndicator size="large" />
+            ) : (
+              <CustomText type="extra-bold-italic" style={styles.text}>
+                {text}
+              </CustomText>
+            )}
+
+            <Divider style={styles.divider} />
+
+            <AppForm
+              initialValues={{ email: '' }}
+              onSubmit={({ email }) => forgotPasswordHandler(email)}
+              validationSchema={validationSchemaForgot}
+            >
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                icon="email"
+                keyboardType="email-address"
+                name="email"
+                placeholder="Email"
+                textContentType="emailAddress"
+              />
+              <SubmitButton
+                buttonWidth="90%"
+                style={styles.button}
+                name="account-arrow-right-outline"
+                size={24}
+                color={Color.tertiary}
+                fontSize={12}
+                animation="fadeIn"
+                textType="bold"
+                text={'Send Pssword Resest Request'}
+              />
+            </AppForm>
+
+            <Divider style={styles.divider} />
+            <CustomButton
+              buttonWidth="50%"
+              name="close"
+              size={15}
+              color="red"
+              fontSize={14}
+              animation="tada"
+              textType="bold"
+              text="Close"
+              onPress={() => {
+                setModal(false);
+              }}
+            />
+          </CustomLayout>
+        </Modal>
+      ) : null}
     </CustomLayout>
   );
 };
@@ -253,7 +378,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   text2: {
-    fontSize: 20,
+    fontSize: 16,
     marginTop: 5,
     marginBottom: 5
   },
@@ -269,6 +394,14 @@ const styles = StyleSheet.create({
     width: width * 0.8,
     textAlign: 'center',
     marginBottom: 20
+  },
+  divider: {
+    marginTop: 20
+  },
+  button: {
+    marginTop: 30,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end'
   }
 });
 

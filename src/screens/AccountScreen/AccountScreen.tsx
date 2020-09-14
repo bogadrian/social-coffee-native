@@ -12,7 +12,6 @@ interface Props {
 }
 
 const AccountScreen: React.FC<Props> = ({ user }) => {
-  console.log('usser account screen', user);
   return <React.Fragment>{user ? <AuthScreen /> : <Login />}</React.Fragment>;
 };
 
