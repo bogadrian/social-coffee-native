@@ -78,7 +78,7 @@ const Login: React.FC<Props> = ({
     navigation.navigate('Account');
   };
 
-  if (err && err.message !== 'jwt malformed') {
+  if (err) {
     return (
       <CustomLayout style={styles.layout}>
         <CustomText type="extra-bold-italic" style={styles.text}>
@@ -183,14 +183,14 @@ const Login: React.FC<Props> = ({
         <View style={styles.content}>
           <CustomText type="extra-bold-italic" style={styles.text}>
             {userType === 'user'
-              ? 'Login as regular User'
-              : 'Login as Coffee Provider'}
+              ? 'Login as regular USER'
+              : 'Login as COFFEE PROVIDER'}
           </CustomText>
           <CustomText type="extra-bold-italic" style={styles.text2}>
             or:
           </CustomText>
           <CustomButton
-            buttonWidth="80%"
+            buttonWidth="85%"
             style={styles.button2}
             name="electric-switch"
             size={28}
@@ -200,8 +200,8 @@ const Login: React.FC<Props> = ({
             textType="bold"
             text={
               userType === 'user'
-                ? 'Switch to Login Coffe Provider'
-                : 'Switch To Login User'
+                ? 'Switch to Login COFFEE PROVIDER'
+                : 'Switch To Login USER'
             }
             onPress={switchUser}
           />
@@ -272,7 +272,7 @@ const Login: React.FC<Props> = ({
         >
           <CustomLayout style={styles.layout}>
             <CustomText type="extra-bold-italic" style={styles.text2}>
-              Loggin in the User...
+              fetching...
             </CustomText>
             <ActivityIndicator size="large" />
           </CustomLayout>
@@ -281,7 +281,7 @@ const Login: React.FC<Props> = ({
       {modal ? (
         <Modal
           animationType="slide"
-          transparent={false}
+          transparent={true}
           visible={true}
           onRequestClose={() => {
             console.log('some action');
@@ -291,9 +291,16 @@ const Login: React.FC<Props> = ({
             {load ? (
               <ActivityIndicator size="large" />
             ) : (
-              <CustomText type="extra-bold-italic" style={styles.text}>
-                {text}
-              </CustomText>
+              <View style={{ alignItems: 'center' }}>
+                <CustomText type="light" style={styles.textWarrning}>
+                  Please make sure you are asking to reset the password for the
+                  right "USER" or "COFFEE PROVIDER". Close and check out how you
+                  try to login!
+                </CustomText>
+                <CustomText type="extra-bold-italic" style={styles.text}>
+                  {text}
+                </CustomText>
+              </View>
             )}
 
             <Divider style={styles.divider} />
@@ -303,26 +310,28 @@ const Login: React.FC<Props> = ({
               onSubmit={({ email }) => forgotPasswordHandler(email)}
               validationSchema={validationSchemaForgot}
             >
-              <AppFormField
-                autoCapitalize="none"
-                autoCorrect={false}
-                icon="email"
-                keyboardType="email-address"
-                name="email"
-                placeholder="Email"
-                textContentType="emailAddress"
-              />
-              <SubmitButton
-                buttonWidth="90%"
-                style={styles.button}
-                name="account-arrow-right-outline"
-                size={24}
-                color={Color.tertiary}
-                fontSize={12}
-                animation="fadeIn"
-                textType="bold"
-                text={'Send Pssword Resest Request'}
-              />
+              <View style={{ width: width * 0.9 }}>
+                <AppFormField
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  icon="email"
+                  keyboardType="email-address"
+                  name="email"
+                  placeholder="Email"
+                  textContentType="emailAddress"
+                />
+                <SubmitButton
+                  buttonWidth="90%"
+                  style={styles.button}
+                  name="account-arrow-right-outline"
+                  size={24}
+                  color={Color.tertiary}
+                  fontSize={12}
+                  animation="fadeIn"
+                  textType="bold"
+                  text={'Send Pssword Resest Request'}
+                />
+              </View>
             </AppForm>
 
             <Divider style={styles.divider} />
@@ -380,13 +389,22 @@ const styles = StyleSheet.create({
   text2: {
     fontSize: 16,
     marginTop: 5,
-    marginBottom: 5
+    marginBottom: 5,
+    textAlign: 'center'
+  },
+  textWarrning: {
+    fontSize: 14,
+    padding: 30,
+    marginTop: 10,
+    margin: 10,
+    textAlign: 'center'
   },
   layout: {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    height
+    height,
+    width
   },
   textLoogedIn: {
     fontSize: 20,

@@ -245,7 +245,7 @@ const AuthScreen: React.FC<Props> = ({
 
   return (
     <CustomLayout style={styles.layout}>
-      {user ? <Settings user={user} /> : <NotLogin />}
+      {user ? <Settings /> : <NotLogin />}
     </CustomLayout>
   );
 };
@@ -262,4 +262,5 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
 const mapStateToProps = ({ user }: any) => ({
   user: user.user
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);

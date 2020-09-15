@@ -18,6 +18,11 @@ import { userGetStart } from '../../../redux/user/getMe/users.actions';
 import CustomLayout from '../../../custom/CustomLayout';
 import CustomButton from '../../../custom/CustomButton';
 
+import HomeScreen from '../../HomeScreen/HomeScreen';
+
+import UpdateUser from './user/updateUser';
+import UpdateProvider from './provider/updateProvider';
+
 interface Props {
   user: any;
   cleanUserErrors: any;
@@ -41,53 +46,17 @@ const styles = StyleSheet.create({
 
 const Settings: React.FC<Props> = ({ user, userGetStart, cleanUserErrors }) => {
   const navigation = useNavigation();
-  console.log(user);
 
-  const handleClick = async () => {
-    await SecureStore.deleteItemAsync('jwt');
-    axios
-      .get(`${URL}/api/v1/users/logout`)
-      .then(response => {
-        console.log(response);
-        cleanUserErrors();
-      })
-      .catch(error => {
-        console.log(error);
-        cleanUserErrors();
-      });
-    axios
-      .get(`${URL}/api/v1/provider/logout`)
-      .then(response => {
-        console.log(response);
-        cleanUserErrors();
-      })
-      .catch(error => {
-        console.log(error);
-        cleanUserErrors();
-      });
-    userGetStart();
+  if (user.role === 'user') {
+    return <UpdateUser />;
+  }
 
-    navigation.navigate('Home');
-  };
+  if (user.role === 'coffee-provider') {
+    return <UpdateProvider />;
+  }
 
   return (
-    <CustomLayout style={styles.layout}>
-      <Text style={styles.text}>
-        The Settings Here. implemnet update me, my blocked ppl, delete, logout.
-        my comunities no, that has its own screen.
-      </Text>
-      <CustomButton
-        buttonWidth="30%"
-        name="account-heart-outline"
-        size={15}
-        color="white"
-        fontSize={14}
-        animation="fadeIn"
-        textType="bold"
-        text="Logout"
-        onPress={() => handleClick()}
-      />
-    </CustomLayout>
+    <CustomLayout style={styles.layout}>{!user && <HomeScreen />}</CustomLayout>
   );
 };
 
@@ -100,4 +69,8 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
     dispatch
   );
 
-export default connect(null, mapDispatchToProps)(Settings);
+const mapStateToProps = ({ user }: any) => ({
+  user: user.user
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

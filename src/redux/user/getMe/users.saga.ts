@@ -15,12 +15,12 @@ function* takeNewRoute() {
 }
 
 function* setSuccessGet() {
-  try {
-    const user = yield call(getUserToken);
+  const user = yield call(getUserToken);
+
+  if (user) {
     yield put(userGetMeSuccess(user));
-  } catch (error) {
+  } else {
     yield call(takeNewRoute);
-    yield put(userGetMeFailure(error));
   }
 }
 
