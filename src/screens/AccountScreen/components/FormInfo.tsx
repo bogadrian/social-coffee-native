@@ -41,7 +41,7 @@ interface Props {
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().min(4).label('Activity Name'),
   email: Yup.string().required().email().label('Email'),
-  password: Yup.string().required().min(4).label('Password'),
+  password: Yup.string().required().min(8).label('Password'),
   passwordConfirm: Yup.string()
     .oneOf([Yup.ref('password'), null!], 'Passwords must match')
     .label('Confirm Password'),
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = ({ user }: any) => ({
-  isLoading: user.isLoading,
+  isLoading: user.isLoadingSignup,
   err: user.err
 });
 

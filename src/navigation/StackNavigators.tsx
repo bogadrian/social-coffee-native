@@ -17,7 +17,8 @@ import {
   InfoStack,
   AuthStack,
   AccountStack,
-  MyComunitiesStack
+  MyComunitiesStack,
+  ResetPasswordStack
 } from './Stacks/Stacks';
 
 import Color from '../constants/Color';
@@ -185,6 +186,13 @@ export const MainStack: React.FC = () => {
       <MainStackNavigator.Screen
         name="Info"
         component={InfoStack}
+        options={{
+          headerShown: false
+        }}
+      />
+      <MainStackNavigator.Screen
+        name="Reset"
+        component={ResetPasswordStack}
         options={{
           headerShown: false
         }}

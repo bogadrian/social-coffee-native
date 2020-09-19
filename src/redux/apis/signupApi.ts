@@ -11,7 +11,8 @@ export const makeCallSignupWithUser = async (user: any) => {
       baseURL: `${URL}/api/v1/users/signup`,
       headers: {
         'Content-Type': `application/json`
-      }
+      },
+      timeout: 4000
     });
 
     const userCreated = await axiosInstance({
@@ -32,7 +33,8 @@ export const makeCallSignupProvider = async (user: any) => {
       baseURL: `${URL}/api/v1/provider/signup`,
       headers: {
         'Content-Type': `application/json`
-      }
+      },
+      timeout: 4000
     });
 
     const userCreated = await axiosInstance({
@@ -40,10 +42,8 @@ export const makeCallSignupProvider = async (user: any) => {
       data: user
     });
 
-    if (userCreated.data) {
-      await SecureStore.setItemAsync('jwt', userCreated.data.token);
-      return userCreated.data.data.user;
-    }
+    await SecureStore.setItemAsync('jwt', userCreated.data.token);
+    return userCreated.data.data.user;
   } catch (error) {
     throw new Error(error.response.data.message);
   }

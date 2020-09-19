@@ -18,7 +18,7 @@ import { userGetStart } from '../../../redux/user/getMe/users.actions';
 import CustomLayout from '../../../custom/CustomLayout';
 import CustomButton from '../../../custom/CustomButton';
 
-import HomeScreen from '../../HomeScreen/HomeScreen';
+import AuthScreen from '../AuthScreen';
 
 import UpdateUser from './user/updateUser';
 import UpdateProvider from './provider/updateProvider';
@@ -56,7 +56,9 @@ const Settings: React.FC<Props> = ({ user, userGetStart, cleanUserErrors }) => {
   }
 
   return (
-    <CustomLayout style={styles.layout}>{!user && <HomeScreen />}</CustomLayout>
+    <CustomLayout style={styles.layout}>
+      <Text>Please login</Text>
+    </CustomLayout>
   );
 };
 

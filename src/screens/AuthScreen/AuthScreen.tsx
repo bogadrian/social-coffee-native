@@ -148,7 +148,6 @@ const AuthScreen: React.FC<Props> = ({
           <Text>
             Please check your inbox an confirm your email before using this app!
           </Text>
-          <Text> Or:</Text>
         </Text>
         <Divider style={styles.divider} />
         <CustomButton
@@ -159,7 +158,7 @@ const AuthScreen: React.FC<Props> = ({
           fontSize={14}
           animation="pulse"
           textType="bold"
-          text="Resned email confirmation"
+          text="Resend email confirmation"
           onPress={() => resendEmail()}
         />
         <Divider style={styles.divider} />
@@ -167,12 +166,22 @@ const AuthScreen: React.FC<Props> = ({
           buttonWidth="50%"
           name="account-heart-outline"
           size={15}
-          color="yellow"
+          color="cyan"
           fontSize={14}
-          animation="pulse"
           textType="bold"
           text="SignUp Again"
           onPress={() => trySignupAgain()}
+        />
+        <Divider style={styles.divider} />
+        <CustomButton
+          buttonWidth="50%"
+          name="account-heart-outline"
+          size={15}
+          color="green"
+          fontSize={14}
+          textType="bold"
+          text="Done!"
+          onPress={() => userGetStart()}
         />
         {modal ? (
           <Modal

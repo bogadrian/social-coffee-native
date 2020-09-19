@@ -10,7 +10,8 @@ export const makeCallLoginWithUser = async (user: any) => {
       baseURL: `${URL}/api/v1/users/login`,
       headers: {
         'Content-Type': `application/json`
-      }
+      },
+      timeout: 4000
     });
 
     const userLoggedIn = await axiosInstance({
@@ -18,10 +19,8 @@ export const makeCallLoginWithUser = async (user: any) => {
       data
     });
 
-    if (userLoggedIn.data) {
-      await SecureStore.setItemAsync('jwt', userLoggedIn.data.token);
-      return userLoggedIn.data.data.user;
-    }
+    await SecureStore.setItemAsync('jwt', userLoggedIn.data.token);
+    return userLoggedIn.data.data.user;
   } catch (error) {
     throw new Error(error.response.data.message);
   }
@@ -35,7 +34,8 @@ export const makeCallLoginProvider = async (user: any) => {
       baseURL: `${URL}/api/v1/provider/login`,
       headers: {
         'Content-Type': `application/json`
-      }
+      },
+      timeout: 4000
     });
 
     const userLoggedIn = await axiosInstance({
@@ -43,11 +43,9 @@ export const makeCallLoginProvider = async (user: any) => {
       data
     });
 
-    if (userLoggedIn.data) {
-      await SecureStore.setItemAsync('jwt', userLoggedIn.data.token);
+    await SecureStore.setItemAsync('jwt', userLoggedIn.data.token);
 
-      return userLoggedIn.data.data.user;
-    }
+    return userLoggedIn.data.data.user;
   } catch (error) {
     throw new Error(error.response.data.message);
   }

@@ -22,10 +22,12 @@ import * as SecureStore from 'expo-secure-store';
 
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
+
 import {
   loginStartUser,
   loginStartProvider
 } from '../../../redux/user/login/login.actions';
+
 import { cleanUserErrors } from '../../../redux/user/reducer.actions';
 
 import Color from '../../../constants/Color';
@@ -256,15 +258,15 @@ const Login: React.FC<Props> = ({
           />
           <TouchableOpacity onPress={forgotHandler}>
             <CustomText type="extra-bold-italic" style={styles.text2}>
-              Forgot your password?
+              {userType.toUpperCase()} , have you forgot your password?
             </CustomText>
           </TouchableOpacity>
         </View>
       </TouchableWithoutFeedback>
-      {isLoading && (
+      {isLoading ? (
         <Modal
           animationType="slide"
-          transparent={false}
+          transparent={true}
           visible={isLoading}
           onRequestClose={() => {
             console.log('modal closed');
@@ -272,12 +274,12 @@ const Login: React.FC<Props> = ({
         >
           <CustomLayout style={styles.layout}>
             <CustomText type="extra-bold-italic" style={styles.text2}>
-              fetching...
+              Loggin You In ...
             </CustomText>
             <ActivityIndicator size="large" />
           </CustomLayout>
         </Modal>
-      )}
+      ) : null}
       {modal ? (
         <Modal
           animationType="slide"
@@ -389,7 +391,7 @@ const styles = StyleSheet.create({
   text2: {
     fontSize: 16,
     marginTop: 5,
-    marginBottom: 5,
+    marginBottom: 20,
     textAlign: 'center'
   },
   textWarrning: {
@@ -436,7 +438,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
 const mapStateToProps = ({ user }: any) => ({
   user: user.user,
   err: user.err,
-  isLoading: user.isLoading
+  isLoading: user.isLoadingLogin
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

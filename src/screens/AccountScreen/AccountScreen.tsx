@@ -16,8 +16,7 @@ const AccountScreen: React.FC<Props> = ({ user }) => {
 };
 
 const mapStateToProps = ({ user }: any) => ({
-  user: user.user,
-  isLoading: user.isLoading
+  user: user.user
 });
 
 export default connect(mapStateToProps)(AccountScreen);

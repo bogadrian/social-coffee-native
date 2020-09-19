@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,18 +7,18 @@ import {
   ActivityIndicator
 } from 'react-native';
 
-import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
-import { cleanUserErrors } from '../../redux/user/reducer.actions';
-import { userGetStart } from '../../redux/user/getMe/users.actions';
+import * as Linking from 'expo-linking';
 
 export const { width, height } = Dimensions.get('window');
 
 import Color from '../../constants/Color';
 
 import CustomLayout from '../../custom/CustomLayout';
-import HomeLoading from './components/HomeLoading';
+import HomeNonAuth from './components/HomeNonAuth';
+import AuthScreen from '../AuthScreen/AuthScreen';
+import ConfirmEmail from './components/ConfirmEmail';
 
 interface Props {
   user: any;
@@ -26,11 +26,44 @@ interface Props {
   navigation?: any;
 }
 
-const HomeScreen: React.FC<Props> = ({ user, isLoading }) => {
+const HomeScreen: React.FC<Props> = ({ user, isLoading, navigation }) => {
+  const [route, setRoute] = useState<string | undefined>();
+  const [token, setToken] = useState<string | undefined>();
+
   useEffect(() => {
-    //cleanUserErrors();
-    //userGetStart();
+    let run: boolean = true;
+
+    Linking.getInitialURL().then((url: any) => extractToken(url));
+    Linking.addEventListener('url', ({ url }) => extractToken(url));
+
+    const extractToken = (url: string) => {
+      if (url) {
+        const { path } = Linking.parse(url);
+
+        if (path) {
+          const rou = (path as any).split('=')[0];
+          const tok = (path as any).split('=')[1];
+          if (run) {
+            setRoute(rou);
+            setToken(tok);
+          }
+        }
+      }
+    };
+
+    return () => {
+      run = false;
+    };
   }, []);
+
+  console.log('route', route, token);
+  if (route === '/reset/token') {
+    navigation.navigate('Reset', { screen: 'Reset', params: { token } });
+  }
+
+  if (route === '/confirmation') {
+    return <ConfirmEmail />;
+  }
 
   if (user && user.emailConfirm === false) {
     return (
@@ -48,11 +81,7 @@ const HomeScreen: React.FC<Props> = ({ user, isLoading }) => {
 
   return (
     <CustomLayout style={styles.layout}>
-      {!isLoading ? (
-        <HomeLoading user={user} />
-      ) : (
-        <ActivityIndicator size="large" />
-      )}
+      {!user ? <HomeNonAuth /> : <AuthScreen />}
     </CustomLayout>
   );
 };
@@ -67,9 +96,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ user }: any) => ({
-  user: user.user,
-  isLoading: user.isLoading
+const mapStateToProps = (state: any) => ({
+  user: state.user.user,
+  isLoading: state.user.isLoading
 });
 
 export default connect(mapStateToProps)(HomeScreen);
