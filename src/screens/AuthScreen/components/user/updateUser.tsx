@@ -18,6 +18,7 @@ import { userGetStart } from '../../../../redux/user/getMe/users.actions';
 import CustomLayout from '../../../../custom/CustomLayout';
 import CustomButton from '../../../../custom/CustomButton';
 
+import UserImage from '../../../../components/UserImage';
 interface Props {
   user: any;
   cleanUserErrors: any;
@@ -81,6 +82,7 @@ const UpdateUser: React.FC<Props> = ({
         my comunities no, that has its own screen.
       </Text>
       <Text>{user.role}</Text>
+      <UserImage />
       <CustomButton
         buttonWidth="30%"
         name="account-heart-outline"

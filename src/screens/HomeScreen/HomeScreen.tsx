@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  Dimensions,
-  StyleSheet,
-  ActivityIndicator
-} from 'react-native';
+import { View, Text, Dimensions, StyleSheet } from 'react-native';
 
 import { connect } from 'react-redux';
 
@@ -26,7 +20,7 @@ interface Props {
   navigation?: any;
 }
 
-const HomeScreen: React.FC<Props> = ({ user, isLoading, navigation }) => {
+const HomeScreen: React.FC<Props> = ({ user, navigation }) => {
   const [route, setRoute] = useState<string | undefined>();
   const [token, setToken] = useState<string | undefined>();
 

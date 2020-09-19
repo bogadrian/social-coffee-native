@@ -10,6 +10,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import playSound from '../customHooks/sound';
 
+import UserImage from '../components/UserImage';
+
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 import {
@@ -180,7 +182,8 @@ export const MainStack: React.FC = () => {
         options={({ route }) => ({
           title: getHeaderTitle(route),
           headerStyle: { backgroundColor: Color.backGroundPrimary },
-          headerTintColor: 'white'
+          headerTintColor: 'white',
+          headerLeft: () => <UserImage />
         })}
       />
       <MainStackNavigator.Screen

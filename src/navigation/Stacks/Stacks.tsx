@@ -16,6 +16,7 @@ import MyComunitiesScreen from '../../screens/MyComunities/MyComunitiesScreen';
 import ResetPasswordScreen from '../../screens/ResetPassword/ResetPassword';
 
 const HomeStackNavigator = createStackNavigator();
+import UserImage from '../../components/UserImage';
 
 export const HomeStack: React.FC = () => {
   return (
