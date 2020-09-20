@@ -145,7 +145,7 @@ const SignupProvider: React.FC<Props> = ({
               {/*<CustomText type="thin-italic" style={styles.text1} >
       Please chose at least 1 photo, up to 10 photos!
          </CustomText>
-      <FormImagePicker name="images" />+*/}
+      <FormImagePicker name="images" numberPhoto={0}/>+*/}
               <AppFormField
                 autoCapitalize="none"
                 autoCorrect={false}

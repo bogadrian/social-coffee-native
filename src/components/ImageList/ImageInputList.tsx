@@ -1,15 +1,26 @@
-import React, { useRef } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
-import ImageInput from "./ImageInput";
+import React, { useRef } from 'react';
+
+import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import ImageInput from './ImageInput';
+
+export const { width, height } = Dimensions.get('window');
 
 interface Props {
-  imageUris: any; 
-  onRemoveImage: (uri: string) => void; 
-  onAddImage: (uri: string) => void
+  imageUris: any;
+  onRemoveImage: (uri: string) => void;
+  onAddImage: (uri: string) => void;
+  numberPhoto?: number;
 }
 
-const ImageInputList: React.FC<Props> = ({ imageUris = [], onRemoveImage, onAddImage }) => {
+const ImageInputList: React.FC<Props> = ({
+  imageUris = [],
+  onRemoveImage,
+  onAddImage,
+  numberPhoto
+}) => {
   const scrollView: any = useRef();
+
+  console.log('uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu', imageUris.length, numberPhoto);
 
   return (
     <View>
@@ -20,27 +31,38 @@ const ImageInputList: React.FC<Props> = ({ imageUris = [], onRemoveImage, onAddI
       >
         <View style={styles.container}>
           {imageUris.slice(0, 10).map((uri: string) => (
-            <View key={uri} style={styles.image}>
+            <View
+              key={uri}
+              style={numberPhoto === 0 ? styles.imageCenter : styles.image}
+            >
               <ImageInput
                 imageUri={uri}
                 onChangeImage={() => onRemoveImage(uri)}
               />
             </View>
           ))}
-          <ImageInput onChangeImage={(uri: string) => onAddImage(uri)} />
+
+          {imageUris.length <= numberPhoto! ? (
+            <ImageInput onChangeImage={(uri: string) => onAddImage(uri)} />
+          ) : null}
         </View>
       </ScrollView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
+    flexDirection: 'row'
   },
   image: {
-    marginRight: 10,
+    marginRight: 10
   },
+  imageCenter: {
+    marginLeft: (width * 0.7) / 2,
+    borderRadius: 10,
+    overflow: 'hidden'
+  }
 });
 
 export default ImageInputList;

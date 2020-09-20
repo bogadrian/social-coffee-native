@@ -9,7 +9,7 @@ interface Props {
   onChangeText?: (value: string) => void;
   autoCapitalize: string;
   autoCorrect: boolean;
-  icon: string;
+  icon?: string;
   show?: boolean;
   keyboardType?: string;
   name: any;
@@ -17,10 +17,18 @@ interface Props {
   secureTextEntry?: boolean;
   placeholder: string;
   textContentType: string;
-  otherProps?: Object;
+  otherProps?: {};
+  style?: any;
+  multiline?: boolean;
 }
 
-const AppFormField: React.FC<Props> = ({ name, handleShow, ...otherProps }) => {
+const AppFormField: React.FC<Props> = ({
+  name,
+  handleShow,
+  multiline,
+  style,
+  ...otherProps
+}) => {
   const { setFieldTouched, handleChange, errors, touched } = useFormikContext<
     string[]
   >();
@@ -31,6 +39,8 @@ const AppFormField: React.FC<Props> = ({ name, handleShow, ...otherProps }) => {
         onBlur={() => setFieldTouched(name)}
         onChangeText={handleChange(name)}
         handleShow={handleShow}
+        style={style}
+        multiline={multiline}
         {...otherProps}
       />
       <ErrorMessage error={errors[name]} visible={touched[name]} />

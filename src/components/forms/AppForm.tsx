@@ -7,6 +7,7 @@ interface Props {
   validationSchema: any;
   children?: any;
   oteherProps?: any;
+  style?: any;
 }
 
 const AppForm: React.FC<Props> = ({

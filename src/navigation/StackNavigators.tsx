@@ -111,6 +111,7 @@ const MyTabs = () => {
         }}
         options={{
           tabBarLabel: 'Donate',
+
           tabBarIcon: () => (
             <MaterialCommunityIcons
               name="plus-circle-outline"

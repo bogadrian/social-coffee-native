@@ -49,8 +49,22 @@ const styles = StyleSheet.create({
     height
   },
   text: {
-    fontSize: 20,
+    fontSize: 16,
     color: 'white',
+    width: width * 0.8,
+    textAlign: 'center',
+    marginBottom: 20
+  },
+  text2: {
+    fontSize: 14,
+    color: 'white',
+    width: width * 0.8,
+    textAlign: 'center',
+    marginBottom: 20
+  },
+  textNoConfirm: {
+    fontSize: 14,
+    color: '#ffccff',
     width: width * 0.8,
     textAlign: 'center',
     marginBottom: 20
@@ -84,6 +98,8 @@ const AuthScreen: React.FC<Props> = ({
   const [modal, setModal] = useState<boolean>(false);
   const [text, setText] = useState<string>('Please re-insert your email here');
   const [load, setLoad] = useState<boolean>(false);
+  const [noConfim, setNoConfirm] = useState<boolean>(false);
+
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -139,31 +155,56 @@ const AuthScreen: React.FC<Props> = ({
       .catch((e: any) => console.log(e));
   };
 
+  const handleDone = () => {
+    userGetStart();
+    setNoConfirm(true);
+  };
+
   if (user && user.emailConfirm === false) {
     return (
       <CustomLayout style={styles.layout}>
-        <Text style={styles.text}>
+        <CustomText type="semibold" style={styles.text}>
           <Text>Hi </Text>
           <Text style={{ color: Color.tertiary }}> {user.name}! </Text>
           <Text>
             Please check your inbox an confirm your email before using this app!
           </Text>
-        </Text>
+        </CustomText>
+        <Divider style={styles.divider} />
+        <CustomText type="light" style={styles.text2}>
+          If You already confirmed your email please press this button:
+        </CustomText>
+        {user.emailConfirm === false && noConfim ? (
+          <CustomText type="light" style={styles.textNoConfirm}>
+            You didn't confirmed your email yet! Please confirm your email or
+            resend a confirmation email or signup again if you wish!
+          </CustomText>
+        ) : null}
+        <CustomButton
+          buttonWidth="60%"
+          name="account-heart-outline"
+          size={15}
+          color={Color.tertiary}
+          fontSize={14}
+          textType="bold"
+          text="I've done that!"
+          onPress={handleDone}
+        />
         <Divider style={styles.divider} />
         <CustomButton
-          buttonWidth="90%"
+          buttonWidth="60%"
           name="account-heart-outline"
           size={15}
           color="yellow"
           fontSize={14}
           animation="pulse"
           textType="bold"
-          text="Resend email confirmation"
+          text="Resend Email"
           onPress={() => resendEmail()}
         />
         <Divider style={styles.divider} />
         <CustomButton
-          buttonWidth="50%"
+          buttonWidth="60%"
           name="account-heart-outline"
           size={15}
           color="cyan"
@@ -171,17 +212,6 @@ const AuthScreen: React.FC<Props> = ({
           textType="bold"
           text="SignUp Again"
           onPress={() => trySignupAgain()}
-        />
-        <Divider style={styles.divider} />
-        <CustomButton
-          buttonWidth="50%"
-          name="account-heart-outline"
-          size={15}
-          color="green"
-          fontSize={14}
-          textType="bold"
-          text="Done!"
-          onPress={() => userGetStart()}
         />
         {modal ? (
           <Modal

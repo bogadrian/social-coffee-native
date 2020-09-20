@@ -10,11 +10,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
-import Color from '../../constants/Color'
+import Color from '../../constants/Color';
 
 interface Props {
   imageUri?: string;
-  onChangeImage: (image: string ) => void
+  onChangeImage: (image: string) => void;
 }
 
 const ImageInput: React.FC<Props> = ({ imageUri, onChangeImage }) => {
@@ -46,7 +46,7 @@ const ImageInput: React.FC<Props> = ({ imageUri, onChangeImage }) => {
         allowsEditing: true,
         aspect: [4, 3]
       });
-      
+
       if (!result.cancelled) {
         onChangeImage(result.uri);
       }

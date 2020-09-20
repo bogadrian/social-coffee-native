@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Dimensions, StyleSheet } from 'react-native';
 
 import { connect } from 'react-redux';
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 
 import * as Linking from 'expo-linking';
 
@@ -9,15 +10,17 @@ export const { width, height } = Dimensions.get('window');
 
 import Color from '../../constants/Color';
 
+import { userGetStart } from '../../redux/user/getMe/users.actions';
+
 import CustomLayout from '../../custom/CustomLayout';
 import HomeNonAuth from './components/HomeNonAuth';
 import AuthScreen from '../AuthScreen/AuthScreen';
-import ConfirmEmail from './components/ConfirmEmail';
 
 interface Props {
   user: any;
   isLoading: boolean;
   navigation?: any;
+  userGetStart?: any;
 }
 
 const HomeScreen: React.FC<Props> = ({ user, navigation }) => {
@@ -56,7 +59,7 @@ const HomeScreen: React.FC<Props> = ({ user, navigation }) => {
   }
 
   if (route === '/confirmation') {
-    return <ConfirmEmail />;
+    navigation.navigate('Confirm Email');
   }
 
   if (user && user.emailConfirm === false) {
@@ -95,4 +98,11 @@ const mapStateToProps = (state: any) => ({
   isLoading: state.user.isLoading
 });
 
-export default connect(mapStateToProps)(HomeScreen);
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+  bindActionCreators(
+    {
+      userGetStart
+    },
+    dispatch
+  );
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
