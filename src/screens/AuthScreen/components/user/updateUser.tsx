@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Dimensions, Modal, TextInput } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  Modal,
+  ActivityIndicator
+} from 'react-native';
 
 export const { width, height } = Dimensions.get('window');
 
@@ -30,10 +36,18 @@ import SubmitButton from '../../../../components/forms/SubmitButton';
 import FormImagePicker from '../../../../components/ImageList/FormImagePicker';
 import { AppForm, AppFormField } from '../../../../components/forms';
 
+import { startUpdateMe } from '../../../../redux/user/updateMe/update.actions';
+import { startPasswordChange } from '../../../../redux/user/changePassword/changePassword.actions';
+
 interface Props {
   user: any;
+  isLoadingUpd: boolean;
+  isLoadingPass: boolean;
   cleanUserErrors: any;
   userGetStart: any;
+  startUpdateMe: any;
+  startPasswordChange: any;
+  changeSuccess: boolean;
 }
 
 const styles = StyleSheet.create({
@@ -69,7 +83,12 @@ const styles = StyleSheet.create({
   textModal: {
     textAlign: 'center',
     fontSize: 20,
-    padding: 20
+    padding: 10
+  },
+  textModal1: {
+    textAlign: 'center',
+    fontSize: 14,
+    padding: 10
   },
   thirdText: {
     fontSize: 16,
@@ -98,6 +117,18 @@ const styles = StyleSheet.create({
     marginRight: 30,
     textAlign: 'center'
   },
+  text3: {
+    fontSize: 14,
+    color: Color.tertiary,
+    marginBottom: 20,
+    textAlign: 'center'
+  },
+  text4: {
+    fontSize: 14,
+    color: 'red',
+    marginBottom: 20,
+    textAlign: 'center'
+  },
   button2: {
     marginTop: 30,
     marginBottom: 20,
@@ -106,19 +137,35 @@ const styles = StyleSheet.create({
 });
 
 const validationSchemaUpdate = Yup.object().shape({
-  name: Yup.string().required().min(4).label('Activity Name'),
-  description: Yup.string().required().min(20).label('Description'),
-  images: Yup.array().min(1, 'Pleaseselect at least 1 image')
+  name: Yup.string().label('Activity Name'),
+  description: Yup.string().label('Description'),
+  images: Yup.array().label('Image')
+});
+
+const validationSchemaPassword = Yup.object().shape({
+  passwordCurrent: Yup.string().required().min(8).label('Password'),
+  password: Yup.string().required().min(8).label('Password'),
+  passwordConfirm: Yup.string()
+    .oneOf([Yup.ref('password'), null!], 'Passwords must match')
+    .label('Confirm Password')
 });
 
 const UpdateUser: React.FC<Props> = ({
   user,
   userGetStart,
-  cleanUserErrors
+  cleanUserErrors,
+  startUpdateMe,
+  isLoadingUpd,
+  startPasswordChange,
+  isLoadingPass,
+  changeSuccess
 }) => {
   const [update, setUpdate] = useState<boolean>(false);
+  const [password, setPassword] = useState<boolean>(false);
+  const [inputTextType, setInputTextType] = useState<boolean>(true);
+  const [textForPass, setTextPass] = useState<boolean>(false);
+
   const navigation = useNavigation();
-  console.log('PPPPPPPPPPPPPPPPPPPPPPPPPP', user);
 
   const handleLogout = async () => {
     await SecureStore.deleteItemAsync('jwt');
@@ -148,18 +195,55 @@ const UpdateUser: React.FC<Props> = ({
   };
 
   const handleUpdate = () => {
-    console.log('fired');
     setUpdate(true);
   };
+
   const handleComunities = () => {};
   const handleBlocked = () => {};
-  const handleChangePassword = () => {};
+  const handleChangePassword = () => {
+    setPassword(true);
+  };
 
   const handleDelete = async () => {
-    await axios.delete(`${URL}/api/v1/users/deleteMe`);
+    const token = await SecureStore.getItemAsync('jwt');
+
+    await axios.delete(`${URL}/api/v1/users/deleteMe`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
     userGetStart();
   };
 
+  const handleUpdateMe = (values: any) => {
+    const u: string = 'user';
+    const userData = { ...values, u };
+    startUpdateMe(userData);
+  };
+
+  const handleChangePasswordValues = (values: any) => {
+    const u: string = 'user';
+    const userData = { ...values, u };
+    startPasswordChange(userData);
+    setTextPass(true);
+  };
+
+  const handleCloseUpdate = () => {
+    setUpdate(false);
+    userGetStart();
+  };
+
+  const handleClosePassword = () => {
+    setPassword(false);
+    userGetStart();
+  };
+
+  const handleShow = () => {
+    setInputTextType(!inputTextType);
+  };
+
+  console.log('aaaaaaaa', textForPass, isLoadingPass);
   return (
     <CustomLayout style={styles.layout}>
       <View
@@ -280,69 +364,193 @@ const UpdateUser: React.FC<Props> = ({
             console.log('modal closed');
           }}
         >
-          <CustomLayout style={styles.layoutModal}>
-            <View style={styles.appForm}>
-              <AppForm
-                initialValues={{
-                  name: '',
-                  description: '',
-                  images: []
-                }}
-                onSubmit={values => console.log(values)}
-                validationSchema={validationSchemaUpdate}
-              >
-                <CustomText type="light" style={styles.textModal}>
-                  Please chose one photo for your profile!
-                </CustomText>
+          {isLoadingUpd ? (
+            <CustomLayout style={styles.layoutModal}>
+              <CustomText type="light" style={styles.textModal}>
+                Updating ...
+              </CustomText>
+              <ActivityIndicator size="large" />
+            </CustomLayout>
+          ) : (
+            <CustomLayout style={styles.layoutModal}>
+              <View style={styles.appForm}>
+                <AppForm
+                  initialValues={{
+                    name: '',
+                    description: '',
+                    images: []
+                  }}
+                  onSubmit={values => handleUpdateMe(values)}
+                  validationSchema={validationSchemaUpdate}
+                >
+                  <CustomText type="light" style={styles.textModal}>
+                    Add or Update a profile photo?
+                  </CustomText>
 
-                <FormImagePicker name="images" numberPhoto={0} />
+                  <FormImagePicker name="images" numberPhoto={0} />
+                  <CustomText type="light" style={styles.textModal1}>
+                    Change your name?
+                  </CustomText>
+                  <AppFormField
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    icon="account"
+                    keyboardType="default"
+                    name="name"
+                    placeholder={user.name}
+                    textContentType="name"
+                  />
+                  <CustomText type="light" style={styles.textModal1}>
+                    Add or Update your description?
+                  </CustomText>
+                  <AppFormField
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType="default"
+                    name="description"
+                    placeholder={user.description}
+                    multiline={true}
+                    textContentType="name"
+                    style={styles.areaText}
+                  />
 
-                <AppFormField
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  icon="account"
-                  keyboardType="default"
-                  name="name"
-                  placeholder="Name"
-                  textContentType="name"
-                />
-                <AppFormField
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="default"
-                  name="description"
-                  placeholder="Description"
-                  multiline={true}
-                  textContentType="name"
-                  style={styles.areaText}
-                />
-
-                <SubmitButton
-                  buttonWidth="70%"
-                  style={styles.button2}
-                  name="account-heart-outline"
-                  size={15}
-                  color={Color.tertiary}
-                  fontSize={14}
-                  animation="fadeIn"
-                  textType="bold"
-                  text="Update my profile"
-                />
-              </AppForm>
-              <View style={{ alignSelf: 'center' }}>
-                <CustomButton
-                  buttonWidth="40%"
-                  name="close"
-                  size={15}
-                  color="cyan"
-                  fontSize={14}
-                  textType="bold"
-                  text="Close"
-                  onPress={() => setUpdate(false)}
-                />
+                  <SubmitButton
+                    buttonWidth="70%"
+                    style={styles.button2}
+                    name="account-heart-outline"
+                    size={15}
+                    color={Color.tertiary}
+                    fontSize={14}
+                    animation="fadeIn"
+                    textType="bold"
+                    text="Update my profile"
+                  />
+                </AppForm>
+                <View style={{ alignSelf: 'center' }}>
+                  <CustomButton
+                    buttonWidth="40%"
+                    name="close"
+                    size={15}
+                    color="cyan"
+                    fontSize={14}
+                    textType="bold"
+                    text="Close"
+                    onPress={handleCloseUpdate}
+                  />
+                </View>
               </View>
-            </View>
-          </CustomLayout>
+            </CustomLayout>
+          )}
+        </Modal>
+      ) : null}
+      {password ? (
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={password}
+          onRequestClose={() => {
+            console.log('modal closed');
+          }}
+        >
+          {isLoadingPass ? (
+            <CustomLayout style={styles.layoutModal}>
+              <CustomText type="light" style={styles.textModal}>
+                Changing your password ...
+              </CustomText>
+              <ActivityIndicator size="large" />
+            </CustomLayout>
+          ) : (
+            <CustomLayout style={styles.layoutModal}>
+              <View style={styles.appForm}>
+                <AppForm
+                  initialValues={{
+                    passwordCurrent: '',
+                    password: '',
+                    passwordConfirm: ''
+                  }}
+                  onSubmit={values => handleChangePasswordValues(values)}
+                  validationSchema={validationSchemaPassword}
+                >
+                  <CustomText type="light" style={styles.textModal}>
+                    Change Your Password
+                  </CustomText>
+                  <AppFormField
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    icon="lock"
+                    show={true}
+                    name="passwordCurrent"
+                    placeholder="Current Password"
+                    secureTextEntry={inputTextType}
+                    textContentType="password"
+                    handleShow={handleShow}
+                  />
+                  <AppFormField
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    icon="lock"
+                    show={true}
+                    name="password"
+                    placeholder="Password"
+                    secureTextEntry={inputTextType}
+                    textContentType="password"
+                    handleShow={handleShow}
+                  />
+                  <AppFormField
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    icon="lock"
+                    show={true}
+                    name="passwordConfirm"
+                    placeholder="Confirm Password"
+                    secureTextEntry={inputTextType}
+                    textContentType="password"
+                    handleShow={handleShow}
+                  />
+                  <SubmitButton
+                    buttonWidth="70%"
+                    style={styles.button2}
+                    name="account-heart-outline"
+                    size={15}
+                    color={Color.tertiary}
+                    fontSize={14}
+                    animation="fadeIn"
+                    textType="bold"
+                    text="Update my password"
+                  />
+                </AppForm>
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                >
+                  {textForPass && changeSuccess ? (
+                    <CustomText type="light" style={styles.text3}>
+                      Cool! You changed your password!
+                    </CustomText>
+                  ) : null}
+                  {textForPass && !changeSuccess && (
+                    <CustomText type="light" style={styles.text4}>
+                      Sorry! That didn't work! Please check your connection and
+                      try again!
+                    </CustomText>
+                  )}
+                  <CustomButton
+                    buttonWidth="40%"
+                    name="close"
+                    size={15}
+                    color="cyan"
+                    fontSize={14}
+                    textType="bold"
+                    text="Close"
+                    onPress={handleClosePassword}
+                  />
+                </View>
+              </View>
+            </CustomLayout>
+          )}
         </Modal>
       ) : null}
     </CustomLayout>
@@ -353,13 +561,18 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
   bindActionCreators(
     {
       cleanUserErrors,
-      userGetStart
+      userGetStart,
+      startUpdateMe,
+      startPasswordChange
     },
     dispatch
   );
 
 const mapStateToProps = ({ user }: any) => ({
-  user: user.user
+  user: user.user,
+  isLoadingUpd: user.isLoadingUpdate,
+  isLoadingPass: user.isLoadingPass,
+  changeSuccess: user.changeSuccess
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateUser);

@@ -7,8 +7,11 @@ export interface IState {
   err: string | null;
   isLoadingLogin: boolean;
   isLoadingSignup: boolean;
-  isLoadingGEt: boolean;
+  isLoadingGet: boolean;
   isLoadingReset: boolean;
+  isLoadingUpdate: boolean;
+  isLoadingPass: boolean;
+  changeSuccess: boolean;
 }
 
 let INITIAL_STATE = {
@@ -16,8 +19,11 @@ let INITIAL_STATE = {
   err: null,
   isLoadingLogin: false,
   isLoadingSignup: false,
-  isLoadingGEt: false,
-  isLoadingReset: false
+  isLoadingGet: false,
+  isLoadingReset: false,
+  isLoadingUpdate: false,
+  isLoadingPass: false,
+  changeSuccess: false
 };
 
 export const userReducer = (
@@ -28,7 +34,7 @@ export const userReducer = (
     case IUsersTypes.START_GET_USER:
       return {
         ...state,
-        isLoadingGEt: true
+        isLoadingGet: true
       };
     case IUsersTypes.START_LOGIN_USER:
     case IUsersTypes.START_LOGIN_PROVIDER:
@@ -45,11 +51,18 @@ export const userReducer = (
     case IUsersTypes.START_RESET_PASSWORD:
       return {
         ...state,
-        err: null,
-        user: null,
         isLoadingReset: true
       };
-
+    case IUsersTypes.START_UPDATE_ME:
+      return {
+        ...state,
+        isLoadingUpdate: true
+      };
+    case IUsersTypes.START_CHANGE_PASSWORD:
+      return {
+        ...state,
+        isLoadingPass: true
+      };
     case IUsersTypes.SUCCESS_LOGIN:
       return {
         ...state,
@@ -78,6 +91,21 @@ export const userReducer = (
         err: null,
         isLoadingReset: false
       };
+    case IUsersTypes.UPDATE_ME_SUCCESS:
+      return {
+        ...state,
+        user: action.user,
+        err: null,
+        isLoadingUpdate: false
+      };
+    case IUsersTypes.CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        err: null,
+        user: action.user,
+        changeSuccess: true,
+        isLoadingPass: false
+      };
     case IUsersTypes.FAILURE_LOGIN:
       return {
         ...state,
@@ -105,6 +133,20 @@ export const userReducer = (
         user: null,
         err: action.error,
         isLoadingReset: false
+      };
+
+    case IUsersTypes.UPDATE_ME_FAILURE:
+      return {
+        ...state,
+        user: null,
+        err: action.error,
+        isLoadingUpdate: false
+      };
+    case IUsersTypes.CHANGE_PASSWORD_FAILURE:
+      return {
+        ...state,
+        err: action.error,
+        isLoadingPass: false
       };
     case IUsersTypes.CLEAN_ERRORS:
       return {

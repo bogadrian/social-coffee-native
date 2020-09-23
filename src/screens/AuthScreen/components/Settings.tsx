@@ -2,23 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, Dimensions } from 'react-native';
 export const { width, height } = Dimensions.get('window');
 
-import * as SecureStore from 'expo-secure-store';
-
-import { useNavigation } from '@react-navigation/native';
-
 import { connect } from 'react-redux';
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
-
-import axios from 'axios';
-import { URL } from '../../../constants/variables';
 
 import { cleanUserErrors } from '../../../redux/user/reducer.actions';
 import { userGetStart } from '../../../redux/user/getMe/users.actions';
 
 import CustomLayout from '../../../custom/CustomLayout';
-import CustomButton from '../../../custom/CustomButton';
-
-import AuthScreen from '../AuthScreen';
+import CustomText from '../../../custom/CustomText';
 
 import UpdateUser from './user/updateUser';
 import UpdateProvider from './provider/updateProvider';
@@ -27,6 +18,7 @@ interface Props {
   user: any;
   cleanUserErrors: any;
   userGetStart: any;
+  error: any;
 }
 
 const styles = StyleSheet.create({
@@ -44,15 +36,24 @@ const styles = StyleSheet.create({
   }
 });
 
-const Settings: React.FC<Props> = ({ user, userGetStart, cleanUserErrors }) => {
-  const navigation = useNavigation();
-
+const Settings: React.FC<Props> = ({ user, error }) => {
   if (user.role === 'user') {
     return <UpdateUser />;
   }
 
   if (user.role === 'coffee-provider') {
     return <UpdateProvider />;
+  }
+
+  console.log('888888', error);
+  if (error && !user) {
+    return (
+      <CustomLayout style={styles.layout}>
+        <CustomText type="light" style={styles.text}>
+          {error.message}
+        </CustomText>
+      </CustomLayout>
+    );
   }
 
   return (
@@ -72,7 +73,8 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
   );
 
 const mapStateToProps = ({ user }: any) => ({
-  user: user.user
+  user: user.user,
+  error: user.error
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

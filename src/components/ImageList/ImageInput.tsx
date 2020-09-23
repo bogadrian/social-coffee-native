@@ -10,14 +10,17 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
+import { connect } from 'react-redux';
+
 import Color from '../../constants/Color';
 
 interface Props {
   imageUri?: string;
   onChangeImage: (image: string) => void;
+  user: any;
 }
 
-const ImageInput: React.FC<Props> = ({ imageUri, onChangeImage }) => {
+const ImageInput: React.FC<Props> = ({ imageUri, onChangeImage, user }) => {
   useEffect(() => {
     requestPermission();
   }, []);
@@ -58,7 +61,10 @@ const ImageInput: React.FC<Props> = ({ imageUri, onChangeImage }) => {
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <View style={styles.container}>
-        {!imageUri && (
+        {user.photo && !imageUri && (
+          <Image source={{ uri: `${user.photo}` }} style={styles.image} />
+        )}
+        {!imageUri && !user.photo && (
           <MaterialCommunityIcons color="white" name="camera" size={40} />
         )}
         {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
@@ -83,5 +89,8 @@ const styles = StyleSheet.create({
     width: '100%'
   }
 });
+const mapStateToProps = (state: any) => ({
+  user: state.user.user
+});
 
-export default ImageInput;
+export default connect(mapStateToProps)(ImageInput);

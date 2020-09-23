@@ -31,7 +31,6 @@ export const makeCallResetPasswordUser = async (data: any) => {
 export const makeCallResetPasswordProvider = async (data: any) => {
   const { token } = data.data;
   const { password, passwordConfirm } = data.data.values;
-  console.log('make call provider', token, password, passwordConfirm);
 
   const body = { password, passwordConfirm };
 

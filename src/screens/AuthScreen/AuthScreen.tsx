@@ -39,6 +39,7 @@ interface Props {
   user: any;
   cleanUserErrors: any;
   userGetStart: any;
+  error: any;
 }
 
 const styles = StyleSheet.create({
@@ -93,7 +94,8 @@ const validationSchema = Yup.object().shape({
 const AuthScreen: React.FC<Props> = ({
   user,
   cleanUserErrors,
-  userGetStart
+  userGetStart,
+  error
 }) => {
   const [modal, setModal] = useState<boolean>(false);
   const [text, setText] = useState<string>('Please re-insert your email here');
@@ -101,6 +103,16 @@ const AuthScreen: React.FC<Props> = ({
   const [noConfim, setNoConfirm] = useState<boolean>(false);
 
   const navigation = useNavigation();
+
+  if (error) {
+    return (
+      <CustomLayout style={styles.layout}>
+        <CustomText type="light" style={styles.text}>
+          {error.message}
+        </CustomText>
+      </CustomLayout>
+    );
+  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -299,7 +311,8 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
   );
 
 const mapStateToProps = ({ user }: any) => ({
-  user: user.user
+  user: user.user,
+  error: user.error
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);

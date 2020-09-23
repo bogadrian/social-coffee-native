@@ -45,7 +45,6 @@ const UpdateProvider: React.FC<Props> = ({
   cleanUserErrors
 }) => {
   const navigation = useNavigation();
-  console.log('PPPPPPPPPPPPPPPPPPPPPPPPPP', user);
 
   const handleClick = async () => {
     await SecureStore.deleteItemAsync('jwt');

@@ -20,7 +20,13 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "bundleIdentifier": "com.bogdan.socialcoffeeapp",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.bogdan.socialcoffeeapp",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./src/assets/favicon.png"

@@ -20,8 +20,6 @@ const ImageInputList: React.FC<Props> = ({
 }) => {
   const scrollView: any = useRef();
 
-  console.log('uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu', imageUris.length, numberPhoto);
-
   return (
     <View>
       <ScrollView

@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
 
 const Settings: React.FC<Props> = ({ user, userGetStart, cleanUserErrors }) => {
   const navigation = useNavigation();
-  console.log(user);
 
   const handleClick = async () => {
     await SecureStore.deleteItemAsync('jwt');
