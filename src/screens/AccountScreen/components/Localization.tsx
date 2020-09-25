@@ -27,7 +27,7 @@ import CustomDragMarker from '../../../custom/CustomDragMarker';
 interface Props {}
 
 const validationSchema = Yup.object().shape({
-  city: Yup.string().required().min(4).label('Address')
+  city: Yup.string().label('Address')
 });
 
 const Localization: React.FC<Props> = () => {
@@ -98,14 +98,11 @@ const Localization: React.FC<Props> = () => {
           <View style={{ position: 'relative' }}>
             <CustomDragMarker reg={coord} />
           </View>
-
           <CustomText type="regular" style={styles.textEnd}>
-            {' '}
             Please press OK if it is the right address{' '}
           </CustomText>
           <CustomText type="bold" style={styles.swipe}>
-            {' '}
-            Swipe Left{' '}
+            Swipe Left
           </CustomText>
           <View style={{ alignItems: 'center', marginBottom: 120 }}>
             <MaterialCommunityIcons

@@ -179,16 +179,6 @@ const UpdateUser: React.FC<Props> = ({
         console.log(error);
         cleanUserErrors();
       });
-    axios
-      .get(`${URL}/api/v1/provider/logout`)
-      .then(response => {
-        console.log(response);
-        cleanUserErrors();
-      })
-      .catch(error => {
-        console.log(error);
-        cleanUserErrors();
-      });
     userGetStart();
 
     navigation.navigate('Home');
@@ -243,7 +233,6 @@ const UpdateUser: React.FC<Props> = ({
     setInputTextType(!inputTextType);
   };
 
-  console.log('aaaaaaaa', textForPass, isLoadingPass);
   return (
     <CustomLayout style={styles.layout}>
       <View
@@ -397,7 +386,7 @@ const UpdateUser: React.FC<Props> = ({
                     icon="account"
                     keyboardType="default"
                     name="name"
-                    placeholder={user.name}
+                    placeholder={user.name ? user.name : 'Name'}
                     textContentType="name"
                   />
                   <CustomText type="light" style={styles.textModal1}>
@@ -408,7 +397,9 @@ const UpdateUser: React.FC<Props> = ({
                     autoCorrect={false}
                     keyboardType="default"
                     name="description"
-                    placeholder={user.description}
+                    placeholder={
+                      user.description ? user.description : 'Add a description'
+                    }
                     multiline={true}
                     textContentType="name"
                     style={styles.areaText}

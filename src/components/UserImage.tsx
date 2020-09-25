@@ -19,7 +19,7 @@ const UserImage: React.FC<Props> = ({ user }) => {
           source={
             user.photo
               ? { uri: `${user.photo}` }
-              : require('../assets/user-default.jpg')
+              : require('../assets/default.jpg')
           }
           style={{
             width: 40,

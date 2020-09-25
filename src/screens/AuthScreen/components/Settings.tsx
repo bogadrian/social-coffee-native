@@ -45,7 +45,6 @@ const Settings: React.FC<Props> = ({ user, error }) => {
     return <UpdateProvider />;
   }
 
-  console.log('888888', error);
   if (error && !user) {
     return (
       <CustomLayout style={styles.layout}>
@@ -58,7 +57,9 @@ const Settings: React.FC<Props> = ({ user, error }) => {
 
   return (
     <CustomLayout style={styles.layout}>
-      <Text>Please login</Text>
+      <CustomText type="light" style={styles.text}>
+        Please login
+      </CustomText>
     </CustomLayout>
   );
 };

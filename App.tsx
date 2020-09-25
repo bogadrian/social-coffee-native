@@ -39,6 +39,7 @@ const App: React.FC = () => {
       />
     );
   }
+
   return (
     <Provider store={store}>
       <View style={styles.container}>

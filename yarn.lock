@@ -6015,6 +6015,11 @@ expo-location@~8.2.1:
   dependencies:
     invariant "^2.2.4"
 
+expo-network@~2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/expo-network/-/expo-network-2.2.1.tgz#d72308d1636a814b6809012bb81eb8646cab0acd"
+  integrity sha512-O76Vh3t/ZC1ZMR0/JNOvaFmiDckP3nbGWSy5fcULf9Qgi9qYqksf7PssDAlo9cGKMD4g/dUTkrQn9QIzdxZCjQ==
+
 expo-permissions@~9.0.1:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-9.0.1.tgz#dc10b58654bbe39bbbed5827369942b01b08055e"

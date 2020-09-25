@@ -84,8 +84,7 @@ const Login: React.FC<Props> = ({
     return (
       <CustomLayout style={styles.layout}>
         <CustomText type="extra-bold-italic" style={styles.text}>
-          {err.message} Operation went wrong. Please chek your connection and
-          try agin!
+          Operation went wrong. Please chek your connection and try agin!
         </CustomText>
         <CustomButton
           buttonWidth="50%"

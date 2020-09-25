@@ -61,10 +61,7 @@ const ImageInput: React.FC<Props> = ({ imageUri, onChangeImage, user }) => {
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <View style={styles.container}>
-        {user.photo && !imageUri && (
-          <Image source={{ uri: `${user.photo}` }} style={styles.image} />
-        )}
-        {!imageUri && !user.photo && (
+        {!imageUri && (
           <MaterialCommunityIcons color="white" name="camera" size={40} />
         )}
         {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}

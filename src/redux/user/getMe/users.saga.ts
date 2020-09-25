@@ -8,6 +8,7 @@ import { getUserToken, getProviderToken } from '../../apis/getUser';
 function* takeNewRoute() {
   try {
     const user = yield call(getProviderToken);
+    console.log('provider in sagaaaaaa', user);
     yield put(userGetMeSuccess(user));
   } catch (error) {
     yield put(userGetMeFailure(error));
@@ -17,11 +18,14 @@ function* takeNewRoute() {
 function* setSuccessGet() {
   try {
     const user = yield call(getUserToken);
-
-    yield put(userGetMeSuccess(user));
+    console.log('user in sagaaaaaa', user);
+    if (user) {
+      yield put(userGetMeSuccess(user));
+    } else {
+      yield call(takeNewRoute);
+    }
   } catch (error) {
     console.log(error);
-    yield call(takeNewRoute);
   }
 }
 

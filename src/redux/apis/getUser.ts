@@ -15,10 +15,6 @@ export const getUserToken = async () => {
       timeout: 4000
     });
 
-    if (user.emailConfirm === false) {
-      console.log('Please confirm your email first!');
-    }
-
     return user.data.data.user;
   } catch (error) {
     console.log(error.response.data.message), 'ooooooooooooo';
@@ -37,10 +33,6 @@ export const getProviderToken = async () => {
       },
       timeout: 4000
     });
-
-    if (provider.emailConfirm === false) {
-      console.log('Please confirm your email first!');
-    }
 
     return provider.data.data.user;
   } catch (error) {

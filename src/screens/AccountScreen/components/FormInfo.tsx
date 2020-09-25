@@ -45,7 +45,6 @@ const validationSchema = Yup.object().shape({
   passwordConfirm: Yup.string()
     .oneOf([Yup.ref('password'), null!], 'Passwords must match')
     .label('Confirm Password'),
-  //address: Yup.string().required().label('Activity Address'),
   vat: Yup.string().required().label('Activity Vat Number')
   //images: Yup.array().min(1, "Pleaseselect at least 1 image")
 });
@@ -221,7 +220,7 @@ const SignupProvider: React.FC<Props> = ({
         >
           <CustomLayout style={styles.layout}>
             <CustomText type="extra-bold-italic" style={styles.text1}>
-              Creating User...
+              Creating Coffee Provider ...
             </CustomText>
             <ActivityIndicator size="large" />
           </CustomLayout>
