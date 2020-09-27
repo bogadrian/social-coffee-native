@@ -36,16 +36,6 @@ interface ILocation {
   longitude: number;
 }
 
-interface IUser {
-  name: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
-  address: string;
-  vat: string;
-  position: ILocation;
-}
-
 interface IData {
   name: string;
   email: string;
@@ -56,8 +46,16 @@ interface IData {
   position: ILocation;
 }
 
+interface IUser {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  vat: string;
+}
+
 interface Props {
-  signupStartProvider: (user: IData) => AnyAction;
+  signupStartProvider: (userData: IData) => AnyAction;
   err: Error;
   cleanUserErrors: () => AnyAction;
   isLoading: boolean;
@@ -110,8 +108,8 @@ const SignupProvider: React.FC<Props> = ({
     );
   }
 
-  const callTheBackendWithProviderData = (data: IData) => {
-    const user: IUser = {
+  const callTheBackendWithProviderData = (data: IUser) => {
+    const userData: IData = {
       name: data.name,
       email: data.email,
       password: data.password,
@@ -120,8 +118,8 @@ const SignupProvider: React.FC<Props> = ({
       vat: data.vat,
       position: providerData.coords[0]
     };
-    console.log('user to be send', user);
-    signupStartProvider(user);
+
+    signupStartProvider(userData);
   };
 
   const handleShow = () => {

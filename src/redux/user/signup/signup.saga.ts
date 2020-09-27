@@ -7,16 +7,10 @@ import {
   makeCallSignupProvider
 } from '../../apis/signupApi';
 
-interface IValues {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  address?: string;
-}
+import { IData } from './signup.actions';
 
 interface ISagaValues {
-  user: IValues;
+  user: IData;
   type: IUsersTypes;
 }
 

@@ -1,21 +1,36 @@
 import { IUsersTypes } from '../users.types';
 
-import { IUserType } from '../../../types/user.types';
+interface ILocation {
+  latitude: number;
+  longitude: number;
+}
 
-interface IValues {
+interface IValuesProvider {
   name: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  passwordConfirm: string;
+  address: string;
+  vat: string;
+  position: ILocation;
 }
 
-export const signupStartUser = (user: IValues) => {
+interface IValuesUser {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+}
+
+export type IData = IValuesUser | IValuesProvider;
+
+export const signupStartUser = (user: IValuesUser) => {
   return {
     type: IUsersTypes.START_SIGNUP_USER,
     user
   };
 };
-export const signupStartProvider = (user: IUserType) => {
+export const signupStartProvider = (user: IValuesProvider) => {
   return {
     type: IUsersTypes.START_SIGNUP_PROVIDER,
     user

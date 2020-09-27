@@ -34,7 +34,7 @@ interface IValues {
   name: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  passwordConfirm: string;
 }
 
 interface Props {

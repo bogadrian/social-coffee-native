@@ -5,16 +5,10 @@ import { URL } from '../../constants/variables';
 
 import { IUsersTypes } from '../user/users.types';
 
-interface IValues {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  address?: string;
-}
+import { IData } from '../user/signup/signup.actions';
 
 interface ISagaValues {
-  user: IValues;
+  user: IData;
   type: IUsersTypes;
 }
 export const makeCallSignupWithUser = async (user: ISagaValues) => {
