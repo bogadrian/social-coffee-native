@@ -1,8 +1,25 @@
 import axios from 'axios';
 
+import { IUsersTypes } from '../user/users.types';
+
 import { URL } from '../../constants/variables';
 
-export const makeCallResetPasswordUser = async (data: any) => {
+interface IValues {
+  password: string;
+  passwordConfirm: string;
+}
+
+interface IResetValues {
+  token: string;
+  values: IValues;
+}
+
+interface IData {
+  data: IResetValues;
+  type: IUsersTypes;
+}
+
+export const makeCallResetPasswordUser = async (data: IData) => {
   const { token } = data.data;
   const { password, passwordConfirm } = data.data.values;
 
@@ -28,7 +45,7 @@ export const makeCallResetPasswordUser = async (data: any) => {
   }
 };
 
-export const makeCallResetPasswordProvider = async (data: any) => {
+export const makeCallResetPasswordProvider = async (data: IData) => {
   const { token } = data.data;
   const { password, passwordConfirm } = data.data.values;
 

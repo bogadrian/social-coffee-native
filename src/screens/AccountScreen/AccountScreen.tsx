@@ -9,10 +9,13 @@ import AuthScreen from '../AuthScreen/AuthScreen';
 import CustomLayout from '../../custom/CustomLayout';
 import CustomText from '../../custom/CustomText';
 
+import { IUserType } from '../../types/user.types';
+
 interface Props {
-  user: any;
-  error: any;
+  user: IUserType;
+  error: Error;
 }
+
 const styles = StyleSheet.create({
   layout: {
     flexGrow: 1,

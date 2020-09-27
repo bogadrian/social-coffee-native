@@ -40,21 +40,32 @@ import { AppForm, AppFormField } from '../../../../components/forms';
 import { startUpdateMe } from '../../../../redux/user/updateMe/update.actions';
 import { startPasswordChange } from '../../../../redux/user/changePassword/changePassword.actions';
 
-interface Props {
-  user: any;
-  cleanUserErrors: any;
-  userGetStart: any;
-}
+import { IUserType } from '../../../../types/user.types';
 
 interface Props {
-  user: any;
+  user: IUserType;
+  cleanUserErrors: () => AnyAction;
+  userGetStart: () => AnyAction;
+  err: Error;
   isLoadingUpd: boolean;
   isLoadingPass: boolean;
-  cleanUserErrors: any;
-  userGetStart: any;
-  startUpdateMe: any;
-  startPasswordChange: any;
+  startUpdateMe: (values: IUpdateValues) => AnyAction;
+  startPasswordChange: (values: IPasswordValues) => AnyAction;
   changeSuccess: boolean;
+}
+
+interface IUpdateValues {
+  name: string;
+  description: string;
+  images: string[];
+  u?: string;
+}
+
+interface IPasswordValues {
+  passwordCurrent: string;
+  password: string;
+  passwordConfirm: string;
+  u?: string;
 }
 
 const styles = StyleSheet.create({
@@ -63,7 +74,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginTop: 30,
-    height: height * 1.2
+    height: height * 1.6
   },
   layoutModal: {
     flexDirection: 'column',
@@ -162,6 +173,7 @@ const validationSchemaPassword = Yup.object().shape({
 });
 const UpdateProvider: React.FC<Props> = ({
   user,
+  err,
   userGetStart,
   cleanUserErrors,
   startUpdateMe,
@@ -174,6 +186,7 @@ const UpdateProvider: React.FC<Props> = ({
   const [password, setPassword] = useState<boolean>(false);
   const [inputTextType, setInputTextType] = useState<boolean>(true);
   const [textForPass, setTextPass] = useState<boolean>(false);
+  const [errorDelete, setErrorDelete] = useState<boolean>(false);
 
   const navigation = useNavigation();
 
@@ -208,18 +221,26 @@ const UpdateProvider: React.FC<Props> = ({
   const handleDelete = async () => {
     const token = await SecureStore.getItemAsync('jwt');
 
-    await axios.delete(`${URL}/api/v1/provider/deleteMe`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-    userGetStart();
+    try {
+      await axios.delete(`${URL}/api/v1/provider/deleteMe`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      userGetStart();
+    } catch (err) {
+      console.log(err);
+      setErrorDelete(true);
+    }
   };
 
-  const handleUpdateMe = (values: any) => {
+  const handleUpdateMe = (values: IUpdateValues) => {
     const u: string = 'coffee-provider';
-    const userData = { ...values, u };
+    const userData = {
+      ...values,
+      u
+    };
     startUpdateMe(userData);
   };
 
@@ -285,7 +306,8 @@ const UpdateProvider: React.FC<Props> = ({
       />
       <Divider style={{ marginTop: 30 }} />
       <CustomText type="extra-light" style={styles.updateText}>
-        If you are part of more comunities, here you can manage them!
+        Create a community around your commercial activity! Become a reference
+        for the people in your neighbourhood!
       </CustomText>
       <CustomButton
         buttonWidth="80%"
@@ -294,7 +316,7 @@ const UpdateProvider: React.FC<Props> = ({
         color={Color.secondary}
         fontSize={14}
         textType="bold"
-        text="Manage My Comunities"
+        text="Create My Comunitiy"
         onPress={() => handleComunities()}
       />
       <Divider style={{ marginTop: 30 }} />
@@ -341,9 +363,15 @@ const UpdateProvider: React.FC<Props> = ({
       />
       <Divider style={{ marginTop: 30 }} />
       <CustomText type="extra-light" style={styles.updateText}>
-        Delete my profile! You won't be seen anywhere on this app. You can
-        always reactivate your account just by simply loggin in again!
+        Delete my profile! Your community will be deleted also! You won't be
+        seen anywhere on this app. You can always reactivate your account just
+        by simply loggin in again!
       </CustomText>
+      {errorDelete && (
+        <CustomText type="extra-light" style={styles.updateText}>
+          That didn't work! Please check your connection and try again!
+        </CustomText>
+      )}
       <CustomButton
         buttonWidth="40%"
         name="account-heart-outline"
@@ -556,10 +584,10 @@ const UpdateProvider: React.FC<Props> = ({
                       Cool! You changed your password!
                     </CustomText>
                   ) : null}
-                  {textForPass && !changeSuccess && (
+                  {textForPass && !changeSuccess && !err && (
                     <CustomText type="light" style={styles.text4}>
                       Sorry! That didn't work! Please check your connection and
-                      try again!
+                      your passwords and try again!
                     </CustomText>
                   )}
                   <CustomButton
@@ -595,6 +623,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
 
 const mapStateToProps = ({ user }: any) => ({
   user: user.user,
+  err: user.error,
   isLoadingUpd: user.isLoadingUpdate,
   isLoadingPass: user.isLoadingPass,
   changeSuccess: user.changeSuccess

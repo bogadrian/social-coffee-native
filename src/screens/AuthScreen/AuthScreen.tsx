@@ -35,10 +35,12 @@ import { userGetStart } from '../../redux/user/getMe/users.actions';
 import NotLogin from './components/NotLogin';
 import Settings from './components/Settings';
 
+import { IUserType } from '../../types/user.types';
+
 interface Props {
-  user: any;
-  cleanUserErrors: any;
-  userGetStart: any;
+  user: IUserType;
+  cleanUserErrors: () => AnyAction;
+  userGetStart: () => AnyAction;
 }
 
 const styles = StyleSheet.create({
@@ -101,16 +103,6 @@ const AuthScreen: React.FC<Props> = ({
   const [noConfim, setNoConfirm] = useState<boolean>(false);
 
   const navigation = useNavigation();
-
-  // if (error) {
-  //   return (
-  //     <CustomLayout style={styles.layout}>
-  //       <CustomText type="light" style={styles.text}>
-  //         {error.message}
-  //       </CustomText>
-  //     </CustomLayout>
-  //   );
-  // }
 
   useEffect(() => {
     setTimeout(() => {

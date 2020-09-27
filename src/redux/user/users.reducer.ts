@@ -1,9 +1,10 @@
 import { IUsersTypes } from './users.types';
 
-import { UserAction } from './getMe/users.actions';
+import { AnyAction } from 'redux';
+import { IUserType } from '../../types/user.types';
 
 export interface IState {
-  user: any;
+  user: IUserType | null;
   err: string | null;
   isLoadingLogin: boolean;
   isLoadingSignup: boolean;
@@ -28,7 +29,7 @@ let INITIAL_STATE = {
 
 export const userReducer = (
   state: IState = INITIAL_STATE,
-  action: UserAction
+  action: AnyAction
 ) => {
   switch (action.type) {
     case IUsersTypes.START_GET_USER:
@@ -61,6 +62,7 @@ export const userReducer = (
     case IUsersTypes.START_CHANGE_PASSWORD:
       return {
         ...state,
+        changePassword: false,
         isLoadingPass: true
       };
     case IUsersTypes.SUCCESS_LOGIN:

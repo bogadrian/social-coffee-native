@@ -26,17 +26,31 @@ import {
   setProviderDataAddress
 } from '../utilis/providerData';
 
+interface ILocation {
+  latitude: number;
+  longitude: number;
+}
+
+interface Props {
+  reg: ILocation | undefined;
+}
 const latitudeDelta = 0.0922;
 const longitudeDelta = 0.0421;
 
-interface Props {
-  reg: any;
-}
+type IAddress = Array<{
+  country: string | undefined;
+  city: string | undefined;
+  isCountryCode: boolean | undefined;
+  name: string | undefined;
+  postalCode: number | undefined;
+  region: string | undefined;
+  street: string | undefined;
+}>;
 
 const CustomDragMarker: React.FC<Props> = ({ reg }) => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [location, setLocation] = useState<any>();
-  const [address, setAddress] = useState<any>(null);
+  const [location, setLocation] = useState<ILocation>();
+  const [address, setAddress] = useState<IAddress>([]);
 
   const [region, setRegion] = useState<any>({
     latitude: 37.78825,
@@ -44,6 +58,21 @@ const CustomDragMarker: React.FC<Props> = ({ reg }) => {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421
   });
+
+  const onRegionChange = (e: any): void => {
+    const latitude = e.latitude;
+    const longitude = e.longitude;
+    setLocation({ latitude, longitude });
+    const findAddress = async () => {
+      let locAddress: IAddress | any;
+      locAddress = await Location.reverseGeocodeAsync({
+        latitude,
+        longitude
+      });
+      setAddress(locAddress);
+    };
+    findAddress();
+  };
 
   useEffect(() => {
     let update = true;
@@ -65,8 +94,8 @@ const CustomDragMarker: React.FC<Props> = ({ reg }) => {
         if ((update && location) || (update && reg)) {
           reg !== undefined
             ? setRegion({
-                latitude: reg.lat,
-                longitude: reg.lng,
+                latitude: reg.latitude,
+                longitude: reg.longitude,
                 latitudeDelta,
                 longitudeDelta
               })
@@ -84,22 +113,10 @@ const CustomDragMarker: React.FC<Props> = ({ reg }) => {
     };
   }, [reg]);
 
-  const onRegionChange: (e: any) => void = e => {
-    //setRegion(e)
-    const latitude = e.latitude;
-    const longitude = e.longitude;
-    setLocation({ latitude, longitude });
-    const findAddress = async () => {
-      let address = await Location.reverseGeocodeAsync({ latitude, longitude });
-      setAddress(address);
-    };
-    findAddress();
-  };
-
-  //const {latitude, longitude} = location!
-
-  const addressFixed: (address: any) => void = address => {
-    setProviderDataWithCoords(location);
+  const addressFixed = (address: any): void => {
+    if (location) {
+      setProviderDataWithCoords(location);
+    }
     setProviderDataAddress(address);
     okPressedFromAlert();
   };

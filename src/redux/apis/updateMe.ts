@@ -2,10 +2,23 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
 import { URL } from '../../constants/variables';
+import { IUsersTypes } from '../user/users.types';
 
 import FormData from 'form-data';
+interface IUpdateValues {
+  name: string;
+  description: string;
+  images: string[];
+  u?: string;
+  vat?: string;
+  address?: string;
+}
 
-export const makeCallToServerWithUserData = async (userData: any) => {
+interface ISagaValues {
+  userData: IUpdateValues;
+  type: IUsersTypes;
+}
+export const makeCallToServerWithUserData = async (userData: ISagaValues) => {
   const token = await SecureStore.getItemAsync('jwt');
 
   const { description, images, name } = userData.userData;
@@ -43,11 +56,12 @@ export const makeCallToServerWithUserData = async (userData: any) => {
   }
 };
 
-export const makeCallToServerWithActivityData = async (userData: any) => {
+export const makeCallToServerWithActivityData = async (
+  userData: ISagaValues
+) => {
   const token = await SecureStore.getItemAsync('jwt');
 
   const { description, images, name, vat, address } = userData.userData;
-  console.log('imagesssssdddddcdcswdcsws', userData.userData);
 
   try {
     let form: any = new FormData();

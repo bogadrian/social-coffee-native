@@ -5,8 +5,10 @@ import { useNavigation } from '@react-navigation/native';
 
 import { connect } from 'react-redux';
 
+import { IUserType } from '../types/user.types';
+
 interface Props {
-  user: any;
+  user: IUserType;
 }
 
 const UserImage: React.FC<Props> = ({ user }) => {

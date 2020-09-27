@@ -3,10 +3,9 @@ import { Text, StyleSheet } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 interface Props {
-  type: string,
-  style?: {},
-  animation?: string
-  
+  type: string;
+  style?: any;
+  animation?: string;
 }
 
 const CustomTextAnimated: React.FC<Props> = props => {
@@ -42,12 +41,18 @@ const CustomTextAnimated: React.FC<Props> = props => {
   };
   const font = setFontType(props.type ? props.type : 'normal');
   const style = [{ fontFamily: font, color: 'white' }, props.style || {}];
-  return  (
-       <Animatable.View animation={props.animation} easing="ease-in-cubic" delay={1000}      iterationCount="infinite" >
-          <Text style={[...style, styles.text]}>{props.children}</Text>
-      </Animatable.View>);
+  return (
+    <Animatable.View
+      animation={props.animation}
+      easing="ease-in-cubic"
+      delay={1000}
+      iterationCount="infinite"
+    >
+      <Text style={[...style, styles.text]}>{props.children}</Text>
+    </Animatable.View>
+  );
 };
 const styles = StyleSheet.create({
-  text: {alignItems: 'center', justifyContent: 'center'}
-})
+  text: { alignItems: 'center', justifyContent: 'center' }
+});
 export default CustomTextAnimated;

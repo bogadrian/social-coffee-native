@@ -13,7 +13,7 @@ import CustomLayout from '../../../custom/CustomLayout';
 import CustomButton from '../../../custom/CustomButton';
 
 interface Props {
-  cleanUserErrors: any;
+  cleanUserErrors: () => AnyAction;
 }
 
 const styles = StyleSheet.create({

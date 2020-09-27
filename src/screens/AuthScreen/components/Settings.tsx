@@ -1,12 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 export const { width, height } = Dimensions.get('window');
 
 import { connect } from 'react-redux';
-import { AnyAction, bindActionCreators, Dispatch } from 'redux';
-
-import { cleanUserErrors } from '../../../redux/user/reducer.actions';
-import { userGetStart } from '../../../redux/user/getMe/users.actions';
 
 import CustomLayout from '../../../custom/CustomLayout';
 import CustomText from '../../../custom/CustomText';
@@ -14,11 +10,11 @@ import CustomText from '../../../custom/CustomText';
 import UpdateUser from './user/updateUser';
 import UpdateProvider from './provider/updateProvider';
 
+import { IUserType } from '../../../types/user.types';
+
 interface Props {
-  user: any;
-  cleanUserErrors: any;
-  userGetStart: any;
-  error: any;
+  user: IUserType;
+  error: Error;
 }
 
 const styles = StyleSheet.create({
@@ -64,18 +60,9 @@ const Settings: React.FC<Props> = ({ user, error }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
-  bindActionCreators(
-    {
-      cleanUserErrors,
-      userGetStart
-    },
-    dispatch
-  );
-
 const mapStateToProps = ({ user }: any) => ({
   user: user.user,
   error: user.error
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default connect(mapStateToProps)(Settings);

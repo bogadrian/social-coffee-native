@@ -1,6 +1,13 @@
 import { IUsersTypes } from '../users.types';
 
-export const startPasswordChange = (userData: any) => {
+export interface IPasswordValues {
+  passwordCurrent: string;
+  password: string;
+  passwordConfirm: string;
+  u?: string;
+}
+
+export const startPasswordChange = (userData: IPasswordValues) => {
   return { type: IUsersTypes.START_CHANGE_PASSWORD, userData };
 };
 
@@ -9,6 +16,5 @@ export const changePasswordSuccess = (user: any) => {
 };
 
 export const changePasswordFailure = (error: any) => {
-  console.log('errrrorror', error);
   return { type: IUsersTypes.CHANGE_PASSWORD_FAILURE, error };
 };

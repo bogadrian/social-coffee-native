@@ -1,16 +1,20 @@
-import {IUsersTypes} from '../users.types'
+import { IUsersTypes } from '../users.types';
 
-
-export const loginStartUser = (user: any) => {
-    return {
-        type: IUsersTypes.START_LOGIN_USER,
-        user
-    }
-}
-export const loginStartProvider = (user: any) => {
-    return {
-        type: IUsersTypes.START_LOGIN_PROVIDER,
-        user
-    }
+interface ILogin {
+  email: string;
+  password: string;
 }
 
+export const loginStartUser = (user: ILogin) => {
+  return {
+    type: IUsersTypes.START_LOGIN_USER,
+    user
+  };
+};
+
+export const loginStartProvider = (user: ILogin) => {
+  return {
+    type: IUsersTypes.START_LOGIN_PROVIDER,
+    user
+  };
+};

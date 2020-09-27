@@ -19,9 +19,11 @@ import CustomText from '../../custom/CustomText';
 import CustomButton from '../../custom/CustomButton';
 import Divider from '../../custom/Divider';
 
+import { IUserType } from '../../types/user.types';
+
 interface Props {
-  user: any;
-  cleanUserErrors: any;
+  user: IUserType;
+  cleanUserErrors: () => AnyAction;
 }
 
 const SignupScreen: React.FC<Props> = ({ user, cleanUserErrors }) => {

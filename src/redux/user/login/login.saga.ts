@@ -7,7 +7,17 @@ import {
   makeCallLoginProvider
 } from '../../apis/loginApi';
 
-export function* setLoginSuccessProvider(user: any) {
+interface ILogin {
+  email: string;
+  password: string;
+}
+
+interface ISagaLogin {
+  user: ILogin;
+  type: IUsersTypes;
+}
+
+export function* setLoginSuccessProvider(user: ISagaLogin) {
   try {
     const userSignedUp = yield call(makeCallLoginProvider, user);
     yield put(userLoginSuccess(userSignedUp));
@@ -16,7 +26,7 @@ export function* setLoginSuccessProvider(user: any) {
   }
 }
 
-export function* setLoginSuccessUser(user: any) {
+export function* setLoginSuccessUser(user: ISagaLogin) {
   try {
     const userSignedUp = yield call(makeCallLoginWithUser, user);
 

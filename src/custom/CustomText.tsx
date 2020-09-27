@@ -2,11 +2,10 @@ import React from 'react';
 import { Text } from 'react-native';
 
 interface Props {
-  type: string,
-  style?: {},
-  children: React.ReactNode,
-  animation?: string
-  
+  type: string;
+  style?: any;
+  children: React.ReactNode;
+  animation?: string;
 }
 
 const CustomText: React.FC<Props> = props => {

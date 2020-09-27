@@ -9,7 +9,22 @@ import {
   makeCallResetPasswordProvider
 } from '../../apis/resetPassword';
 
-function* setResetSuccessProvider(data: any) {
+interface IValues {
+  password: string;
+  passwordConfirm: string;
+}
+
+interface IResetValues {
+  token: string;
+  values: IValues;
+}
+
+interface IData {
+  data: IResetValues;
+  type: IUsersTypes;
+}
+
+function* setResetSuccessProvider(data: IData) {
   try {
     const response = yield call(makeCallResetPasswordProvider, data);
 
@@ -19,7 +34,8 @@ function* setResetSuccessProvider(data: any) {
   }
 }
 
-function* setResetSuccessUser(data: any) {
+function* setResetSuccessUser(data: IData) {
+  console.log('user dataaaaaa', data);
   try {
     const response = yield call(makeCallResetPasswordUser, data);
 

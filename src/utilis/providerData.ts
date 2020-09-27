@@ -1,14 +1,24 @@
-export const providerData: { coords: any; address: any } = {
+interface IProviderData {
+  coords: Array<ILocation>;
+  address: string;
+}
+
+export const providerData: IProviderData = {
   coords: [],
   address: ''
 };
 
-type SetPDL = (location: any) => void;
+interface ILocation {
+  latitude: number;
+  longitude: number;
+}
+
+type SetPDL = (location: ILocation) => void;
 
 export const setProviderDataWithCoords: SetPDL = location => {
   providerData.coords.push(location);
 };
 
-export const setProviderDataAddress = (address: any) => {
+export const setProviderDataAddress = (address: string) => {
   providerData.address = address;
 };

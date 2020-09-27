@@ -5,7 +5,7 @@ interface Props {
   initialValues: any;
   onSubmit: (values: any) => void;
   validationSchema: any;
-  children?: any;
+  children?: React.ReactNode;
   oteherProps?: any;
   style?: any;
 }

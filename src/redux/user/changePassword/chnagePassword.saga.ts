@@ -1,21 +1,36 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects';
 
 import { IUsersTypes } from '../users.types';
+import { IPasswordValues } from './changePassword.actions';
+import { IUserType } from '../../../types/user.types';
+
+interface IData {
+  type: IUsersTypes;
+  userData: IPasswordValues;
+}
 
 import {
   changePasswordSuccess,
   changePasswordFailure
 } from './changePassword.actions';
 
-import { makeCallToServerWithUserNewPassword } from '../../apis/changePassword';
+import {
+  makeCallToServerWithUserNewPassword,
+  makeCallToServerWithProviderNewPassword
+} from '../../apis/changePassword';
 
-function* setChange(userData: any) {
+function* setChange(userData: IData) {
   try {
-    let response: any;
+    let response: IUserType | undefined;
 
     if (userData.userData.u === 'user') {
       response = yield call(makeCallToServerWithUserNewPassword, userData);
     }
+
+    if (userData.userData.u === 'coffee-provider') {
+      response = yield call(makeCallToServerWithProviderNewPassword, userData);
+    }
+
     yield put(changePasswordSuccess(response));
   } catch (error) {
     console.log(error);

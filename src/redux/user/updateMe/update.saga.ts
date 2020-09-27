@@ -8,7 +8,20 @@ import {
   makeCallToServerWithActivityData
 } from '../../apis/updateMe';
 
-function* setUpdate(userData: any) {
+interface IUpdateValues {
+  name: string;
+  description: string;
+  images: string[];
+  u?: string;
+  vat?: string;
+}
+
+interface ISagaValues {
+  userData: IUpdateValues;
+  type: IUsersTypes;
+}
+
+function* setUpdate(userData: ISagaValues) {
   try {
     let response: any;
 

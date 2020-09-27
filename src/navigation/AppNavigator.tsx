@@ -7,10 +7,9 @@ import { MainStack } from './StackNavigators';
 import * as Linking from 'expo-linking';
 
 const prefix1 = Linking.makeUrl('/reset/:token', { token: 'token' });
-const prefix2 = Linking.makeUrl('/confirmation');
 
 const linkingConfig: any = {
-  prefixes: [prefix1, prefix2]
+  prefixes: [prefix1]
 };
 
 const AppNavigator: React.FC = () => {

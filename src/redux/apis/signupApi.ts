@@ -3,7 +3,21 @@ import * as SecureStore from 'expo-secure-store';
 
 import { URL } from '../../constants/variables';
 
-export const makeCallSignupWithUser = async (user: any) => {
+import { IUsersTypes } from '../user/users.types';
+
+interface IValues {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  address?: string;
+}
+
+interface ISagaValues {
+  user: IValues;
+  type: IUsersTypes;
+}
+export const makeCallSignupWithUser = async (user: ISagaValues) => {
   const data = user.user;
 
   try {
@@ -27,7 +41,7 @@ export const makeCallSignupWithUser = async (user: any) => {
   }
 };
 
-export const makeCallSignupProvider = async (user: any) => {
+export const makeCallSignupProvider = async (user: ISagaValues) => {
   try {
     const axiosInstance = await axios.create({
       baseURL: `${URL}/api/v1/provider/signup`,

@@ -1,11 +1,5 @@
 import { IUsersTypes } from '../users.types';
 
-export interface UserAction {
-  type: IUsersTypes;
-  user?: {};
-  error?: string;
-}
-
 export interface StartActionType {
   type: IUsersTypes;
   error?: string;

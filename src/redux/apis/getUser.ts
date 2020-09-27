@@ -7,7 +7,7 @@ export const getUserToken = async () => {
   try {
     const token = await SecureStore.getItemAsync('jwt');
 
-    const user: any = await axios.get(`${URL}/api/v1/users/getMe`, {
+    const user = await axios.get(`${URL}/api/v1/users/getMe`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Access-Control-Allow-Origin': '*'
@@ -17,7 +17,7 @@ export const getUserToken = async () => {
 
     return user.data.data.user;
   } catch (error) {
-    console.log(error.response.data.message), 'ooooooooooooo';
+    console.log(error.response.data.message);
     //throw new Error(error.response.data.message);
   }
 };
@@ -26,7 +26,7 @@ export const getProviderToken = async () => {
   try {
     const token = await SecureStore.getItemAsync('jwt');
 
-    const provider: any = await axios.get(`${URL}/api/v1/provider/getMe`, {
+    const provider = await axios.get(`${URL}/api/v1/provider/getMe`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Access-Control-Allow-Origin': '*'
@@ -36,7 +36,7 @@ export const getProviderToken = async () => {
 
     return provider.data.data.user;
   } catch (error) {
-    console.log(error.response.data.message, 'eeeeeeeeeeeeee');
+    console.log(error.response.data.message);
     //throw new Error(error.response.data.message);
   }
 };

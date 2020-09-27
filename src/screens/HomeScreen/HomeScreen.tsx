@@ -16,11 +16,13 @@ import CustomLayout from '../../custom/CustomLayout';
 import HomeNonAuth from './components/HomeNonAuth';
 import AuthScreen from '../AuthScreen/AuthScreen';
 
+import { IUserType } from '../../types/user.types';
+
 interface Props {
-  user: any;
+  user: IUserType;
   isLoading: boolean;
   navigation?: any;
-  userGetStart?: any;
+  userGetStart?: () => AnyAction;
 }
 
 const HomeScreen: React.FC<Props> = ({ user, navigation }) => {

@@ -28,11 +28,20 @@ import SubmitButton from '../../../components/forms/SubmitButton';
 import CustomButton from '../../../custom/CustomButton';
 import CustomLayout from '../../../custom/CustomLayout';
 
+import { IUserType } from '../../../types/user.types';
+
+interface IValues {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 interface Props {
-  signupStartUser: any;
-  user: any;
-  cleanUserErrors: any;
-  err: any;
+  signupStartUser: (values: IValues) => AnyAction;
+  user: IUserType;
+  cleanUserErrors: () => AnyAction;
+  err: Error;
   isLoading: boolean;
 }
 
@@ -105,7 +114,7 @@ const SignupUser: React.FC<Props> = ({
     );
   }
 
-  const signupUserHandler = (values: any) => {
+  const signupUserHandler = (values: IValues) => {
     signupStartUser(values);
   };
 

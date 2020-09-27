@@ -1,6 +1,5 @@
 import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
-//import { useNavigation } from '@react-navigation/native';
 
 export const { width, height } = Dimensions.get('window');
 
@@ -9,13 +8,13 @@ import HomeNonAuth from './HomeNonAuth';
 
 import AuthScreen from '../../AuthScreen/AuthScreen';
 
+import { IUserType } from '../../../types/user.types';
+
 interface Props {
-  user: any;
+  user: IUserType;
 }
 
 const HomeLoading: React.FC<Props> = ({ user }) => {
-  //const navigation = useNavigation();
-
   return (
     <CustomLayout style={styles.layout}>
       {!user ? <HomeNonAuth /> : <AuthScreen />}

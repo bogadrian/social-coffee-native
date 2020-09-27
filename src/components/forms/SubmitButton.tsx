@@ -6,8 +6,8 @@ import CustomButton from '../../custom/CustomButton';
 
 interface Props {
   textType: string;
-  style?: {};
-  textStyle?: {};
+  style?: any;
+  textStyle?: string;
   text: string;
   color: string;
   name: string;
@@ -18,9 +18,17 @@ interface Props {
   onPress?: () => void;
 }
 
-const SubmitButton: React.FC<Props> = ({ buttonWidth, style, name, size, color, fontSize, textType, text }) => {
+const SubmitButton: React.FC<Props> = ({
+  buttonWidth,
+  style,
+  name,
+  size,
+  color,
+  fontSize,
+  textType,
+  text
+}) => {
   const { handleSubmit } = useFormikContext<string[]>();
-
 
   return (
     <React.Fragment>

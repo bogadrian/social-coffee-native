@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 import WalkThrough from '../../components/WalkThrough';
 
 const InfoScreen: React.FC = () => {
@@ -11,5 +10,4 @@ const InfoScreen: React.FC = () => {
   );
 };
 
-
-export default InfoScreen
+export default InfoScreen;

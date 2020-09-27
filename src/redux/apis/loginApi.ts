@@ -2,8 +2,18 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
 import { URL } from '../../constants/variables';
+import { IUsersTypes } from '../user/users.types';
 
-export const makeCallLoginWithUser = async (user: any) => {
+interface IUser {
+  email: string;
+  password: string;
+}
+
+interface ILogin {
+  user: IUser;
+  type: IUsersTypes;
+}
+export const makeCallLoginWithUser = async (user: ILogin) => {
   const data = user.user;
   try {
     const axiosInstance = await axios.create({

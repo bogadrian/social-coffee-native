@@ -10,17 +10,14 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
-import { connect } from 'react-redux';
-
 import Color from '../../constants/Color';
 
 interface Props {
   imageUri?: string;
   onChangeImage: (image: string) => void;
-  user: any;
 }
 
-const ImageInput: React.FC<Props> = ({ imageUri, onChangeImage, user }) => {
+const ImageInput: React.FC<Props> = ({ imageUri, onChangeImage }) => {
   useEffect(() => {
     requestPermission();
   }, []);
@@ -86,8 +83,5 @@ const styles = StyleSheet.create({
     width: '100%'
   }
 });
-const mapStateToProps = (state: any) => ({
-  user: state.user.user
-});
 
-export default connect(mapStateToProps)(ImageInput);
+export default ImageInput;

@@ -41,12 +41,19 @@ import Divider from '../../../custom/Divider';
 import { AppForm, AppFormField } from '../../../components/forms';
 import SubmitButton from '../../../components/forms/SubmitButton';
 
+import { IUserType } from '../../../types/user.types';
+
+interface ILogin {
+  email: string;
+  password: string;
+}
+
 interface Props {
-  loginStartUser: any;
-  loginStartProvider: any;
-  cleanUserErrors: any;
-  user: any;
-  err: any;
+  loginStartUser: ({ email, password }: ILogin) => AnyAction;
+  loginStartProvider: ({ email, password }: ILogin) => AnyAction;
+  cleanUserErrors: () => AnyAction;
+  user: IUserType;
+  err: Error;
   isLoading: boolean;
 }
 
@@ -137,7 +144,7 @@ const Login: React.FC<Props> = ({
       : loginStartProvider({ email, password });
   };
 
-  const forgotHandler = () => {
+  const forgotHandler = (): void => {
     setModal(true);
   };
 

@@ -24,14 +24,17 @@ import CustomLayout from '../../../custom/CustomLayout';
 import CustomText from '../../../custom/CustomText';
 import CustomDragMarker from '../../../custom/CustomDragMarker';
 
-interface Props {}
-
 const validationSchema = Yup.object().shape({
   city: Yup.string().label('Address')
 });
 
-const Localization: React.FC<Props> = () => {
-  const [coord, setCoordinates] = useState<any>();
+export interface ILocation {
+  latitude: number;
+  longitude: number;
+}
+
+const Localization: React.FC = () => {
+  const [coord, setCoordinates] = useState<ILocation>();
 
   const setCoords = async (city: string) => {
     try {
@@ -40,16 +43,14 @@ const Localization: React.FC<Props> = () => {
       });
 
       if (coordinates) {
-        setCoordinates(coordinates.data.data);
-      } else {
-        setCoordinates({ lat: 344555, lng: 556767 });
+        const { lat, lng } = coordinates.data.data;
+        setCoordinates({ latitude: lat, longitude: lng });
       }
-
-      // call a action and put this in a reducer for provider data
     } catch (err) {
       console.log(err);
     }
   };
+
   return (
     <ScrollView
       contentContainerStyle={{ flex: 1, height: '140%', marginBottom: 140 }}

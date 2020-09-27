@@ -4,6 +4,7 @@ import {
   View,
   Dimensions,
   Modal,
+  Image,
   ActivityIndicator
 } from 'react-native';
 
@@ -39,15 +40,32 @@ import { AppForm, AppFormField } from '../../../../components/forms';
 import { startUpdateMe } from '../../../../redux/user/updateMe/update.actions';
 import { startPasswordChange } from '../../../../redux/user/changePassword/changePassword.actions';
 
+import { IUserType } from '../../../../types/user.types';
+
 interface Props {
-  user: any;
+  user: IUserType;
+  err: Error;
   isLoadingUpd: boolean;
   isLoadingPass: boolean;
-  cleanUserErrors: any;
-  userGetStart: any;
-  startUpdateMe: any;
-  startPasswordChange: any;
+  cleanUserErrors: () => AnyAction;
+  userGetStart: () => AnyAction;
+  startUpdateMe: (values: IUpdateValues) => AnyAction;
+  startPasswordChange: (values: IPasswordValues) => AnyAction;
   changeSuccess: boolean;
+}
+
+interface IUpdateValues {
+  name: string;
+  description: string;
+  images: string[];
+  u?: string;
+}
+
+interface IPasswordValues {
+  passwordCurrent: string;
+  password: string;
+  passwordConfirm: string;
+  u?: string;
 }
 
 const styles = StyleSheet.create({
@@ -82,8 +100,9 @@ const styles = StyleSheet.create({
   },
   textModal: {
     textAlign: 'center',
-    fontSize: 20,
-    padding: 10
+    fontSize: 18,
+    padding: 10,
+    marginLeft: 10
   },
   textModal1: {
     textAlign: 'center',
@@ -152,6 +171,7 @@ const validationSchemaPassword = Yup.object().shape({
 
 const UpdateUser: React.FC<Props> = ({
   user,
+  err,
   userGetStart,
   cleanUserErrors,
   startUpdateMe,
@@ -164,6 +184,7 @@ const UpdateUser: React.FC<Props> = ({
   const [password, setPassword] = useState<boolean>(false);
   const [inputTextType, setInputTextType] = useState<boolean>(true);
   const [textForPass, setTextPass] = useState<boolean>(false);
+  const [errorDelete, setErrorDelete] = useState<boolean>(false);
 
   const navigation = useNavigation();
 
@@ -188,8 +209,8 @@ const UpdateUser: React.FC<Props> = ({
     setUpdate(true);
   };
 
-  const handleComunities = () => {};
   const handleBlocked = () => {};
+
   const handleChangePassword = () => {
     setPassword(true);
   };
@@ -197,22 +218,27 @@ const UpdateUser: React.FC<Props> = ({
   const handleDelete = async () => {
     const token = await SecureStore.getItemAsync('jwt');
 
-    await axios.delete(`${URL}/api/v1/users/deleteMe`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-    userGetStart();
+    try {
+      await axios.delete(`${URL}/api/v1/users/deleteMe`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      userGetStart();
+    } catch (err) {
+      console.log(err);
+      setErrorDelete(true);
+    }
   };
 
-  const handleUpdateMe = (values: any) => {
+  const handleUpdateMe = (values: IUpdateValues) => {
     const u: string = 'user';
     const userData = { ...values, u };
     startUpdateMe(userData);
   };
 
-  const handleChangePasswordValues = (values: any) => {
+  const handleChangePasswordValues = (values: IPasswordValues) => {
     const u: string = 'user';
     const userData = { ...values, u };
     startPasswordChange(userData);
@@ -274,20 +300,6 @@ const UpdateUser: React.FC<Props> = ({
       />
       <Divider style={{ marginTop: 30 }} />
       <CustomText type="extra-light" style={styles.updateText}>
-        If you are part of more comunities, here you can manage them!
-      </CustomText>
-      <CustomButton
-        buttonWidth="80%"
-        name="account-heart-outline"
-        size={15}
-        color={Color.secondary}
-        fontSize={14}
-        textType="bold"
-        text="Manage My Comunities"
-        onPress={() => handleComunities()}
-      />
-      <Divider style={{ marginTop: 30 }} />
-      <CustomText type="extra-light" style={styles.updateText}>
         If you have blocked some people, here you can manage those blockes!
       </CustomText>
       <CustomButton
@@ -333,6 +345,11 @@ const UpdateUser: React.FC<Props> = ({
         Delete my profile! You won't be seen anywhere on this app. You can
         always reactivate your account just by simply loggin in again!
       </CustomText>
+      {errorDelete && (
+        <CustomText type="extra-light" style={styles.updateText}>
+          That didn't work! Please check your connection and try again!
+        </CustomText>
+      )}
       <CustomButton
         buttonWidth="40%"
         name="account-heart-outline"
@@ -372,9 +389,20 @@ const UpdateUser: React.FC<Props> = ({
                   onSubmit={values => handleUpdateMe(values)}
                   validationSchema={validationSchemaUpdate}
                 >
-                  <CustomText type="light" style={styles.textModal}>
-                    Add or Update a profile photo?
-                  </CustomText>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Image
+                      source={{ uri: `${user.photo}` }}
+                      style={{
+                        width: 50,
+                        height: 50,
+                        borderRadius: 50,
+                        marginTop: 5
+                      }}
+                    />
+                    <CustomText type="light" style={styles.textModal}>
+                      Add or Update your photo?
+                    </CustomText>
+                  </View>
 
                   <FormImagePicker name="images" numberPhoto={0} />
                   <CustomText type="light" style={styles.textModal1}>
@@ -522,10 +550,10 @@ const UpdateUser: React.FC<Props> = ({
                       Cool! You changed your password!
                     </CustomText>
                   ) : null}
-                  {textForPass && !changeSuccess && (
+                  {textForPass && !changeSuccess && !err && (
                     <CustomText type="light" style={styles.text4}>
                       Sorry! That didn't work! Please check your connection and
-                      try again!
+                      your passwords and try again!
                     </CustomText>
                   )}
                   <CustomButton
@@ -561,6 +589,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
 
 const mapStateToProps = ({ user }: any) => ({
   user: user.user,
+  err: user.err,
   isLoadingUpd: user.isLoadingUpdate,
   isLoadingPass: user.isLoadingPass,
   changeSuccess: user.changeSuccess

@@ -31,10 +31,35 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import { providerData } from '../../../utilis/providerData';
 
+interface ILocation {
+  latitude: number;
+  longitude: number;
+}
+
+interface IUser {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  address: string;
+  vat: string;
+  position: ILocation;
+}
+
+interface IData {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  address: string;
+  vat: string;
+  position: ILocation;
+}
+
 interface Props {
-  signupStartProvider: any;
-  err: any;
-  cleanUserErrors: any;
+  signupStartProvider: (user: IData) => AnyAction;
+  err: Error;
+  cleanUserErrors: () => AnyAction;
   isLoading: boolean;
 }
 
@@ -85,16 +110,17 @@ const SignupProvider: React.FC<Props> = ({
     );
   }
 
-  const callTheBackendWithProviderData = (data: any) => {
-    const user = {
+  const callTheBackendWithProviderData = (data: IData) => {
+    const user: IUser = {
       name: data.name,
       email: data.email,
       password: data.password,
       passwordConfirm: data.passwordConfirm,
       address: providerData.address,
       vat: data.vat,
-      position: providerData.coords
+      position: providerData.coords[0]
     };
+    console.log('user to be send', user);
     signupStartProvider(user);
   };
 
@@ -136,15 +162,10 @@ const SignupProvider: React.FC<Props> = ({
                 password: '',
                 passwordConfirm: '',
                 vat: ''
-                //images: []
               }}
               onSubmit={values => callTheBackendWithProviderData(values)}
               validationSchema={validationSchema}
             >
-              {/*<CustomText type="thin-italic" style={styles.text1} >
-      Please chose at least 1 photo, up to 10 photos!
-         </CustomText>
-      <FormImagePicker name="images" numberPhoto={0}/>+*/}
               <AppFormField
                 autoCapitalize="none"
                 autoCorrect={false}

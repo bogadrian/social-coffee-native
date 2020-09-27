@@ -4,11 +4,12 @@ import { IUsersTypes } from '../users.types';
 import { userGetMeSuccess, userGetMeFailure } from '../reducer.actions';
 
 import { getUserToken, getProviderToken } from '../../apis/getUser';
+import { IUserType } from '../../../types/user.types';
 
 function* takeNewRoute() {
   try {
-    const user = yield call(getProviderToken);
-    console.log('provider in sagaaaaaa', user);
+    const user: IUserType = yield call(getProviderToken);
+
     yield put(userGetMeSuccess(user));
   } catch (error) {
     yield put(userGetMeFailure(error));
@@ -17,8 +18,8 @@ function* takeNewRoute() {
 
 function* setSuccessGet() {
   try {
-    const user = yield call(getUserToken);
-    console.log('user in sagaaaaaa', user);
+    const user: IUserType = yield call(getUserToken);
+
     if (user) {
       yield put(userGetMeSuccess(user));
     } else {

@@ -19,7 +19,7 @@ import CustomLayout from '../../../custom/CustomLayout';
 import { cleanUserErrors } from '../../../redux/user/reducer.actions';
 
 interface Props {
-  cleanUserErrors: any;
+  cleanUserErrors: () => AnyAction;
 }
 
 const HomeNonAuth: React.FC<Props> = ({ cleanUserErrors }) => {

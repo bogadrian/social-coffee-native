@@ -28,14 +28,26 @@ import { cleanUserErrors } from '../../redux/user/reducer.actions';
 
 import Color from '../../constants/Color';
 
+import { IUserType } from '../../types/user.types';
+
 interface Props {
   route: any;
-  startResetPassword: any;
-  user: any;
-  cleanUserErrors: any;
+  startResetPassword: ({ values, token }: IResetValues) => AnyAction;
+  user: IUserType;
+  cleanUserErrors: () => AnyAction;
   navigation: any;
-  err: any;
+  err: Error;
   isLoading: boolean;
+}
+
+interface IValues {
+  password: string;
+  passwordConfirm: string;
+}
+
+interface IResetValues {
+  token: string;
+  values: IValues;
 }
 
 const styles = StyleSheet.create({
@@ -111,7 +123,7 @@ const ResetPasswordScreen: React.FC<Props> = ({
 
   const { token } = route.params;
 
-  const resetHandler = async (values: any) => {
+  const resetHandler = async (values: IValues) => {
     setH(true);
 
     startResetPassword({ values, token });

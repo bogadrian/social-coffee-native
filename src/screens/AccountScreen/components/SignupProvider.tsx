@@ -10,9 +10,11 @@ import SwiperFlatList from 'react-native-swiper-flatlist';
 import Color from '../../../constants/Color';
 import CustomButton from '../../../custom/CustomButton';
 
+import { IUserType } from '../../../types/user.types';
+
 interface Props {
-  user: any;
-  err: any;
+  user: IUserType;
+  err: Error;
 }
 
 import Localization from './Localization';

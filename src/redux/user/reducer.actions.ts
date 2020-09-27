@@ -1,6 +1,7 @@
 import { IUsersTypes } from './users.types';
+import { IUserType } from '../../types/user.types';
 
-export const userGetMeSuccess = (user: any) => {
+export const userGetMeSuccess = (user: IUserType) => {
   return {
     type: IUsersTypes.SUCCESS_USER_GET,
     user
@@ -13,7 +14,7 @@ export const userGetMeFailure = (error: string) => {
     error
   };
 };
-export const userLoginSuccess = (user: any) => {
+export const userLoginSuccess = (user: IUserType) => {
   return {
     type: IUsersTypes.SUCCESS_LOGIN,
     user
@@ -26,7 +27,7 @@ export const userLoginFailure = (error: string) => {
     error
   };
 };
-export const userSignupSuccess = (user: any) => {
+export const userSignupSuccess = (user: IUserType) => {
   return {
     type: IUsersTypes.SUCCESS_SIGNUP,
     user

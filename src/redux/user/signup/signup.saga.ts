@@ -7,7 +7,20 @@ import {
   makeCallSignupProvider
 } from '../../apis/signupApi';
 
-export function* setSignupSuccessProvider(user: any) {
+interface IValues {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  address?: string;
+}
+
+interface ISagaValues {
+  user: IValues;
+  type: IUsersTypes;
+}
+
+export function* setSignupSuccessProvider(user: ISagaValues) {
   try {
     const userSignedUp = yield call(makeCallSignupProvider, user);
 
@@ -17,7 +30,7 @@ export function* setSignupSuccessProvider(user: any) {
   }
 }
 
-export function* setSignupSuccessUser(user: any) {
+export function* setSignupSuccessUser(user: ISagaValues) {
   try {
     const userSignedUp = yield call(makeCallSignupWithUser, user);
 
