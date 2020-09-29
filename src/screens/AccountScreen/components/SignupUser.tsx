@@ -43,6 +43,7 @@ interface Props {
   cleanUserErrors: () => AnyAction;
   err: Error;
   isLoading: boolean;
+  textType: boolean;
 }
 
 const validationSchema = Yup.object().shape({
@@ -59,9 +60,9 @@ const SignupUser: React.FC<Props> = ({
   user,
   isLoading,
   err,
-  cleanUserErrors
+  cleanUserErrors,
+  textType
 }) => {
-  const [inputTextType, setInputTextType] = useState<boolean>(true);
   const navigation = useNavigation();
 
   const resetLogin = async () => {
@@ -116,10 +117,6 @@ const SignupUser: React.FC<Props> = ({
 
   const signupUserHandler = (values: IValues) => {
     signupStartUser(values);
-  };
-
-  const handleShow = () => {
-    setInputTextType(!inputTextType);
   };
 
   return (
@@ -179,9 +176,8 @@ const SignupUser: React.FC<Props> = ({
               show={true}
               name="password"
               placeholder="Password"
-              secureTextEntry={inputTextType}
+              secureTextEntry={textType}
               textContentType="password"
-              handleShow={handleShow}
             />
             <AppFormField
               autoCapitalize="none"
@@ -190,9 +186,8 @@ const SignupUser: React.FC<Props> = ({
               show={true}
               name="passwordConfirm"
               placeholder="Confirm Password"
-              secureTextEntry={inputTextType}
+              secureTextEntry={textType}
               textContentType="password"
-              handleShow={handleShow}
             />
             <SubmitButton
               buttonWidth="40%"
@@ -292,10 +287,11 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
     dispatch
   );
 
-const mapStateToProps = ({ user }: any) => ({
+const mapStateToProps = ({ user, textType }: any) => ({
   user: user.user,
   isLoading: user.isLoadingSignup,
-  err: user.err
+  err: user.err,
+  textType: textType.textType
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupUser);

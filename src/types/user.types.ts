@@ -23,7 +23,10 @@ export interface IProvider {
   address: string;
   photo: string;
   description: string;
+  myQrImage?: string;
+  s3MenuLink?: string;
+  menuUrl: string;
   passwordChangeAt: Date;
 }
 
-export type IUserType = IUser | IProvider;
+export type IUserType = IProvider | IUser;

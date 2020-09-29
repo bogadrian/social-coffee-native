@@ -52,6 +52,7 @@ interface Props {
   startUpdateMe: (values: IUpdateValues) => AnyAction;
   startPasswordChange: (values: IPasswordValues) => AnyAction;
   changeSuccess: boolean;
+  textType: boolean;
 }
 
 interface IUpdateValues {
@@ -180,11 +181,11 @@ const UpdateProvider: React.FC<Props> = ({
   isLoadingUpd,
   startPasswordChange,
   isLoadingPass,
-  changeSuccess
+  changeSuccess,
+  textType
 }) => {
   const [update, setUpdate] = useState<boolean>(false);
   const [password, setPassword] = useState<boolean>(false);
-  const [inputTextType, setInputTextType] = useState<boolean>(true);
   const [textForPass, setTextPass] = useState<boolean>(false);
   const [errorDelete, setErrorDelete] = useState<boolean>(false);
 
@@ -213,7 +214,11 @@ const UpdateProvider: React.FC<Props> = ({
   };
 
   const handleComunities = () => {};
-  const handleBlocked = () => {};
+
+  const handleQr = () => {
+    navigation.navigate('QR');
+  };
+
   const handleChangePassword = () => {
     setPassword(true);
   };
@@ -261,9 +266,7 @@ const UpdateProvider: React.FC<Props> = ({
     userGetStart();
   };
 
-  const handleShow = () => {
-    setInputTextType(!inputTextType);
-  };
+ 
 
   return (
     <CustomLayout style={styles.layout}>
@@ -321,7 +324,8 @@ const UpdateProvider: React.FC<Props> = ({
       />
       <Divider style={{ marginTop: 30 }} />
       <CustomText type="extra-light" style={styles.updateText}>
-        If you have blocked some people, here you can manage those blockes!
+        Load your menu cart and generate a Qr code that people can scann and see
+        your menu online!
       </CustomText>
       <CustomButton
         buttonWidth="80%"
@@ -330,8 +334,8 @@ const UpdateProvider: React.FC<Props> = ({
         color={Color.primary}
         fontSize={14}
         textType="bold"
-        text="People I blocked"
-        onPress={() => handleBlocked()}
+        text="Generate Qr"
+        onPress={() => handleQr()}
       />
       <Divider style={{ marginTop: 30 }} />
       <CustomText type="extra-light" style={styles.updateText}>
@@ -534,9 +538,8 @@ const UpdateProvider: React.FC<Props> = ({
                     show={true}
                     name="passwordCurrent"
                     placeholder="Current Password"
-                    secureTextEntry={inputTextType}
+                    secureTextEntry={textType}
                     textContentType="password"
-                    handleShow={handleShow}
                   />
                   <AppFormField
                     autoCapitalize="none"
@@ -545,9 +548,8 @@ const UpdateProvider: React.FC<Props> = ({
                     show={true}
                     name="password"
                     placeholder="Password"
-                    secureTextEntry={inputTextType}
+                    secureTextEntry={textType}
                     textContentType="password"
-                    handleShow={handleShow}
                   />
                   <AppFormField
                     autoCapitalize="none"
@@ -556,9 +558,8 @@ const UpdateProvider: React.FC<Props> = ({
                     show={true}
                     name="passwordConfirm"
                     placeholder="Confirm Password"
-                    secureTextEntry={inputTextType}
+                    secureTextEntry={textType}
                     textContentType="password"
-                    handleShow={handleShow}
                   />
                   <SubmitButton
                     buttonWidth="70%"
@@ -621,12 +622,13 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
     dispatch
   );
 
-const mapStateToProps = ({ user }: any) => ({
+const mapStateToProps = ({ user, textType}: any) => ({
   user: user.user,
   err: user.error,
   isLoadingUpd: user.isLoadingUpdate,
   isLoadingPass: user.isLoadingPass,
-  changeSuccess: user.changeSuccess
+  changeSuccess: user.changeSuccess,
+  textType: textType.textType
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateProvider);

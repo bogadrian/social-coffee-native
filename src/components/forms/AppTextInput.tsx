@@ -6,17 +6,22 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
+
+import { switchText } from '../../redux/handleTextPassword/textPassword.actions';
+
+import { connect } from 'react-redux';
 import defaultStyles from '../../constants/styles';
 
 interface Props {
   icon?: string;
-  handleShow: any;
   show?: boolean;
   otherProps?: any;
   style?: {};
   multiline?: boolean;
+  switchText: () => AnyAction;
 }
 
 const AppTextInput: React.FC<Props> = ({
@@ -24,7 +29,7 @@ const AppTextInput: React.FC<Props> = ({
   show,
   style,
   multiline,
-  handleShow,
+  switchText,
   ...otherProps
 }) => {
   return (
@@ -44,7 +49,7 @@ const AppTextInput: React.FC<Props> = ({
         {...otherProps}
       />
       {show && (
-        <TouchableOpacity onPress={handleShow}>
+        <TouchableOpacity onPress={switchText}>
           <Text style={styles.show}>Show</Text>
         </TouchableOpacity>
       )}
@@ -72,5 +77,11 @@ const styles = StyleSheet.create({
     marginLeft: -50
   }
 });
-
-export default AppTextInput;
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+  bindActionCreators(
+    {
+      switchText
+    },
+    dispatch
+  );
+export default connect(null, mapDispatchToProps)(AppTextInput);

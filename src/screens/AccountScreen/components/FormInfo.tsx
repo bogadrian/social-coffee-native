@@ -59,6 +59,7 @@ interface Props {
   err: Error;
   cleanUserErrors: () => AnyAction;
   isLoading: boolean;
+  textType:boolean;
 }
 
 const validationSchema = Yup.object().shape({
@@ -76,9 +77,10 @@ const SignupProvider: React.FC<Props> = ({
   signupStartProvider,
   cleanUserErrors,
   err,
-  isLoading
+  isLoading,
+  textType
 }) => {
-  const [inputTextType, setInputTextType] = useState<boolean>(true);
+ 
   const navigation = useNavigation();
 
   const resetLogin = async () => {
@@ -120,10 +122,6 @@ const SignupProvider: React.FC<Props> = ({
     };
 
     signupStartProvider(userData);
-  };
-
-  const handleShow = () => {
-    setInputTextType(!inputTextType);
   };
 
   return (
@@ -189,9 +187,8 @@ const SignupProvider: React.FC<Props> = ({
                 show={true}
                 name="password"
                 placeholder="Password"
-                secureTextEntry={inputTextType}
+                secureTextEntry={textType}
                 textContentType="password"
-                handleShow={handleShow}
               />
               <AppFormField
                 autoCapitalize="none"
@@ -200,9 +197,8 @@ const SignupProvider: React.FC<Props> = ({
                 show={true}
                 name="passwordConfirm"
                 placeholder="Confirm Password"
-                secureTextEntry={inputTextType}
+                secureTextEntry={textType}
                 textContentType="password"
-                handleShow={handleShow}
               />
               <AppFormField
                 autoCapitalize="none"
@@ -303,9 +299,10 @@ const styles = StyleSheet.create({
   layout: { flex: 1, justifyContent: 'center', alignItems: 'center', height }
 });
 
-const mapStateToProps = ({ user }: any) => ({
+const mapStateToProps = ({ user, textType }: any) => ({
   isLoading: user.isLoadingSignup,
-  err: user.err
+  err: user.err,
+  textType: textType.textType
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>

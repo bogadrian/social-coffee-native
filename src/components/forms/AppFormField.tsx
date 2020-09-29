@@ -13,7 +13,6 @@ interface Props {
   show?: boolean;
   keyboardType?: string;
   name: any;
-  handleShow?: any;
   secureTextEntry?: boolean;
   placeholder: string;
   textContentType: string;
@@ -24,7 +23,6 @@ interface Props {
 
 const AppFormField: React.FC<Props> = ({
   name,
-  handleShow,
   multiline,
   style,
   ...otherProps
@@ -38,7 +36,6 @@ const AppFormField: React.FC<Props> = ({
       <AppTextInput
         onBlur={() => setFieldTouched(name)}
         onChangeText={handleChange(name)}
-        handleShow={handleShow}
         style={style}
         multiline={multiline}
         {...otherProps}

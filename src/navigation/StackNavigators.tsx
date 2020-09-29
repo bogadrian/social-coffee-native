@@ -20,10 +20,13 @@ import {
   AuthStack,
   AccountStack,
   MyComunitiesStack,
-  ResetPasswordStack
+  ResetPasswordStack,
+  QRCodeStack,
+  ScanMenuStack
 } from './Stacks/Stacks';
 
 import Color from '../constants/Color';
+import { BottomTabBar } from '@react-navigation/bottom-tabs';
 
 function getHeaderTitle(route: any) {
   // If the focused route is not found, we need to assume it's the initial screen
@@ -159,6 +162,18 @@ const MyTabs = () => {
   );
 };
 
+// hide this
+//const QrStackNavigator = createMaterialBottomTabNavigator();
+
+// export const QrStackN: React.FC = () => {
+//   return (
+//     <QrStackNavigator.Navigator>
+//       <QrStackNavigator.Screen name="rrr" component={QRCodeStack} />
+//       <QrStackNavigator.Screen name="tabs" component={MyTabs} />
+//     </QrStackNavigator.Navigator>
+//   );
+// };
+
 const MainStackNavigator = createStackNavigator();
 
 export const MainStack: React.FC = () => {
@@ -197,6 +212,20 @@ export const MainStack: React.FC = () => {
       <MainStackNavigator.Screen
         name="Reset"
         component={ResetPasswordStack}
+        options={{
+          headerShown: false
+        }}
+      />
+      <MainStackNavigator.Screen
+        name="QR"
+        component={QRCodeStack}
+        options={{
+          headerShown: false
+        }}
+      />
+      <MainStackNavigator.Screen
+        name="Scan"
+        component={ScanMenuStack}
         options={{
           headerShown: false
         }}

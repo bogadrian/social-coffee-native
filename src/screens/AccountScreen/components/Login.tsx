@@ -55,6 +55,7 @@ interface Props {
   user: IUserType;
   err: Error;
   isLoading: boolean;
+  textType: boolean;
 }
 
 const validationSchema = Yup.object().shape({
@@ -72,14 +73,14 @@ const Login: React.FC<Props> = ({
   cleanUserErrors,
   user,
   err,
-  isLoading
+  isLoading,
+  textType
 }) => {
   const navigation = useNavigation();
   const [userType, setUserType] = useState<string>('user');
   const [modal, setModal] = useState<boolean>(false);
   const [load, setLoad] = useState<boolean>(false);
   const [text, setText] = useState<string>('Enter your email please!');
-  const [inputTextType, setInputTextType] = useState<boolean>(true);
 
   const resetLogin = async () => {
     await SecureStore.deleteItemAsync('jwt');
@@ -178,10 +179,6 @@ const Login: React.FC<Props> = ({
     }
   };
 
-  const handleShow = () => {
-    setInputTextType(!inputTextType);
-  };
-
   return (
     <CustomLayout style={styles.container}>
       <TouchableWithoutFeedback
@@ -234,9 +231,8 @@ const Login: React.FC<Props> = ({
               name="password"
               show={true}
               placeholder="Password"
-              secureTextEntry={inputTextType}
+              secureTextEntry={textType}
               textContentType="password"
-              handleShow={handleShow}
             />
             <SubmitButton
               buttonWidth="60%"
@@ -441,9 +437,10 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
     dispatch
   );
 
-const mapStateToProps = ({ user }: any) => ({
+const mapStateToProps = ({ user, textType }: any) => ({
   user: user.user,
   err: user.err,
+  textType: textType.textType,
   isLoading: user.isLoadingLogin
 });
 

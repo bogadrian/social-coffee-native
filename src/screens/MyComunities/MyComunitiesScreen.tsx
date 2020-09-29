@@ -1,9 +1,15 @@
 import React from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
 import CustomText from '../../custom/CustomText';
 import CustomLayout from '../../custom/CustomLayout';
+import CustomButton from '../../custom/CustomButton';
+
 export const { width, height } = Dimensions.get('window');
+
+import { useNavigation } from '@react-navigation/native';
+
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface Props {
   type?: string;
@@ -25,11 +31,37 @@ const styles = StyleSheet.create({
 });
 
 const MyComunitiesScreen: React.FC<Props> = () => {
+  const communityExists = false; //for now as testing
+  const navigation = useNavigation();
+  const handleScan = () => {
+    navigation.navigate('Scan');
+  };
   return (
     <CustomLayout style={styles.layout}>
-      <CustomText type="extra-bold" style={styles.text}>
-        My Comunities Screen
-      </CustomText>
+      {communityExists ? (
+        <CustomLayout style={styles.layout}>
+          <CustomText type="extra-bold" style={styles.text}>
+            Scan The Menu
+          </CustomText>
+          <TouchableOpacity onPress={handleScan}>
+            <MaterialCommunityIcons color="white" name="camera" size={200} />
+          </TouchableOpacity>
+          <CustomButton
+            buttonWidth="50%"
+            name="camera"
+            size={18}
+            color="cyan"
+            fontSize={12}
+            textType="bold"
+            text="Scan"
+            onPress={handleScan}
+          />
+        </CustomLayout>
+      ) : (
+        <CustomText type="extra-bold" style={styles.text}>
+          My Community
+        </CustomText>
+      )}
     </CustomLayout>
   );
 };

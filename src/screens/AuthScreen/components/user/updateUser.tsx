@@ -52,6 +52,7 @@ interface Props {
   startUpdateMe: (values: IUpdateValues) => AnyAction;
   startPasswordChange: (values: IPasswordValues) => AnyAction;
   changeSuccess: boolean;
+  textType: boolean;
 }
 
 interface IUpdateValues {
@@ -178,11 +179,11 @@ const UpdateUser: React.FC<Props> = ({
   isLoadingUpd,
   startPasswordChange,
   isLoadingPass,
-  changeSuccess
+  changeSuccess,
+  textType
 }) => {
   const [update, setUpdate] = useState<boolean>(false);
   const [password, setPassword] = useState<boolean>(false);
-  const [inputTextType, setInputTextType] = useState<boolean>(true);
   const [textForPass, setTextPass] = useState<boolean>(false);
   const [errorDelete, setErrorDelete] = useState<boolean>(false);
 
@@ -253,10 +254,6 @@ const UpdateUser: React.FC<Props> = ({
   const handleClosePassword = () => {
     setPassword(false);
     userGetStart();
-  };
-
-  const handleShow = () => {
-    setInputTextType(!inputTextType);
   };
 
   return (
@@ -500,9 +497,8 @@ const UpdateUser: React.FC<Props> = ({
                     show={true}
                     name="passwordCurrent"
                     placeholder="Current Password"
-                    secureTextEntry={inputTextType}
+                    secureTextEntry={textType}
                     textContentType="password"
-                    handleShow={handleShow}
                   />
                   <AppFormField
                     autoCapitalize="none"
@@ -511,9 +507,8 @@ const UpdateUser: React.FC<Props> = ({
                     show={true}
                     name="password"
                     placeholder="Password"
-                    secureTextEntry={inputTextType}
+                    secureTextEntry={textType}
                     textContentType="password"
-                    handleShow={handleShow}
                   />
                   <AppFormField
                     autoCapitalize="none"
@@ -522,9 +517,8 @@ const UpdateUser: React.FC<Props> = ({
                     show={true}
                     name="passwordConfirm"
                     placeholder="Confirm Password"
-                    secureTextEntry={inputTextType}
+                    secureTextEntry={textType}
                     textContentType="password"
-                    handleShow={handleShow}
                   />
                   <SubmitButton
                     buttonWidth="70%"
@@ -587,12 +581,13 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
     dispatch
   );
 
-const mapStateToProps = ({ user }: any) => ({
+const mapStateToProps = ({ user, textType }: any) => ({
   user: user.user,
   err: user.err,
   isLoadingUpd: user.isLoadingUpdate,
   isLoadingPass: user.isLoadingPass,
-  changeSuccess: user.changeSuccess
+  changeSuccess: user.changeSuccess,
+  textType: textType.textType
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateUser);

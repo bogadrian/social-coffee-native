@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from '../../screens/HomeScreen/HomeScreen';
@@ -14,6 +15,9 @@ import AccountScreen from '../../screens/AccountScreen/AccountScreen';
 import MyComunitiesScreen from '../../screens/MyComunities/MyComunitiesScreen';
 
 import ResetPasswordScreen from '../../screens/ResetPassword/ResetPassword';
+
+import QRcodeScreen from '../../screens/QRCode/QRCodeScreen';
+import ScanMenuScreen from '../../screens/ScanMenu/ScanMenuScreen';
 
 const HomeStackNavigator = createStackNavigator();
 
@@ -87,5 +91,33 @@ export const ResetPasswordStack: React.FC = () => {
     <ResetPasswordStackNavigator.Navigator headerMode="none">
       <HomeStackNavigator.Screen name="Reset" component={ResetPasswordScreen} />
     </ResetPasswordStackNavigator.Navigator>
+  );
+};
+
+const QRCodeStackNavigator = createStackNavigator();
+
+export const QRCodeStack: React.FC = () => {
+  return (
+    <QRCodeStackNavigator.Navigator headerMode="none">
+      <HomeStackNavigator.Screen
+        name="Qr Code"
+        component={QRcodeScreen}
+        options={{}}
+      />
+    </QRCodeStackNavigator.Navigator>
+  );
+};
+
+const ScanMenuStackNavigator = createStackNavigator();
+
+export const ScanMenuStack: React.FC = () => {
+  return (
+    <ScanMenuStackNavigator.Navigator headerMode="none">
+      <ScanMenuStackNavigator.Screen
+        name="Qr Code Scan"
+        component={ScanMenuScreen}
+        options={{}}
+      />
+    </ScanMenuStackNavigator.Navigator>
   );
 };

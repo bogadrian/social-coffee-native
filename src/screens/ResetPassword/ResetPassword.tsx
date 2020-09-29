@@ -38,6 +38,7 @@ interface Props {
   navigation: any;
   err: Error;
   isLoading: boolean;
+  textType: boolean;
 }
 
 interface IValues {
@@ -116,9 +117,9 @@ const ResetPasswordScreen: React.FC<Props> = ({
   startResetPassword,
   cleanUserErrors,
   err,
-  isLoading
+  isLoading,
+  textType
 }) => {
-  const [inputTextType, setInputTextType] = useState<boolean>(true);
   const [h, setH] = useState<boolean>(false);
 
   const { token } = route.params;
@@ -137,10 +138,6 @@ const ResetPasswordScreen: React.FC<Props> = ({
     await SecureStore.deleteItemAsync('jwt');
     cleanUserErrors();
     navigation.navigate('Account');
-  };
-
-  const handleShow = () => {
-    setInputTextType(!inputTextType);
   };
 
   return (
@@ -164,9 +161,8 @@ const ResetPasswordScreen: React.FC<Props> = ({
             show={true}
             name="password"
             placeholder=" New Password"
-            secureTextEntry={inputTextType}
+            secureTextEntry={textType}
             textContentType="password"
-            handleShow={handleShow}
           />
           <AppFormField
             autoCapitalize="none"
@@ -175,9 +171,8 @@ const ResetPasswordScreen: React.FC<Props> = ({
             show={true}
             name="passwordConfirm"
             placeholder="Confirm New Password"
-            secureTextEntry={inputTextType}
+            secureTextEntry={textType}
             textContentType="password"
-            handleShow={handleShow}
           />
           <SubmitButton
             buttonWidth="60%"
@@ -266,10 +261,11 @@ const ResetPasswordScreen: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  err: state.user.err,
-  isLoading: state.user.isLoadingReset,
-  user: state.user.user
+const mapStateToProps = ({ user, textType }: any) => ({
+  err: user.err,
+  isLoading: user.isLoadingReset,
+  user: user.user,
+  textType: textType.textType
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
