@@ -3,9 +3,9 @@ import * as SecureStore from 'expo-secure-store';
 
 import { URL } from '../constants/variables';
 
-import { IUserType } from '../types/user.types';
+import { IProvider } from '../types/user.types';
 
-const useMenuUrl = async (user: IUserType) => {
+const useMenuUrl = async (user: IProvider) => {
   const token = await SecureStore.getItemAsync('jwt');
   try {
     const axiosInstance = await axios.create({
@@ -21,8 +21,7 @@ const useMenuUrl = async (user: IUserType) => {
       method: 'GET'
     });
 
-    const url = `https://socialcoffeeapp.app/${user.slug}-${response.data
-      .results++}`;
+    const url = `${user.slug}-${response.data.results++}`;
 
     return url;
   } catch (err) {

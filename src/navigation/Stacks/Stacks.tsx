@@ -19,6 +19,8 @@ import ResetPasswordScreen from '../../screens/ResetPassword/ResetPassword';
 import QRcodeScreen from '../../screens/QRCode/QRCodeScreen';
 import ScanMenuScreen from '../../screens/ScanMenu/ScanMenuScreen';
 
+import ViewMenuScreen from '../../screens/ViewMenu/ViewMenuScreen';
+
 const HomeStackNavigator = createStackNavigator();
 
 export const HomeStack: React.FC = () => {
@@ -119,5 +121,19 @@ export const ScanMenuStack: React.FC = () => {
         options={{}}
       />
     </ScanMenuStackNavigator.Navigator>
+  );
+};
+
+const ViewMenuStackNavigator = createStackNavigator();
+
+export const ViewMenuStack: React.FC = () => {
+  return (
+    <ViewMenuStackNavigator.Navigator headerMode="none">
+      <ViewMenuStackNavigator.Screen
+        name="Qr Code Scan"
+        component={ViewMenuScreen}
+        options={{}}
+      />
+    </ViewMenuStackNavigator.Navigator>
   );
 };

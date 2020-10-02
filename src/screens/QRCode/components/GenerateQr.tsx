@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  StyleSheet,
-  Dimensions,
-  View,
-  Share,
-  ActivityIndicator
-} from 'react-native';
+import { StyleSheet, Dimensions, View, Share } from 'react-native';
 
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
@@ -25,10 +19,13 @@ import useMenuUrl from '../../../customHooks/createMenuUrl';
 import Color from '../../../constants/Color';
 import { URL } from '../../../constants/variables';
 
-import { IUserType } from '../../../types/user.types';
+import { IProvider } from '../../../types/user.types';
+
+import { base64 } from '../../../assets/coffeeBase64';
 
 interface Props {
-  user: IUserType;
+  user: IProvider;
+  closeGenerator: () => void;
 }
 
 const styles = StyleSheet.create({
@@ -39,7 +36,7 @@ const styles = StyleSheet.create({
     height
   },
   text: {
-    fontSize: 20,
+    fontSize: 18,
     color: 'white',
     width: width * 0.8,
     textAlign: 'center',
@@ -61,7 +58,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const QRcodeScreen: React.FC<Props> = ({ user }) => {
+const defaultMenuPdf =
+  'https://social-coffee-app.s3.eu-west-3.amazonaws.com/SeafoodRestaurentMenu.pdf-user-5f74ab9e75d83c404c5c9cd3-1601631116018.pdf';
+
+const QRcodeScreen: React.FC<Props> = ({ user, closeGenerator }) => {
   const [svg, setSvg] = useState<any>();
   const [urlProvider, setUrlProvider] = useState<string>('');
 
@@ -70,19 +70,6 @@ const QRcodeScreen: React.FC<Props> = ({ user }) => {
   useEffect(() => {
     writeMenuUrl();
   }, [urlProvider]);
-
-  // console.log('url provideeeeer', urlProvider);
-  // if (!url) {
-  //   return (
-  //     <CustomLayout style={styles.layout}>
-  //       <CustomText type="extra-bold" style={styles.text}>
-  //         Creating Url
-  //       </CustomText>
-  //       <Divider />
-  //       <ActivityIndicator size="large" />
-  //     </CustomLayout>
-  //   );
-  // }
 
   url.then((res: any) => setUrlProvider(res));
 
@@ -130,33 +117,34 @@ const QRcodeScreen: React.FC<Props> = ({ user }) => {
   return (
     <React.Fragment>
       <CustomLayout style={styles.layout}>
-        <CustomText type="extra-bold" style={styles.text}>
-          Here is your URL:
-        </CustomText>
+        <View style={{ marginTop: 20 }}>
+          <CustomText type="extra-bold" style={styles.text}>
+            Here is your URL:
+          </CustomText>
+        </View>
         <CustomText type="light" style={styles.text2}>
           At this URL your clients will find the menu you upload on this app any
           time you want!
         </CustomText>
         <CustomText type="extra-bold" style={styles.text1}>
-          {urlProvider}
+          https://socialcoffeeapp.app/commercial/{urlProvider}
         </CustomText>
         <Divider />
-
         <CustomText type="extra-bold" style={styles.text}>
           And here is your generated QR Code
         </CustomText>
-        <Divider style={{ marginBottom: 30, marginTop: 30 }} />
+
         <QRCode
           value={
-            !!urlProvider
-              ? JSON.stringify({ urlProvider })
-              : 'https://some-default-url.com'
+            !!urlProvider ? JSON.stringify({ urlProvider }) : defaultMenuPdf
           }
+          logo={{ uri: base64 }}
+          logoSize={60}
+          logoBackgroundColor="transparent"
           getRef={c => setSvg(c)}
           size={200}
         />
-
-        <View style={{ marginTop: 40 }}>
+        <View style={{ marginTop: 20, marginBottom: 30 }}>
           <CustomButton
             buttonWidth="60%"
             name="account-heart-outline"
@@ -166,6 +154,18 @@ const QRcodeScreen: React.FC<Props> = ({ user }) => {
             textType="bold"
             text="Share your Qr Code"
             onPress={getDataURL}
+          />
+        </View>
+        <View style={{ marginTop: 10, marginBottom: 30 }}>
+          <CustomButton
+            buttonWidth="60%"
+            name="close"
+            size={18}
+            color={Color.secondary}
+            fontSize={12}
+            textType="bold"
+            text="Close"
+            onPress={closeGenerator}
           />
         </View>
       </CustomLayout>

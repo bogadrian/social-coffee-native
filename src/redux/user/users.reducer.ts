@@ -13,6 +13,7 @@ export interface IState {
   isLoadingUpdate: boolean;
   isLoadingPass: boolean;
   changeSuccess: boolean;
+  isLoadingPdf: boolean;
 }
 
 let INITIAL_STATE = {
@@ -24,7 +25,8 @@ let INITIAL_STATE = {
   isLoadingReset: false,
   isLoadingUpdate: false,
   isLoadingPass: false,
-  changeSuccess: false
+  changeSuccess: false,
+  isLoadingPdf: false
 };
 
 export const userReducer = (
@@ -65,6 +67,8 @@ export const userReducer = (
         changePassword: false,
         isLoadingPass: true
       };
+    case IUsersTypes.UPLOAD_START:
+      return { ...state, isLoadingPdf: true };
     case IUsersTypes.SUCCESS_LOGIN:
       return {
         ...state,
@@ -108,6 +112,8 @@ export const userReducer = (
         changeSuccess: true,
         isLoadingPass: false
       };
+    case IUsersTypes.UPLOAD_SUCCESS:
+      return { ...state, err: null, user: action.user, isLoadingPdf: false };
     case IUsersTypes.FAILURE_LOGIN:
       return {
         ...state,
@@ -150,6 +156,8 @@ export const userReducer = (
         err: action.error,
         isLoadingPass: false
       };
+    case IUsersTypes.UPLOAD_FAILURE:
+      return { ...state, err: action.error, isLoadingPdf: false };
     case IUsersTypes.CLEAN_ERRORS:
       return {
         ...state,

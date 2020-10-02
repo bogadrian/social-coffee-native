@@ -100,3 +100,38 @@ export const makeCallToServerWithActivityData = async (
     console.log(err);
   }
 };
+export const makeCallToServerPdf = async (pdf: any) => {
+  const token = await SecureStore.getItemAsync('jwt');
+
+  try {
+    let form: any = new FormData();
+
+    const localUri = pdf.pdf.uri;
+    if (localUri) {
+      let filename = localUri.split('/').pop();
+
+      let match: any = /\.(\w+)$.exec(filename)/;
+
+      let type: any = match ? `pdf/${match}` : 'pdf';
+
+      form.append('pdf', { uri: localUri, name: filename, type });
+
+      const userUpdated = await axios.patch(
+        `${URL}/api/v1/provider/uploadPdf`,
+        form,
+        {
+          headers: {
+            Accept: 'application/pdf',
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/pdf',
+            'Access-Control-Allow-Origin': '*'
+          }
+        }
+      );
+
+      return userUpdated.data.data.user;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};

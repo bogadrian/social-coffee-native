@@ -22,6 +22,7 @@ export interface IProvider {
   vat: string;
   address: string;
   photo: string;
+  slug: string;
   description: string;
   myQrImage?: string;
   s3MenuLink?: string;

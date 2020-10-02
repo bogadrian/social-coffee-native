@@ -22,7 +22,8 @@ import {
   MyComunitiesStack,
   ResetPasswordStack,
   QRCodeStack,
-  ScanMenuStack
+  ScanMenuStack,
+  ViewMenuStack
 } from './Stacks/Stacks';
 
 import Color from '../constants/Color';
@@ -226,6 +227,13 @@ export const MainStack: React.FC = () => {
       <MainStackNavigator.Screen
         name="Scan"
         component={ScanMenuStack}
+        options={{
+          headerShown: false
+        }}
+      />
+      <MainStackNavigator.Screen
+        name="View"
+        component={ViewMenuStack}
         options={{
           headerShown: false
         }}

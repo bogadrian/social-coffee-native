@@ -266,8 +266,6 @@ const UpdateProvider: React.FC<Props> = ({
     userGetStart();
   };
 
- 
-
   return (
     <CustomLayout style={styles.layout}>
       <View
@@ -307,6 +305,22 @@ const UpdateProvider: React.FC<Props> = ({
         text="Update My Profile"
         onPress={() => handleUpdate()}
       />
+      {/*move this to mycommunity*/}
+      <Divider style={{ marginTop: 30 }} />
+      <CustomText type="extra-light" style={styles.updateText}>
+        View Menu
+      </CustomText>
+      <CustomButton
+        buttonWidth="80%"
+        name="account-heart-outline"
+        size={15}
+        color={Color.tertiary}
+        fontSize={14}
+        textType="bold"
+        text="View Menu"
+        onPress={() => navigation.navigate('View')}
+      />
+      {/*pana aici*/}
       <Divider style={{ marginTop: 30 }} />
       <CustomText type="extra-light" style={styles.updateText}>
         Create a community around your commercial activity! Become a reference
@@ -622,7 +636,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
     dispatch
   );
 
-const mapStateToProps = ({ user, textType}: any) => ({
+const mapStateToProps = ({ user, textType }: any) => ({
   user: user.user,
   err: user.error,
   isLoadingUpd: user.isLoadingUpdate,

@@ -3932,6 +3932,14 @@ buffer-xor@^1.0.3:
   resolved "https://registry.yarnpkg.com/buffer-xor/-/buffer-xor-1.0.3.tgz#26e61ed1422fb70dd42e6e36729ed51d855fe8d9"
   integrity sha1-JuYe0UIvtw3ULm42cp7VHYVf6Nk=
 
+buffer@5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.1.0.tgz#c913e43678c7cb7c8bd16afbcddb6c5505e8f9fe"
+  integrity sha512-YkIRgwsZwJWTnyQrsBTWefizHh+8GYj3kbL1BTiAQ/9pwpino0G7B2gp5tx/FUBqUlvtxV85KNR3mwfAtv15Yw==
+  dependencies:
+    base64-js "^1.0.2"
+    ieee754 "^1.1.4"
+
 buffer@^4.3.0:
   version "4.9.2"
   resolved "https://registry.yarnpkg.com/buffer/-/buffer-4.9.2.tgz#230ead344002988644841ab0244af8c44bbe3ef8"
@@ -4996,6 +5004,11 @@ csso@^4.0.2:
   dependencies:
     css-tree "1.0.0-alpha.39"
 
+csstype@2.6.8:
+  version "2.6.8"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.8.tgz#0fb6fc2417ffd2816a418c9336da74d7f07db431"
+  integrity sha512-msVS9qTuMT5zwAGCVm4mxfrZ18BNc6Csd0oJAtiFMZ1FAx1CCvy2+5MDmYoix63LM/6NDbNtodCiGYGmFgO0dA==
+
 csstype@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.3.tgz#2b410bbeba38ba9633353aff34b05d9755d065f8"
@@ -5963,6 +5976,13 @@ expo-constants@~9.1.1:
   integrity sha512-zCa/wRARODHd6BSwxjBhidmao0AqQnKmLkl0tsVIoZlRyPDHsEaxNR/m+7wqGC7qiC+UpG1qRnvLOLwCGt2ihg==
   dependencies:
     fbjs "1.0.0"
+    uuid "^3.3.2"
+
+expo-document-picker@~8.2.1:
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/expo-document-picker/-/expo-document-picker-8.2.1.tgz#8363078274b5f86b25812ae3ecc2677ee42b3cfb"
+  integrity sha512-U7bow5hPpiiwppil7LFwdAW/bf0DIf5GX781gRReWLbizULq1p6njcMdMxYC5p8osDhYal+DAhzT7VB5i1ucsA==
+  dependencies:
     uuid "^3.3.2"
 
 expo-error-recovery@~1.2.1:
@@ -8236,6 +8256,11 @@ jpeg-js@^0.3.4:
   version "0.3.7"
   resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.3.7.tgz#471a89d06011640592d314158608690172b1028d"
   integrity sha512-9IXdWudL61npZjvLuVe/ktHiA41iE8qFyLB+4VDTblEsWBzeg8WQTlktdUK4CdncUqtUgUg0bbOmTE2bKBKaBQ==
+
+js-base64@2.4.5:
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.5.tgz#e293cd3c7c82f070d700fc7a1ca0a2e69f101f92"
+  integrity sha512-aUnNwqMOXw3yvErjMPSQu6qIIzUmT1e5KcU1OZxRDU1g/am6mzBvcrmLAYwzmB59BHPrh5/tKaiF4OPhqRWESQ==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
@@ -11420,6 +11445,14 @@ react-native-web@~0.11.7:
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.4"
 
+react-native-webview@^10.9.1:
+  version "10.9.1"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-10.9.1.tgz#8c64ac51cf04f5e63a4ade2536fac8e79170bd07"
+  integrity sha512-hqUvca0+jHbQBRFl0trAgEpLUGcEebLDAvwDo7K5pnwtgBfu9UsbBUg/kqC7IVSNXS94rjwp1Dw4f/Pf91kqZQ==
+  dependencies:
+    escape-string-regexp "2.0.0"
+    invariant "2.2.4"
+
 react-native@0.62.2:
   version "0.62.2"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.62.2.tgz#d831e11a3178705449142df19a70ac2ca16bad10"
@@ -11907,6 +11940,15 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
   dependencies:
     hash-base "^3.0.0"
     inherits "^2.0.1"
+
+rn-pdf-reader-js@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/rn-pdf-reader-js/-/rn-pdf-reader-js-4.1.1.tgz#979bc045b9d6065ceb1a6de8bd82f4c6184c0bf7"
+  integrity sha512-KnBzB1wfHPdE/Qb6oMmX0/iAD60tp+kf0TZaHw6tb0ULrdSvaG5rspTJArUEA724qYFwuVG1U2B0WTK8inpe1Q==
+  dependencies:
+    buffer "5.1.0"
+    csstype "2.6.8"
+    js-base64 "2.4.5"
 
 router-ips@^1.0.0:
   version "1.0.0"

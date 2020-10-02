@@ -9,6 +9,10 @@ interface IUpdateValues {
   u?: string;
 }
 
+interface IUploadValues {
+  pdf: any;
+}
+
 export const startUpdateMe = (userData: IUpdateValues) => {
   return { type: IUsersTypes.START_UPDATE_ME, userData };
 };
@@ -19,4 +23,16 @@ export const updateMeSuccess = (user: IUserType) => {
 
 export const updateMeFailure = (error: string) => {
   return { type: IUsersTypes.UPDATE_ME_FAILURE, error };
+};
+
+export const startUpload = (pdf: IUploadValues) => {
+  return { type: IUsersTypes.UPLOAD_START, pdf };
+};
+
+export const uploadSuccess = (user: IUserType) => {
+  return { type: IUsersTypes.UPLOAD_SUCCESS, user };
+};
+
+export const uploadFailure = (error: string) => {
+  return { type: IUsersTypes.UPLOAD_FAILURE, error };
 };
