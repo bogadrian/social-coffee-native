@@ -13,7 +13,6 @@ export const { width, height } = Dimensions.get('window');
 import { IProvider } from '../../types/user.types';
 
 interface Props {
-  type?: string;
   user: IProvider;
 }
 

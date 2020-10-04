@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, StyleSheet, ActivityIndicator } from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  ActivityIndicator,
+  View,
+  Platform
+} from 'react-native';
 
 import axios from 'axios';
 export const { width, height } = Dimensions.get('window');
@@ -36,6 +42,7 @@ const styles = StyleSheet.create({
   }
 });
 
+// ATTENTION! The user here must be the provider from comunity not the user logged in. Implemnet the button that lead to this in Comunity
 const ViewMenuScreen: React.FC<Props> = ({ user }) => {
   const navigation = useNavigation();
   const [url, setUrl] = useState<string>();
@@ -76,7 +83,7 @@ const ViewMenuScreen: React.FC<Props> = ({ user }) => {
   }
 
   return (
-    <React.Fragment>
+    <View style={Platform.OS === 'android' ? { marginTop: 20 } : null}>
       {url ? (
         <CustomLayout style={styles.layout}>
           <CustomButton
@@ -103,7 +110,7 @@ const ViewMenuScreen: React.FC<Props> = ({ user }) => {
           <ActivityIndicator size="large" />
         </CustomLayout>
       )}
-    </React.Fragment>
+    </View>
   );
 };
 

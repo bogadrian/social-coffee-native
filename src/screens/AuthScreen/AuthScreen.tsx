@@ -101,6 +101,7 @@ const AuthScreen: React.FC<Props> = ({
   const [text, setText] = useState<string>('Please re-insert your email here');
   const [load, setLoad] = useState<boolean>(false);
   const [noConfim, setNoConfirm] = useState<boolean>(false);
+  const [confirmPressed, setConfirmPressed] = useState<boolean>(false);
 
   const navigation = useNavigation();
 
@@ -159,7 +160,11 @@ const AuthScreen: React.FC<Props> = ({
 
   const handleDone = () => {
     userGetStart();
-    setNoConfirm(true);
+    setConfirmPressed(true);
+    setTimeout(() => {
+      setNoConfirm(true);
+      setConfirmPressed(false);
+    }, 4000);
   };
 
   if (user && user.emailConfirm === false) {
@@ -176,10 +181,11 @@ const AuthScreen: React.FC<Props> = ({
         <CustomText type="light" style={styles.text2}>
           If You already confirmed your email please press this button:
         </CustomText>
+        {confirmPressed && <ActivityIndicator size="large" />}
         {user.emailConfirm === false && noConfim ? (
           <CustomText type="light" style={styles.textNoConfirm}>
             You didn't confirmed your email yet! Please confirm your email or
-            resend a confirmation email or signup again if you wish!
+            resend a confirmation email. Or just signup again if you wish!
           </CustomText>
         ) : null}
         <CustomButton

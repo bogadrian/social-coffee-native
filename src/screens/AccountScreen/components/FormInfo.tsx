@@ -59,7 +59,7 @@ interface Props {
   err: Error;
   cleanUserErrors: () => AnyAction;
   isLoading: boolean;
-  textType:boolean;
+  textType: boolean;
 }
 
 const validationSchema = Yup.object().shape({
@@ -80,7 +80,6 @@ const SignupProvider: React.FC<Props> = ({
   isLoading,
   textType
 }) => {
- 
   const navigation = useNavigation();
 
   const resetLogin = async () => {
@@ -93,10 +92,10 @@ const SignupProvider: React.FC<Props> = ({
     return (
       <CustomLayout style={styles.container}>
         <CustomText type="extra-bold-italic" style={styles.text}>
-          {err.message}
+          Something went rong. Please go back and try again!
         </CustomText>
         <CustomButton
-          buttonWidth="50%"
+          buttonWidth="70%"
           name="step-backward"
           size={15}
           color="yellow"
@@ -277,7 +276,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   text: {
-    fontSize: 20,
+    fontSize: 18,
     marginTop: 20,
     marginBottom: 20,
     textAlign: 'center'

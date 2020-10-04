@@ -57,7 +57,6 @@ function* setUpdate(userData: ISagaValues) {
 function* setUpload(pdf: ISagaUploadValues) {
   try {
     const response = yield call(makeCallToServerPdf, pdf);
-    console.log('222222222222222222222222222222', response);
     yield put(uploadSuccess(response));
   } catch (err) {
     yield put(uploadFailure(err));

@@ -68,7 +68,10 @@ const QRcodeScreen: React.FC<Props> = ({ user, closeGenerator }) => {
   const url = useMenuUrl(user);
 
   useEffect(() => {
-    writeMenuUrl();
+    let run: boolean = true;
+    if (run) writeMenuUrl();
+
+    () => (run = false);
   }, [urlProvider]);
 
   url.then((res: any) => setUrlProvider(res));
@@ -136,10 +139,12 @@ const QRcodeScreen: React.FC<Props> = ({ user, closeGenerator }) => {
 
         <QRCode
           value={
-            !!urlProvider ? JSON.stringify({ urlProvider }) : defaultMenuPdf
+            urlProvider
+              ? `https://socialcoffeeapp.app/commercial/${urlProvider}`
+              : defaultMenuPdf
           }
           logo={{ uri: base64 }}
-          logoSize={60}
+          logoSize={30}
           logoBackgroundColor="transparent"
           getRef={c => setSvg(c)}
           size={200}

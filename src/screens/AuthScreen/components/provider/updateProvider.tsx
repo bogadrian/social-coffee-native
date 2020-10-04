@@ -5,7 +5,8 @@ import {
   Dimensions,
   Modal,
   ActivityIndicator,
-  Image
+  Image,
+  ScrollView
 } from 'react-native';
 
 export const { width, height } = Dimensions.get('window');
@@ -305,22 +306,22 @@ const UpdateProvider: React.FC<Props> = ({
         text="Update My Profile"
         onPress={() => handleUpdate()}
       />
-      {/*move this to mycommunity*/}
-      <Divider style={{ marginTop: 30 }} />
-      <CustomText type="extra-light" style={styles.updateText}>
-        View Menu
-      </CustomText>
-      <CustomButton
-        buttonWidth="80%"
-        name="account-heart-outline"
-        size={15}
-        color={Color.tertiary}
-        fontSize={14}
-        textType="bold"
-        text="View Menu"
-        onPress={() => navigation.navigate('View')}
-      />
-      {/*pana aici*/}
+      {/*move this to mycommunity*
+        <Divider style={{ marginTop: 30 }} />
+        <CustomText type="extra-light" style={styles.updateText}>
+          View Menu
+        </CustomText>
+        <CustomButton
+          buttonWidth="80%"
+          name="account-heart-outline"
+          size={15}
+          color={Color.tertiary}
+          fontSize={14}
+          textType="bold"
+          text="View Menu"
+          onPress={() => navigation.navigate('View')}
+        />
+        pana aici*/}
       <Divider style={{ marginTop: 30 }} />
       <CustomText type="extra-light" style={styles.updateText}>
         Create a community around your commercial activity! Become a reference
@@ -328,7 +329,7 @@ const UpdateProvider: React.FC<Props> = ({
       </CustomText>
       <CustomButton
         buttonWidth="80%"
-        name="account-heart-outline"
+        name="google-circles-communities"
         size={15}
         color={Color.secondary}
         fontSize={14}
@@ -343,12 +344,12 @@ const UpdateProvider: React.FC<Props> = ({
       </CustomText>
       <CustomButton
         buttonWidth="80%"
-        name="account-heart-outline"
+        name="qrcode"
         size={15}
         color={Color.primary}
         fontSize={14}
         textType="bold"
-        text="Generate Qr"
+        text="Generate QR"
         onPress={() => handleQr()}
       />
       <Divider style={{ marginTop: 30 }} />
@@ -357,7 +358,7 @@ const UpdateProvider: React.FC<Props> = ({
       </CustomText>
       <CustomButton
         buttonWidth="40%"
-        name="account-heart-outline"
+        name="logout"
         size={15}
         color="cyan"
         fontSize={14}
@@ -371,7 +372,7 @@ const UpdateProvider: React.FC<Props> = ({
       </CustomText>
       <CustomButton
         buttonWidth="40%"
-        name="account-heart-outline"
+        name="key-change"
         size={15}
         color={Color.secondary}
         fontSize={14}
@@ -392,15 +393,15 @@ const UpdateProvider: React.FC<Props> = ({
       )}
       <CustomButton
         buttonWidth="40%"
-        name="account-heart-outline"
-        size={15}
+        name="delete-circle-outline"
+        size={30}
         color="red"
         fontSize={14}
         textType="bold"
         text="Delete Me"
         onPress={() => handleDelete()}
       />
-      <Divider style={{ marginBottom: 20, marginTop: 20 }} />
+      <Divider style={{ marginBottom: 50, marginTop: 20 }} />
       {update ? (
         <Modal
           animationType="slide"
@@ -414,7 +415,11 @@ const UpdateProvider: React.FC<Props> = ({
             <CustomLayout style={styles.layoutModal}>
               <CustomText
                 type="bold"
-                style={{ fontSize: 20, textAlign: 'center', marginBottom: 30 }}
+                style={{
+                  fontSize: 20,
+                  textAlign: 'center',
+                  marginBottom: 30
+                }}
               >
                 Updating ...
               </CustomText>
@@ -488,7 +493,7 @@ const UpdateProvider: React.FC<Props> = ({
                   <SubmitButton
                     buttonWidth="70%"
                     style={styles.button2}
-                    name="account-heart-outline"
+                    name="update"
                     size={15}
                     color={Color.tertiary}
                     fontSize={14}
@@ -578,7 +583,7 @@ const UpdateProvider: React.FC<Props> = ({
                   <SubmitButton
                     buttonWidth="70%"
                     style={styles.button2}
-                    name="account-heart-outline"
+                    name="update"
                     size={15}
                     color={Color.tertiary}
                     fontSize={14}

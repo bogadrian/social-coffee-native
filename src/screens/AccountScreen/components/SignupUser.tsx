@@ -75,7 +75,7 @@ const SignupUser: React.FC<Props> = ({
     return (
       <CustomLayout style={styles.container}>
         <CustomText type="extra-bold-italic" style={styles.text}>
-          {err.message}
+          Something went wrong. Please check your connection and try again!{' '}
         </CustomText>
         <CustomButton
           buttonWidth="50%"
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   text: {
-    fontSize: 20,
+    fontSize: 16,
     marginTop: 20,
     textAlign: 'center',
     marginBottom: 20

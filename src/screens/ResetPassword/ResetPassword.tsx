@@ -126,7 +126,6 @@ const ResetPasswordScreen: React.FC<Props> = ({
 
   const resetHandler = async (values: IValues) => {
     setH(true);
-
     startResetPassword({ values, token });
   };
 

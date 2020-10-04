@@ -31,37 +31,32 @@ const styles = StyleSheet.create({
 });
 
 const MyComunitiesScreen: React.FC<Props> = () => {
-  const communityExists = false; //for now as testing
   const navigation = useNavigation();
   const handleScan = () => {
+    // pass the user.menuUrl here as param when comunity is ready
     navigation.navigate('Scan');
   };
   return (
     <CustomLayout style={styles.layout}>
-      {communityExists ? (
-        <CustomLayout style={styles.layout}>
-          <CustomText type="extra-bold" style={styles.text}>
-            Scan The Menu
-          </CustomText>
-          <TouchableOpacity onPress={handleScan}>
-            <MaterialCommunityIcons color="white" name="camera" size={200} />
-          </TouchableOpacity>
-          <CustomButton
-            buttonWidth="50%"
-            name="camera"
-            size={18}
-            color="cyan"
-            fontSize={12}
-            textType="bold"
-            text="Scan"
-            onPress={handleScan}
-          />
-        </CustomLayout>
-      ) : (
-        <CustomText type="extra-bold" style={styles.text}>
-          My Community
-        </CustomText>
-      )}
+      <CustomText type="extra-bold" style={styles.text}>
+        My Community
+      </CustomText>
+      <CustomText type="extra-bold" style={styles.text}>
+        Scan The Menu
+      </CustomText>
+      <TouchableOpacity onPress={handleScan}>
+        <MaterialCommunityIcons color="white" name="camera" size={200} />
+      </TouchableOpacity>
+      <CustomButton
+        buttonWidth="50%"
+        name="camera"
+        size={18}
+        color="cyan"
+        fontSize={12}
+        textType="bold"
+        text="Scan"
+        onPress={handleScan}
+      />
     </CustomLayout>
   );
 };

@@ -42,7 +42,7 @@ export const ScanMenuScreeen = () => {
     >
       <BarCodeScanner
         onBarCodeScanned={
-          scanned ? () => console.log('it is scanned') : handleBarCodeScanned
+          scanned ? () => console.log('It was scanned!') : handleBarCodeScanned
         }
         style={StyleSheet.absoluteFillObject}
       />
