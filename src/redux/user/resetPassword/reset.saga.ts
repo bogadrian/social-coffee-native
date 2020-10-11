@@ -35,7 +35,6 @@ function* setResetSuccessProvider(data: IData) {
 }
 
 function* setResetSuccessUser(data: IData) {
-  console.log('user dataaaaaa', data);
   try {
     const response = yield call(makeCallResetPasswordUser, data);
 

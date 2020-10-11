@@ -39,7 +39,9 @@ export const makeCallResetPasswordUser = async (data: IData) => {
       data: body
     });
 
-    return userReseted.data.data.user;
+    if (userReseted.data.data) {
+      return userReseted.data.data.user;
+    }
   } catch (error) {
     console.log(error.response.data.message);
   }
@@ -65,7 +67,9 @@ export const makeCallResetPasswordProvider = async (data: IData) => {
       data: body
     });
 
-    return userReseted.data.data.user;
+    if (userReseted.data.data) {
+      return userReseted.data.data.user;
+    }
   } catch (error) {
     console.log(error.response.data.message);
     //throw new Error(error.response.data.message);

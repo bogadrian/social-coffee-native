@@ -30,7 +30,10 @@ export const makeCallLoginWithUser = async (user: ILogin) => {
     });
 
     await SecureStore.setItemAsync('jwt', userLoggedIn.data.token);
-    return userLoggedIn.data.data.user;
+
+    if (userLoggedIn.data.data) {
+      return userLoggedIn.data.data.user;
+    }
   } catch (error) {
     throw new Error(error.response.data.message);
   }
@@ -55,7 +58,9 @@ export const makeCallLoginProvider = async (user: any) => {
 
     await SecureStore.setItemAsync('jwt', userLoggedIn.data.token);
 
-    return userLoggedIn.data.data.user;
+    if (userLoggedIn.data.data) {
+      return userLoggedIn.data.data.user;
+    }
   } catch (error) {
     throw new Error(error.response.data.message);
   }

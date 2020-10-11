@@ -26,8 +26,9 @@ export const makeCallToServerWithUserNewPassword = async (userData: IData) => {
         }
       }
     );
-
-    return userUpdated.data.data.user;
+    if (userUpdated.data.data) {
+      return userUpdated.data.data.user;
+    }
   } catch (err) {
     throw new Error(err.message);
   }
@@ -53,7 +54,9 @@ export const makeCallToServerWithProviderNewPassword = async (
       }
     );
 
-    return userUpdated.data.data.user;
+    if (userUpdated.data.data) {
+      return userUpdated.data.data.user;
+    }
   } catch (err) {
     throw new Error(err.message);
   }

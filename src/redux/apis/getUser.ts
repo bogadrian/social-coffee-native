@@ -15,7 +15,9 @@ export const getUserToken = async () => {
       timeout: 4000
     });
 
-    return user.data.data.user;
+    if (user.data.data) {
+      return user.data.data.user;
+    }
   } catch (error) {
     console.log(error.response.data.message);
     //throw new Error(error.response.data.message);
@@ -34,7 +36,9 @@ export const getProviderToken = async () => {
       timeout: 4000
     });
 
-    return provider.data.data.user;
+    if (provider.data.data) {
+      return provider.data.data.user;
+    }
   } catch (error) {
     console.log(error.response.data.message);
     //throw new Error(error.response.data.message);

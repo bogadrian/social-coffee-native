@@ -20,7 +20,7 @@ export const makeCallSignupWithUser = async (user: ISagaValues) => {
       headers: {
         'Content-Type': `application/json`
       },
-      timeout: 4000
+      timeout: 6000
     });
 
     const userCreated = await axiosInstance({
@@ -29,7 +29,10 @@ export const makeCallSignupWithUser = async (user: ISagaValues) => {
     });
 
     await SecureStore.setItemAsync('jwt', userCreated.data.token);
-    return userCreated.data.data.user;
+
+    if (userCreated.data.data) {
+      return userCreated.data.data.user;
+    }
   } catch (error) {
     throw new Error(error.response.data.message);
   }
@@ -42,7 +45,7 @@ export const makeCallSignupProvider = async (user: ISagaValues) => {
       headers: {
         'Content-Type': `application/json`
       },
-      timeout: 4000
+      timeout: 6000
     });
 
     const userCreated = await axiosInstance({
@@ -51,7 +54,10 @@ export const makeCallSignupProvider = async (user: ISagaValues) => {
     });
 
     await SecureStore.setItemAsync('jwt', userCreated.data.token);
-    return userCreated.data.data.user;
+
+    if (userCreated.data.data) {
+      return userCreated.data.data.user;
+    }
   } catch (error) {
     throw new Error(error.response.data.message);
   }

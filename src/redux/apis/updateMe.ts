@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import mime from 'mime';
 
 import { URL } from '../../constants/variables';
 import { IUsersTypes } from '../user/users.types';
@@ -27,28 +28,29 @@ export const makeCallToServerWithUserData = async (userData: ISagaValues) => {
     let form: any = new FormData();
     images.forEach((img: any) => {
       let localUri = img;
-
+      const newImageUri = 'file:///' + localUri.split('file:/').join('');
       let filename = localUri.split('/').pop();
 
-      let match: any = /\.(\w+)$.exec(filename)/;
-
-      let type: any = match ? `image/${match}` : 'image';
-      form.append('photo', { uri: localUri, name: filename, type });
+      const type = mime.getType(newImageUri);
+      form.append('photo', { uri: newImageUri, name: filename, type });
     });
     form.append('name', name);
     form.append('description', description);
 
-    const userUpdated = await axios.patch(
-      `${URL}/api/v1/users/updateMe`,
-      form,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-          'Access-Control-Allow-Origin': '*'
-        }
+    const axiosInstance = await axios.create({
+      baseURL: `${URL}/api/v1/users/updateMe`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': `multipart/form-data boundary=${form._boundary}`,
+        'Access-Control-Allow-Origin': '*',
+        accept: 'application/json'
       }
-    );
+    });
+
+    const userUpdated = await axiosInstance({
+      method: 'PATCH',
+      data: form
+    });
 
     return userUpdated.data.data.user;
   } catch (err) {
@@ -67,13 +69,11 @@ export const makeCallToServerWithActivityData = async (
     let form: any = new FormData();
     images.forEach((img: any) => {
       let localUri = img;
-
+      const newImageUri = 'file:///' + localUri.split('file:/').join('');
       let filename = localUri.split('/').pop();
 
-      let match: any = /\.(\w+)$.exec(filename)/;
-
-      let type: any = match ? `image/${match}` : 'image';
-      form.append('images', { uri: localUri, name: filename, type });
+      const type = mime.getType(newImageUri);
+      form.append('images', { uri: newImageUri, name: filename, type });
     });
 
     form.append('name', name);
@@ -83,19 +83,23 @@ export const makeCallToServerWithActivityData = async (
 
     console.log('fooooorrrmm', form);
 
-    const userUpdated = await axios.patch(
-      `${URL}/api/v1/provider/updateMe`,
-      form,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-          'Access-Control-Allow-Origin': '*'
-        }
+    const axiosInstance = await axios.create({
+      baseURL: `${URL}/api/v1/provider/updateMe`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': `multipart/form-data boundary=${form._boundary}`,
+        'Access-Control-Allow-Origin': '*',
+        accept: 'application/json'
       }
-    );
+    });
 
-    return userUpdated.data.data.user;
+    const userUpdated = await axiosInstance({
+      method: 'PATCH',
+      data: form
+    });
+    if (userUpdated.data.data) {
+      return userUpdated.data.data.user;
+    }
   } catch (err) {
     console.log(err);
   }
@@ -129,7 +133,9 @@ export const makeCallToServerPdf = async (pdf: any) => {
         }
       );
 
-      return userUpdated.data.data.user;
+      if (userUpdated.data.data) {
+        return userUpdated.data.data.user;
+      }
     }
   } catch (err) {
     console.log(err);
