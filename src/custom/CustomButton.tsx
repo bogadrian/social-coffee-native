@@ -15,6 +15,7 @@ interface Props {
   size: number;
   fontSize: number;
   buttonWidth: string;
+  backColor?: string;
   onPress: (NativeSyntheticEvent: any) => void;
 }
 
@@ -27,7 +28,6 @@ const styles = StyleSheet.create({
     padding: 6,
     borderWidth: 1,
     opacity: 0.9,
-    backgroundColor: 'rgba(0,0,0,0.1) ',
     alignItems: 'center',
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 10 },
@@ -48,11 +48,20 @@ export const CustomButton: React.FC<Props> = ({
   text,
   onPress,
   fontSize,
+  backColor,
   buttonWidth
 }) => (
   <TouchableOpacity
     onPress={onPress}
-    style={[style, styles.button, { borderColor: color, width: buttonWidth }]}
+    style={[
+      style,
+      styles.button,
+      {
+        borderColor: color,
+        width: buttonWidth,
+        backgroundColor: backColor ? backColor : 'rgba(0,0,0,0.1)'
+      }
+    ]}
   >
     <CustomIcon name={name} size={size} color={color} />
     <CustomTextAnimated

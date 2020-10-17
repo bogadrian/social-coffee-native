@@ -72,11 +72,10 @@ interface IPasswordValues {
 
 const styles = StyleSheet.create({
   layout: {
-    flexGrow: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    marginTop: 30,
-    height: height * 1.6
+    width,
+    height: height * 1.6,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   layoutModal: {
     flexDirection: 'column',
@@ -269,44 +268,45 @@ const UpdateProvider: React.FC<Props> = ({
 
   return (
     <CustomLayout style={styles.layout}>
-      <View
-        style={{
-          flexDirection: 'row',
-          width: width * 0.4,
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 30
-        }}
-      >
+      <ScrollView contentContainerStyle={styles.layout}>
+        <View
+          style={{
+            flexDirection: 'row',
+            width: width * 0.4,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 70
+          }}
+        >
+          <CustomText type="semibold" style={styles.hi}>
+            Hi
+          </CustomText>
+          <CustomText type="semibold" style={styles.thirdText}>
+            {user.name}
+          </CustomText>
+        </View>
         <CustomText type="semibold" style={styles.hi}>
-          Hi
+          Welcome to your profile settings!
         </CustomText>
-        <CustomText type="semibold" style={styles.thirdText}>
-          {user.name}
+        <CustomText type="black" style={styles.updateText1}>
+          Here you can:
         </CustomText>
-      </View>
-      <CustomText type="semibold" style={styles.hi}>
-        Welcome to your profile settings!
-      </CustomText>
-      <CustomText type="black" style={styles.updateText1}>
-        Here you can:
-      </CustomText>
-      <Divider style={{ marginTop: 30 }} />
-      <CustomText type="extra-light" style={styles.updateText}>
-        Add a photo and a description that people can see on your profile,
-        change your name.
-      </CustomText>
-      <CustomButton
-        buttonWidth="80%"
-        name="account-heart-outline"
-        size={15}
-        color={Color.tertiary}
-        fontSize={14}
-        textType="bold"
-        text="Update My Profile"
-        onPress={() => handleUpdate()}
-      />
-      {/*move this to mycommunity*
+        <Divider style={{ marginTop: 30 }} />
+        <CustomText type="extra-light" style={styles.updateText}>
+          Add a photo and a description that people can see on your profile,
+          change your name.
+        </CustomText>
+        <CustomButton
+          buttonWidth="80%"
+          name="account-heart-outline"
+          size={15}
+          color={Color.tertiary}
+          fontSize={14}
+          textType="bold"
+          text="Update My Profile"
+          onPress={() => handleUpdate()}
+        />
+        {/*move this to mycommunity*
         <Divider style={{ marginTop: 30 }} />
         <CustomText type="extra-light" style={styles.updateText}>
           View Menu
@@ -322,86 +322,87 @@ const UpdateProvider: React.FC<Props> = ({
           onPress={() => navigation.navigate('View')}
         />
         pana aici*/}
-      <Divider style={{ marginTop: 30 }} />
-      <CustomText type="extra-light" style={styles.updateText}>
-        Create a community around your commercial activity! Become a reference
-        for the people in your neighbourhood!
-      </CustomText>
-      <CustomButton
-        buttonWidth="80%"
-        name="google-circles-communities"
-        size={15}
-        color={Color.secondary}
-        fontSize={14}
-        textType="bold"
-        text="Create My Comunitiy"
-        onPress={() => handleComunities()}
-      />
-      <Divider style={{ marginTop: 30 }} />
-      <CustomText type="extra-light" style={styles.updateText}>
-        Load your menu cart and generate a Qr code that people can scann and see
-        your menu online!
-      </CustomText>
-      <CustomButton
-        buttonWidth="80%"
-        name="qrcode"
-        size={15}
-        color={Color.primary}
-        fontSize={14}
-        textType="bold"
-        text="Generate QR"
-        onPress={() => handleQr()}
-      />
-      <Divider style={{ marginTop: 30 }} />
-      <CustomText type="extra-light" style={styles.updateText}>
-        Logout!
-      </CustomText>
-      <CustomButton
-        buttonWidth="40%"
-        name="logout"
-        size={15}
-        color="cyan"
-        fontSize={14}
-        textType="bold"
-        text="Logout"
-        onPress={() => handleLogout()}
-      />
-      <Divider style={{ marginTop: 30 }} />
-      <CustomText type="extra-light" style={styles.updateText}>
-        Change My Password
-      </CustomText>
-      <CustomButton
-        buttonWidth="40%"
-        name="key-change"
-        size={15}
-        color={Color.secondary}
-        fontSize={14}
-        textType="bold"
-        text="Change"
-        onPress={() => handleChangePassword()}
-      />
-      <Divider style={{ marginTop: 30 }} />
-      <CustomText type="extra-light" style={styles.updateText}>
-        Delete my profile! Your community will be deleted also! You won't be
-        seen anywhere on this app. You can always reactivate your account just
-        by simply loggin in again!
-      </CustomText>
-      {errorDelete && (
+        <Divider style={{ marginTop: 30 }} />
         <CustomText type="extra-light" style={styles.updateText}>
-          That didn't work! Please check your connection and try again!
+          Create a community around your commercial activity! Become a reference
+          for the people in your neighbourhood!
         </CustomText>
-      )}
-      <CustomButton
-        buttonWidth="40%"
-        name="delete-circle-outline"
-        size={30}
-        color="red"
-        fontSize={14}
-        textType="bold"
-        text="Delete Me"
-        onPress={() => handleDelete()}
-      />
-      <Divider style={{ marginBottom: 50, marginTop: 20 }} />
+        <CustomButton
+          buttonWidth="80%"
+          name="google-circles-communities"
+          size={15}
+          color={Color.secondary}
+          fontSize={14}
+          textType="bold"
+          text="Create My Comunitiy"
+          onPress={() => handleComunities()}
+        />
+        <Divider style={{ marginTop: 30 }} />
+        <CustomText type="extra-light" style={styles.updateText}>
+          Load your menu cart and generate a Qr code that people can scann and
+          see your menu online!
+        </CustomText>
+        <CustomButton
+          buttonWidth="80%"
+          name="qrcode"
+          size={15}
+          color={Color.primary}
+          fontSize={14}
+          textType="bold"
+          text="Generate QR"
+          onPress={() => handleQr()}
+        />
+        <Divider style={{ marginTop: 30 }} />
+        <CustomText type="extra-light" style={styles.updateText}>
+          Logout!
+        </CustomText>
+        <CustomButton
+          buttonWidth="40%"
+          name="logout"
+          size={15}
+          color="cyan"
+          fontSize={14}
+          textType="bold"
+          text="Logout"
+          onPress={() => handleLogout()}
+        />
+        <Divider style={{ marginTop: 30 }} />
+        <CustomText type="extra-light" style={styles.updateText}>
+          Change My Password
+        </CustomText>
+        <CustomButton
+          buttonWidth="40%"
+          name="key-change"
+          size={15}
+          color={Color.secondary}
+          fontSize={14}
+          textType="bold"
+          text="Change"
+          onPress={() => handleChangePassword()}
+        />
+        <Divider style={{ marginTop: 30 }} />
+        <CustomText type="extra-light" style={styles.updateText}>
+          Delete my profile! Your community will be deleted also! You won't be
+          seen anywhere on this app. You can always reactivate your account just
+          by simply loggin in again!
+        </CustomText>
+        {errorDelete && (
+          <CustomText type="extra-light" style={styles.updateText}>
+            That didn't work! Please check your connection and try again!
+          </CustomText>
+        )}
+        <CustomButton
+          buttonWidth="40%"
+          name="delete-circle-outline"
+          size={30}
+          color="red"
+          fontSize={14}
+          textType="bold"
+          text="Delete Me"
+          onPress={() => handleDelete()}
+        />
+        <Divider style={{ marginBottom: 50, marginTop: 20 }} />
+      </ScrollView>
       {update ? (
         <Modal
           animationType="slide"

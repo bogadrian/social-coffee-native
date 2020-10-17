@@ -1,18 +1,24 @@
-import React from 'react';
-import { StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Dimensions, Text } from 'react-native';
 
-import CustomText from '../../custom/CustomText';
+import { useIsFocused } from '@react-navigation/native';
+//import CustomText from '../../custom/CustomText';
 import CustomLayout from '../../custom/CustomLayout';
-import CustomButton from '../../custom/CustomButton';
+//import CustomButton from '../../custom/CustomButton';
+
+import MyCommunity from './components/MyCommunity';
+import CommunityMap from './components/CommunityMap';
 
 export const { width, height } = Dimensions.get('window');
 
-import { useNavigation } from '@react-navigation/native';
+//import { useNavigation } from '@react-navigation/native';
 
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+//import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface Props {
   type?: string;
+  route: any;
+  navigation: any;
 }
 
 const styles = StyleSheet.create({
@@ -30,33 +36,30 @@ const styles = StyleSheet.create({
   }
 });
 
-const MyComunitiesScreen: React.FC<Props> = () => {
-  const navigation = useNavigation();
-  const handleScan = () => {
-    // pass the user.menuUrl here as param when comunity is ready
-    navigation.navigate('Scan');
-  };
+const MyComunitiesScreen: React.FC<Props> = ({ route }) => {
+  //const navigation = useNavigation();
+  const [mapString, setMapString] = useState<string>();
+  const isFocused = useIsFocused();
+  console.log('uuuuu', isFocused);
+
+  useEffect(() => {
+    let map;
+    if (route.params) {
+      map = route.params.map;
+      setMapString(map);
+    }
+  }, [isFocused]);
+
+  console.log(mapString);
+  if (mapString === 'map') {
+    return <CommunityMap />;
+  }
+
   return (
     <CustomLayout style={styles.layout}>
-      <CustomText type="extra-bold" style={styles.text}>
-        My Community
-      </CustomText>
-      <CustomText type="extra-bold" style={styles.text}>
-        Scan The Menu
-      </CustomText>
-      <TouchableOpacity onPress={handleScan}>
-        <MaterialCommunityIcons color="white" name="camera" size={200} />
-      </TouchableOpacity>
-      <CustomButton
-        buttonWidth="50%"
-        name="camera"
-        size={18}
-        color="cyan"
-        fontSize={12}
-        textType="bold"
-        text="Scan"
-        onPress={handleScan}
-      />
+      {/* check the user comunities array and return a list of them with FlatLis. If no comunityies at all, return : You are not in any community yet! Pleae consider requirenig to aderate to a community. Go to find community page. take the user to myCommuity whan clicking on one of the communities. */}
+
+      <MyCommunity communityId={/* pass the community id here*/ '1234'} />
     </CustomLayout>
   );
 };

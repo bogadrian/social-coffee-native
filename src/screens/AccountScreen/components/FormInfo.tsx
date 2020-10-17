@@ -124,9 +124,7 @@ const SignupProvider: React.FC<Props> = ({
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={{ flex: 1, height, width, marginBottom: 150 }}
-    >
+    <ScrollView contentContainerStyle={{ height: height * 1.1, width }}>
       <TouchableWithoutFeedback
         style={{ flex: 1 }}
         onPress={() => Keyboard.dismiss()}
@@ -246,11 +244,9 @@ const SignupProvider: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
     height,
+    marginBottom: 20,
     padding: 10,
-    marginTop: 0,
-    marginBottom: 10,
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.5,

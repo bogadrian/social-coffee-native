@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, ScrollView } from 'react-native';
 
 import { connect } from 'react-redux';
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
@@ -12,7 +12,7 @@ import Color from '../../constants/Color';
 
 import { userGetStart } from '../../redux/user/getMe/users.actions';
 
-import CustomLayout from '../../custom/CustomLayout';
+//import CustomLayout from '../../custom/CustomLayout';
 import HomeNonAuth from './components/HomeNonAuth';
 import AuthScreen from '../AuthScreen/AuthScreen';
 
@@ -66,7 +66,7 @@ const HomeScreen: React.FC<Props> = ({ user, navigation }) => {
 
   if (user && user.emailConfirm === false) {
     return (
-      <CustomLayout style={styles.layout}>
+      <View style={styles.layout}>
         <View>
           <Text style={styles.text}>
             <Text>Hi </Text>
@@ -74,19 +74,23 @@ const HomeScreen: React.FC<Props> = ({ user, navigation }) => {
             <Text> Please confirm your email before using this app!</Text>
           </Text>
         </View>
-      </CustomLayout>
+      </View>
     );
   }
 
   return (
-    <CustomLayout style={styles.layout}>
+    <ScrollView contentContainerStyle={styles.layout}>
       {!user ? <HomeNonAuth /> : <AuthScreen />}
-    </CustomLayout>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  layout: { flex: 1, justifyContent: 'center', alignItems: 'center', height },
+  layout: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: height * 1.6
+  },
   text: {
     fontSize: 20,
     color: 'white',

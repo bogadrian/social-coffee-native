@@ -19,15 +19,15 @@ import {
   InfoStack,
   AuthStack,
   AccountStack,
-  MyComunitiesStack,
   ResetPasswordStack,
   QRCodeStack,
   ScanMenuStack,
   ViewMenuStack
 } from './Stacks/Stacks';
 
+import MyComunitiesScreen from '../screens/MyComunities/MyComunitiesScreen';
+
 import Color from '../constants/Color';
-import { BottomTabBar } from '@react-navigation/bottom-tabs';
 
 function getHeaderTitle(route: any) {
   // If the focused route is not found, we need to assume it's the initial screen
@@ -78,7 +78,7 @@ const MyTabs = () => {
         listeners={{
           tabPress: () => play()
         }}
-        component={user ? MyComunitiesStack : HomeStack}
+        component={user ? MyComunitiesScreen : HomeStack}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
@@ -91,13 +91,13 @@ const MyTabs = () => {
         }}
       />
       <Tab.Screen
-        name="My Comunities"
+        name="My Communities"
         listeners={{
           tabPress: () => play()
         }}
-        component={MyComunitiesStack}
+        component={MyComunitiesScreen}
         options={{
-          tabBarLabel: 'Comunity',
+          tabBarLabel: 'Community',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="account-group-outline"

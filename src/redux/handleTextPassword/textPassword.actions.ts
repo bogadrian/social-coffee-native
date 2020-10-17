@@ -3,5 +3,6 @@ export enum ITextPassword {
 }
 
 export const switchText = () => {
+  console.log('callled');
   return { type: ITextPassword.SWITH_TEXT };
 };

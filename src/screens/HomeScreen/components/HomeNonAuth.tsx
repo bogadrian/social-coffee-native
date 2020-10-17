@@ -12,10 +12,14 @@ import playSound from '../../../customHooks/sound';
 import Logo from '../../../assets/coffee.svg';
 
 import CustomTextAnimated from '../../../custom/CustomTextAnimated';
-import CustomButton from '../../../custom/CustomButton';
+//import CustomButton from '../../../custom/CustomButton';
 import CustomText from '../../../custom/CustomText';
 import Divider from '../../../custom/Divider';
 import CustomLayout from '../../../custom/CustomLayout';
+import CustomBox from '../../../custom/CustomBox';
+
+import Color from '../../../constants/Color';
+
 import { cleanUserErrors } from '../../../redux/user/reducer.actions';
 
 interface Props {
@@ -43,20 +47,31 @@ const HomeNonAuth: React.FC<Props> = ({ cleanUserErrors }) => {
   };
 
   return (
-    <ScrollView>
-      <CustomLayout style={styles.container}>
-        <Logo width="60" height="60" />
-        <CustomText type="extra-bold-italic" style={styles.text}>
-          Welcome!
-        </CustomText>
-        <CustomText type="black" style={styles.subtitle}>
-          To The Social Coffee App
-        </CustomText>
-        <CustomText type="semibold" style={styles.thirdText}>
-          A Coffee Adicted People's App
-        </CustomText>
-        <Divider />
-        <CustomText type="light" style={styles.forthText}>
+    <CustomLayout style={styles.container}>
+      <Logo width="60" height="60" />
+      <CustomText type="extra-bold-italic" style={styles.text}>
+        Welcome!
+      </CustomText>
+      <CustomText type="black" style={styles.subtitle}>
+        To The Social Coffee App
+      </CustomText>
+      <CustomText type="semibold" style={styles.thirdText}>
+        A Coffee Adicted People's App
+      </CustomText>
+      <Divider />
+      <CustomBox
+        handleButton1={() =>
+          navigation.navigate('My Communities', { map: 'map' })
+        }
+        buttonSize={20}
+        buttonColor1={Color.backGroundPrimary}
+        buttonWidth="50%"
+        button1="Search"
+        name1="search-web"
+        headText="Search for a Coffee Provider"
+        iconName="search-web"
+      />
+      {/*<CustomText type="light" style={styles.forthText}>
           Search for a Coffee Provider
         </CustomText>
         <View style={styles.buttonContainer}>
@@ -70,8 +85,8 @@ const HomeNonAuth: React.FC<Props> = ({ cleanUserErrors }) => {
             text="Search a Coffee Provider"
             onPress={handleUserLogin}
           />
-        </View>
-        <Divider style={styles.secondDivider} />
+  </View>*/}
+      {/*<Divider style={styles.secondDivider} />
         <CustomText type="light" style={styles.forthText}>
           Login or Signup
         </CustomText>
@@ -96,16 +111,33 @@ const HomeNonAuth: React.FC<Props> = ({ cleanUserErrors }) => {
             text="Signup"
             onPress={handleUserSignup}
           />
-        </View>
-        <Divider style={styles.secondDivider} />
-        <CustomTextAnimated
-          animation="pulse"
-          type="extra-bold-italic"
-          style={styles.textAnimatedSecond}
-        >
-          You can also ...
-        </CustomTextAnimated>
-        <CustomText type="light" style={styles.forthText}>
+</View>*/}
+      <Divider />
+      <CustomBox
+        handleButton1={handleUserLogin}
+        handleButton2={handleUserSignup}
+        buttonSize={20}
+        buttonColor1={Color.backGroundPrimary}
+        buttonColor2={Color.primary}
+        buttonWidth="30%"
+        name1="account-heart-outline"
+        name2="account-heart-outline"
+        button1="Login"
+        button2="Signup"
+        headText="Login or Signup"
+        backColor1={Color.tertiary}
+        backColor2={Color.secondary}
+        iconName="account"
+      />
+      <Divider style={styles.secondDivider} />
+      <CustomTextAnimated
+        animation="pulse"
+        type="extra-bold-italic"
+        style={styles.textAnimatedSecond}
+      >
+        You can also ...
+      </CustomTextAnimated>
+      {/*<CustomText type="light" style={styles.forthText}>
           Donate a coffee to us. We will forawrad it to one of our verfied
           coffee provider!
         </CustomText>
@@ -119,24 +151,38 @@ const HomeNonAuth: React.FC<Props> = ({ cleanUserErrors }) => {
           textType="bold"
           text="Donate"
           onPress={handleUserLogin}
-        />
-
-        <Divider style={styles.secondDivider} />
-        <CustomText type="light" style={styles.forthText}>
-          How does this app work?
-        </CustomText>
-        <CustomButton
-          buttonWidth="50%"
-          name="information-outline"
-          size={18}
-          color="white"
-          fontSize={14}
-          textType="bold"
-          text="App Info"
-          onPress={appInfo}
-        />
-      </CustomLayout>
-    </ScrollView>
+/>*/}
+      <CustomText type="light" style={styles.forthText}>
+        Donate a coffee to us. We will forawrad it to one of our verfied coffee
+        provider!
+      </CustomText>
+      <CustomBox
+        handleButton1={handleUserLogin}
+        buttonSize={30}
+        buttonColor1={Color.primary}
+        buttonWidth="70%"
+        name1="account-heart-outline"
+        button1="Donate"
+        headText="Thank You !"
+        backColor1={Color.backGroundPrimary}
+        iconName="atom-variant"
+      />
+      <Divider style={styles.secondDivider} />
+      <CustomText type="light" style={styles.forthText}>
+        How does this app work?
+      </CustomText>
+      <CustomBox
+        handleButton1={appInfo}
+        buttonSize={30}
+        buttonColor1="cyan"
+        buttonWidth="70%"
+        name1="information-outline"
+        button1="Info"
+        headText="App Info"
+        backColor1={Color.backGroundPrimary}
+        iconName="information-outline"
+      />
+    </CustomLayout>
   );
 };
 
@@ -144,9 +190,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 80,
-    height: height * 1.2,
+    height,
     width
   },
   logo: { width: 100, height: 100 },

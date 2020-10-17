@@ -15,6 +15,8 @@ import { switchText } from '../../redux/handleTextPassword/textPassword.actions'
 import { connect } from 'react-redux';
 import defaultStyles from '../../constants/styles';
 
+import Color from '../../constants/Color';
+
 interface Props {
   icon?: string;
   show?: boolean;
@@ -49,9 +51,15 @@ const AppTextInput: React.FC<Props> = ({
         {...otherProps}
       />
       {show && (
-        <TouchableOpacity onPress={switchText}>
-          <Text style={styles.show}>Show</Text>
-        </TouchableOpacity>
+        <View style={styles.showContainer}>
+          <TouchableOpacity onPress={switchText}>
+            <MaterialCommunityIcons
+              name="eye"
+              size={30}
+              color={Color.backGroundPrimary}
+            />
+          </TouchableOpacity>
+        </View>
       )}
     </View>
   );
@@ -72,9 +80,13 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 10
   },
-  show: {
-    marginRight: 20,
-    marginLeft: -50
+  show: { marginTop: 5 },
+  showContainer: {
+    marginRight: -20,
+    marginLeft: -100,
+    width: 120,
+    height: 32,
+    alignItems: 'center'
   }
 });
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>

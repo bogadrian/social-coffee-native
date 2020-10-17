@@ -52,9 +52,7 @@ const Localization: React.FC = () => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={{ flex: 1, height: '140%', marginBottom: 140 }}
-    >
+    <ScrollView contentContainerStyle={styles.container}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <CustomLayout>
           <CustomText type="bold" style={styles.title}>
@@ -120,7 +118,8 @@ const Localization: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width
+    width,
+    height: height * 1.4
   },
   form: {
     width: '90%',

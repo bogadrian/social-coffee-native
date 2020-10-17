@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useNavigation } from '@react-navigation/native';
+//import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from '../../screens/HomeScreen/HomeScreen';
@@ -12,7 +12,10 @@ import SignupUser from '../../screens/AccountScreen/components/SignupUser';
 import SignupProvider from '../../screens/AccountScreen/components/SignupProvider';
 
 import AccountScreen from '../../screens/AccountScreen/AccountScreen';
+
 import MyComunitiesScreen from '../../screens/MyComunities/MyComunitiesScreen';
+import MyCommunityScreen from '../../screens/MyComunities/components/MyCommunity';
+import CommunityMapScreen from '../../screens/MyComunities/components/CommunityMap';
 
 import ResetPasswordScreen from '../../screens/ResetPassword/ResetPassword';
 
@@ -73,18 +76,18 @@ export const AccountStack: React.FC = () => {
   );
 };
 
-const MyComunitiesStackNavigator = createStackNavigator();
+// const MyComunitiesStackNavigator = createStackNavigator();
 
-export const MyComunitiesStack: React.FC = () => {
-  return (
-    <MyComunitiesStackNavigator.Navigator>
-      <HomeStackNavigator.Screen
-        name="Comunities"
-        component={MyComunitiesScreen}
-      />
-    </MyComunitiesStackNavigator.Navigator>
-  );
-};
+// export const MyComunitiesStack: React.FC = () => {
+//   return (
+//     <MyComunitiesStackNavigator.Navigator>
+//       <HomeStackNavigator.Screen
+//         name="Comunities"
+//         component={MyComunitiesScreen}
+//       />
+//     </MyComunitiesStackNavigator.Navigator>
+//   );
+// };
 
 const ResetPasswordStackNavigator = createStackNavigator();
 
