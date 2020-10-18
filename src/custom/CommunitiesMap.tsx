@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Text,
   View,
   StyleSheet,
   Dimensions,
-  Image,
-  TouchableOpacity,
   ActivityIndicator,
+  TouchableOpacity,
   Alert
 } from 'react-native';
+
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from 'expo-location';
 
-const screen = Dimensions.get('window');
+import axios from 'axios';
 
-import marker from '../assets/markers/marker4.png';
+import { URL } from '../constants/variables';
+
+import useDebounce from '../customHooks/useDebounce';
+
+const screen = Dimensions.get('window');
 
 import Color from '../constants/Color';
 
@@ -22,11 +25,6 @@ import CustomTextAnimated from './CustomTextAnimated';
 import CustomText from './CustomText';
 
 import MarkerComp from './Marker';
-
-import {
-  setProviderDataWithCoords,
-  setProviderDataAddress
-} from '../utilis/providerData';
 
 interface ILocation {
   latitude: number;
@@ -39,20 +37,12 @@ interface Props {
 const latitudeDelta = 0.0922;
 const longitudeDelta = 0.0421;
 
-type IAddress = Array<{
-  country: string | undefined;
-  city: string | undefined;
-  isCountryCode: boolean | undefined;
-  name: string | undefined;
-  postalCode: number | undefined;
-  region: string | undefined;
-  street: string | undefined;
-}>;
-
 const CommunitiesMap: React.FC<Props> = ({ reg }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [location, setLocation] = useState<ILocation>();
-  const [address, setAddress] = useState<IAddress>([]);
+  const [results, setResults] = useState<any>([]);
+
+  const debouncedLocation = useDebounce(location, 500);
 
   const [region, setRegion] = useState<any>({
     latitude: 37.78825,
@@ -65,15 +55,6 @@ const CommunitiesMap: React.FC<Props> = ({ reg }) => {
     const latitude = e.latitude;
     const longitude = e.longitude;
     setLocation({ latitude, longitude });
-    const findAddress = async () => {
-      let locAddress: IAddress | any;
-      locAddress = await Location.reverseGeocodeAsync({
-        latitude,
-        longitude
-      });
-      setAddress(locAddress);
-    };
-    findAddress();
   };
 
   useEffect(() => {
@@ -115,42 +96,28 @@ const CommunitiesMap: React.FC<Props> = ({ reg }) => {
     };
   }, [reg]);
 
-  const addressFixed = (address: any): void => {
-    if (location) {
-      setProviderDataWithCoords(location);
-    }
-    setProviderDataAddress(address);
-    okPressedFromAlert();
-  };
+  useEffect(() => {
+    const searchMap = async (location: any) => {
+      let latitude, longitude;
+      if (location) {
+        latitude = location.latitude;
+        longitude = location.longitude;
+      }
 
-  const okPressedFromAlert = () => {
-    Alert.alert('Your Address was set! Please press OK and swipe left! <--');
-  };
+      const lnglat = `${longitude},${latitude}`;
 
-  const okPressed = async () => {
-    let { country, city, street } = address[0];
-    if (country === null) country = 'No Country';
-    if (city === null) city = 'No City';
-    if (street === null) street = 'No Street';
+      try {
+        const url = `${URL}/api/v1/geo/providers-within/500/center/${lnglat}`;
+        const response = await axios.get(url);
 
-    Alert.alert(
-      'Is this address right?',
-      `If the address you chose on the map is right, press ok, otherise return to the map and try again! 
-        
-        Country: ${country}, 
-        City: ${city} 
-        Street: ${street}`,
-      [
-        { text: 'OK', onPress: () => addressFixed(address) },
-        {
-          text: 'Try Again',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        }
-      ],
-      { cancelable: false }
-    );
-  };
+        setResults(response.data.data.data);
+      } catch (err) {
+        console.log(err);
+        setResults([]);
+      }
+    };
+    searchMap(debouncedLocation);
+  }, [debouncedLocation]);
 
   if (loading) {
     return (
@@ -170,7 +137,7 @@ const CommunitiesMap: React.FC<Props> = ({ reg }) => {
     );
   }
   return (
-    <View style={{ position: 'relative' }}>
+    <View>
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
@@ -178,16 +145,20 @@ const CommunitiesMap: React.FC<Props> = ({ reg }) => {
         scrollEnabled={true}
         initialRegion={region}
         onRegionChangeComplete={onRegionChange}
-      />
-      {/*loop over the markers here and call a component bellow. pass the provider d? name? all provider object?*/}
-      <Marker
-        coordinate={{
-          latitude: 34343453455,
-          longitude: 45624645645
-        }}
       >
-        <MarkerComp />
-      </Marker>
+        {results.map((res: any, index: number) => (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: res.position.coordinates[0],
+              longitude: res.position.coordinates[1]
+            }}
+            onPress={() => console.log(res.name)}
+          >
+            <MarkerComp name={res.name} />
+          </Marker>
+        ))}
+      </MapView>
     </View>
   );
 };

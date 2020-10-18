@@ -16,6 +16,7 @@ import Color from '../constants/Color';
 
 interface Props {
   style?: any;
+  name: string;
 }
 
 const styles = StyleSheet.create({
@@ -28,7 +29,10 @@ const styles = StyleSheet.create({
     marginTop: 40
   },
 
-  markerFixed: {},
+  markerContainer: {
+    // width: 100,
+    // height: 100
+  },
   marker: {
     height: 44,
     width: 32
@@ -36,43 +40,22 @@ const styles = StyleSheet.create({
   ok: {
     backgroundColor: Color.backGroundPrimary,
     color: 'white',
-    marginLeft: -8,
+    marginBottom: -10,
     padding: 10,
     borderWidth: 2,
     borderColor: 'white',
     borderRadius: 20,
-    overflow: 'hidden'
-  },
-  touchble: {
-    flexDirection: 'column',
-    justifyContent: 'center',
+    overflow: 'hidden',
     alignItems: 'center',
-    borderRadius: 20,
-    marginBottom: 5
-  },
-  text: {
-    fontSize: 18,
-    letterSpacing: 2,
-    color: Color.tertiary,
-    padding: 4,
-    textAlign: 'center',
-    marginTop: 30
-  },
-  text1: {
-    fontSize: 14,
-    color: 'white',
-    textAlign: 'center'
+    justifyContent: 'center'
   }
 });
 
-const MarkerComp: React.FC<Props> = props => {
-  const okPressed = () => {};
+const MarkerComp: React.FC<Props> = ({ name }) => {
   return (
-    <View style={styles.markerFixed}>
-      <TouchableOpacity onPress={okPressed} style={styles.touchble}>
-        <Text style={styles.ok}>°name of the provider</Text>
-        <Image style={styles.marker} source={marker} />
-      </TouchableOpacity>
+    <View style={styles.markerContainer}>
+      <Text style={styles.ok}>{name}</Text>
+      <Image style={styles.marker} source={marker} />
     </View>
   );
 };
