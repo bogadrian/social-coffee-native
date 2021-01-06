@@ -22,7 +22,7 @@
     "@types/redux-logger": "^3.0.8",
     "@types/redux-saga": "^0.10.5",
     "@types/yup": "^0.29.6",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "expo": "^38.0.0",
     "expo-av": "~8.2.1",
     "expo-barcode-scanner": "~8.2.1",
